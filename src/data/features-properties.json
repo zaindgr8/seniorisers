@@ -1,0 +1,14 @@
+[
+    {
+      "id": 1,
+      "img": "assets/my_imgs/community.jpg",
+      "status": "Community Service",
+      "name":"Community Service Centers",
+      "location":"Across United States of America",
+      "description":"If you believe you can assist with real estate inquiries, submit your bid for the community service centers today!",
+      "bedroom":"3",
+      "bathroom":"3",
+      "area":"62",
+      "money":"17,966"
+    }
+  ]
