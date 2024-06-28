@@ -1,6 +1,6 @@
-import Layout from "@/components/Layout";
-import Dropdown from "@/components/form-control-two";
-import GooglePropertyMapsComponent from "@/components/property-map";
+import Layout from "../../components/Layout";
+import Dropdown from "../../components/form-control-two";
+import GooglePropertyMapsComponent from "../../components/property-map";
 import Link from "next/link";
 
 export default function PropertyGrid() {
@@ -41,14 +41,21 @@ export default function PropertyGrid() {
                 {/* Start Section Header Title */}
                 <div className="section-header text-center mb-5">
                   {/* Start Section Header title */}
-                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Find The Houses, <span className="underline position-relative text-primary">Apartments</span> And Office<br className="d-none d-sm-block"></br>In Your Favorite Location</h2>
+                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                    Find The Houses,{" "}
+                    <span className="underline position-relative text-primary">
+                      Apartments
+                    </span>{" "}
+                    And Office<br className="d-none d-sm-block"></br>In Your
+                    Favorite Location
+                  </h2>
                   {/* /.End Section Header Title */}
                   {/* Start Section Header Sub Title */}
                   <div className="sub-title fs-16">
-                    
-                    Our guests always travel the world in style. Mention @Kempinski
-                    <br className="d-none d-lg-block" /> on Instagram for a chance
-                    to be featured!
+                    Our guests always travel the world in style. Mention
+                    ../..Kempinski
+                    <br className="d-none d-lg-block" /> on Instagram for a
+                    chance to be featured!
                   </div>
                   {/* /.End Section Header Sub Title */}
                 </div>
@@ -58,7 +65,7 @@ export default function PropertyGrid() {
             {/* Start Search Form */}
             <div className="search-form__wrap z-1 position-relative mb-5 properties-search">
               {/* Start Main Search Content */}
-              <Dropdown/>
+              <Dropdown />
               {/* /.End Main Search Content */}
             </div>
             {/* /.End Search Form */}
@@ -93,9 +100,9 @@ export default function PropertyGrid() {
               <div className="col-xl-6">
                 {/* Start Map */}
                 <div className="rounded-4 map-list overflow-hidden">
-                <GooglePropertyMapsComponent  />
+                  <GooglePropertyMapsComponent />
                 </div>
-               
+
                 {/* /.End Map */}
               </div>
               <div className="col-xl-6">
@@ -280,7 +287,9 @@ export default function PropertyGrid() {
                       <div className="card-property-content-wrap d-flex flex-column h-100 position-relative p-4">
                         {/* Start Card Property Price */}
                         <div className="align-items-end card-property-price d-flex flex-row mb-1 gap-1">
-                          <h3 className="m-0 fw-bold text-primary">$1,295,000</h3>
+                          <h3 className="m-0 fw-bold text-primary">
+                            $1,295,000
+                          </h3>
                           <div> / year</div>
                         </div>
                         {/* /. End Card Property Price */}
@@ -453,8 +462,6 @@ export default function PropertyGrid() {
         </div>
       </div>
       {/* /. End Main Content */}
-
-
     </Layout>
   );
 }

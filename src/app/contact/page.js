@@ -1,8 +1,7 @@
-import Layout from "@/components/Layout";
-import GoogleMapsComponent from "@/components/map";
-import Slideshow from "@/components/slideshow";
+import Layout from "../../components/Layout";
+import GoogleMapsComponent from "../../components/map";
+import Slideshow from "../../components/slideshow";
 import Link from "next/link";
-
 
 export default function Contact() {
   return (
@@ -67,11 +66,11 @@ export default function Contact() {
                       We're here to assist you. Feel free to reach out to us!
                     </p>
                     <Link
-                      href="mailto:first.last@example.com"
+                      href="mailto:first.last../..example.com"
                       className="fw-medium"
                     >
                       <i className="fa-solid fa-envelope me-2" />
-                      info@senioriser.com
+                      info../..senioriser.com
                     </Link>
                   </div>
                 </div>

@@ -1,13 +1,12 @@
-import Layout from "@/components/Layout";
-import ReusableCountUp from "@/components/counter";
-import DropdownTwo from "@/components/form-control";
-import VideoContainer from "@/components/video-container";
+import Layout from "../../components/Layout";
+import ReusableCountUp from "../../components/counter";
+import DropdownTwo from "../../components/form-control";
+import VideoContainer from "../../components/video-container";
 import Link from "next/link";
 
 export default function HomeThreeHeaderDark() {
   return (
     <Layout>
-
       {/* Hero Header Three */}
       <div
         className="hero-header hero-header__three align-items-center d-flex position-relative header-dark background-image"
@@ -28,13 +27,14 @@ export default function HomeThreeHeaderDark() {
               {/* /.End Title */}
               {/* Start Text */}
               <p className="fs-18 mb-5">
-                It is a long established fact that a reader will be distracted by
-                the readable content of a page when looking at its layout. The point
-                of using Lorem Ipsum is that it has a more-or-less normal
+                It is a long established fact that a reader will be distracted
+                by the readable content of a page when looking at its layout.
+                The point of using Lorem Ipsum is that it has a more-or-less
+                normal
               </p>
               {/* /.End Text */}
               {/* Start Main Search Content */}
-              <DropdownTwo/>
+              <DropdownTwo />
               {/* /.End Main Search Content */}
               <h6 className="mt-5 text-white">
                 Are you a agent?
@@ -95,7 +95,10 @@ export default function HomeThreeHeaderDark() {
           <div className="row">
             <div className="col-md-10 offset-md-1">
               {/* Start Section Header Title */}
-              <div className="section-header text-center mb-5" data-aos="fade-down">
+              <div
+                className="section-header text-center mb-5"
+                data-aos="fade-down"
+              >
                 {/* Start Subtitle */}
                 <div className="bg-soft-primary d-inline-block fw-medium mb-3 rounded-pill section-header__subtitle text-capitalize text-primary">
                   Best Way
@@ -113,10 +116,10 @@ export default function HomeThreeHeaderDark() {
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
                   {" "}
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -237,10 +240,10 @@ export default function HomeThreeHeaderDark() {
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
                   {" "}
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -277,7 +280,9 @@ export default function HomeThreeHeaderDark() {
                     <div> /night</div>
                   </div>
                   {/* /. End Card Property Price */}
-                  <h4 className="property-card-title mb-3">Koh Samui, Thailand</h4>
+                  <h4 className="property-card-title mb-3">
+                    Koh Samui, Thailand
+                  </h4>
                   <div className="card-property-description mb-3">
                     37 Ambleside Gardens, Ilford, IG4
                   </div>
@@ -503,7 +508,9 @@ export default function HomeThreeHeaderDark() {
                     <div> /night</div>
                   </div>
                   {/* /. End Card Property Price */}
-                  <h4 className="property-card-title mb-3">Koh Samui, Thailand</h4>
+                  <h4 className="property-card-title mb-3">
+                    Koh Samui, Thailand
+                  </h4>
                   <div className="card-property-description mb-3">
                     37 Ambleside Gardens, Ilford, IG4
                   </div>
@@ -728,9 +735,13 @@ export default function HomeThreeHeaderDark() {
                 <i className="fa-igloo fa-solid display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
                   <strong className="counter">
-                     <ReusableCountUp separator=""
-                            decimals={""}
-                            decimal="" start={0} end={3000} /> 
+                    <ReusableCountUp
+                      separator=""
+                      decimals={""}
+                      decimal=""
+                      start={0}
+                      end={3000}
+                    />
                   </strong>
                   <small> +</small>
                 </p>
@@ -739,10 +750,15 @@ export default function HomeThreeHeaderDark() {
               <div className="col-6 col-md-3 col-xl-6 p-3 p-sm-4 p-md-3 p-xxl-5">
                 <i className="fa-solid fa-user-group display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
-                  <strong className="counter"><ReusableCountUp separator=""
-                            decimals={""}
-                            decimal="" start={0} end={2500} />
-                            </strong>
+                  <strong className="counter">
+                    <ReusableCountUp
+                      separator=""
+                      decimals={""}
+                      decimal=""
+                      start={0}
+                      end={2500}
+                    />
+                  </strong>
                   <small> +</small>
                 </p>
                 <p className="fw-semibold mb-0 text-white">Satisfied Clients</p>
@@ -751,9 +767,17 @@ export default function HomeThreeHeaderDark() {
                 <i className="fa-solid fa-sack-dollar display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
                   <strong>
-                  $ <span className="counter"><ReusableCountUp separator=""
-                              decimals={1}
-                              decimal="." start={0.0} end={6.8} /></span>B
+                    ${" "}
+                    <span className="counter">
+                      <ReusableCountUp
+                        separator=""
+                        decimals={1}
+                        decimal="."
+                        start={0.0}
+                        end={6.8}
+                      />
+                    </span>
+                    B
                   </strong>
                   <small> +</small>
                 </p>
@@ -764,17 +788,25 @@ export default function HomeThreeHeaderDark() {
               <div className="col-6 col-md-3 col-xl-6 p-3 p-sm-4 p-md-3 p-xxl-5">
                 <i className="fa-solid fa-user-tie display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
-                  <strong className="counter">  <strong className="counter"><ReusableCountUp separator=""
-                            decimals={""}
-                            decimal="" start={0} end={593} />
-                          </strong></strong>
+                  <strong className="counter">
+                    {" "}
+                    <strong className="counter">
+                      <ReusableCountUp
+                        separator=""
+                        decimals={""}
+                        decimal=""
+                        start={0}
+                        end={593}
+                      />
+                    </strong>
+                  </strong>
                   <small> +</small>
                 </p>
                 <p className="fw-semibold mb-0 text-white">Total Agents</p>
               </div>
             </div>
           </div>
-          <VideoContainer/>
+          <VideoContainer />
         </div>
       </div>
       {/* /. About And Counter Section */}
@@ -784,7 +816,10 @@ export default function HomeThreeHeaderDark() {
           <div className="row">
             <div className="col-md-10 offset-md-1">
               {/* Start Section Header Title */}
-              <div className="section-header text-center mb-5" data-aos="fade-down">
+              <div
+                className="section-header text-center mb-5"
+                data-aos="fade-down"
+              >
                 {/* Start Subtitle */}
                 <div className="bg-soft-primary d-inline-block fw-medium mb-3 rounded-pill section-header__subtitle text-capitalize text-primary">
                   Top Regions
@@ -802,10 +837,10 @@ export default function HomeThreeHeaderDark() {
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
                   {" "}
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -1189,10 +1224,10 @@ export default function HomeThreeHeaderDark() {
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
                   {" "}
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -1224,8 +1259,8 @@ export default function HomeThreeHeaderDark() {
                     <div className="bottom-0 left-0 p-3 p-sm-4 position-absolute post-block w-100 z-1">
                       <h3 className="fw-semibold mb-3 post-title_hover ">
                         <Link href="blog-details">
-                          Eu Feugiat Pretium Nibh Ipsum Consequat Nisl Vel Pretium
-                          Lectus
+                          Eu Feugiat Pretium Nibh Ipsum Consequat Nisl Vel
+                          Pretium Lectus
                         </Link>
                       </h3>
                       {/* /.End Meta Info */}
@@ -1249,8 +1284,8 @@ export default function HomeThreeHeaderDark() {
                     <div className="bottom-0 left-0 p-3 p-sm-4 position-absolute post-block w-100 z-1">
                       <h3 className="fw-semibold mb-3 post-title_hover ">
                         <Link href="blog-details">
-                          Ullamcorper A Lacus Vestibulum Sed Arcu Non Odio Euismod
-                          Lacinia
+                          Ullamcorper A Lacus Vestibulum Sed Arcu Non Odio
+                          Euismod Lacinia
                         </Link>
                       </h3>
                       {/* Start Meta Info */}
@@ -1295,8 +1330,8 @@ export default function HomeThreeHeaderDark() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          eu feugiat pretium nibh ipsum consequat nisl vel pretium
-                          lectus
+                          eu feugiat pretium nibh ipsum consequat nisl vel
+                          pretium lectus
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1338,8 +1373,8 @@ export default function HomeThreeHeaderDark() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          ut faucibus pulvinar elementum integer enim neque volutpat
-                          ac tincidunt?
+                          ut faucibus pulvinar elementum integer enim neque
+                          volutpat ac tincidunt?
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1381,8 +1416,8 @@ export default function HomeThreeHeaderDark() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          fames ac turpis egestas integer eget aliquet nibh praesent
-                          tristique
+                          fames ac turpis egestas integer eget aliquet nibh
+                          praesent tristique
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1424,8 +1459,8 @@ export default function HomeThreeHeaderDark() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          ullamcorper a lacus vestibulum sed arcu non odio euismod
-                          lacinia
+                          ullamcorper a lacus vestibulum sed arcu non odio
+                          euismod lacinia
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1448,7 +1483,6 @@ export default function HomeThreeHeaderDark() {
         </div>
       </div>
       {/* /. End Blog Section */}
-
     </Layout>
   );
 }

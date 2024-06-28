@@ -1,6 +1,6 @@
-import Layout from "@/components/Layout";
-import Regions from "@/components/Regions";
-import SectionHeader from "@/components/section-header";
+import Layout from "../../components/Layout";
+import Regions from "../../components/Regions";
+import SectionHeader from "../../components/section-header";
 import Link from "next/link";
 
 export default function Locations() {
@@ -36,8 +36,8 @@ export default function Locations() {
         </div>
         <div className="py-5">
           <div className="container py-4">
-            <SectionHeader/>
-            <Regions/>
+            <SectionHeader />
+            <Regions />
           </div>
         </div>
         <div className="py-5 bg-grey">
@@ -55,15 +55,20 @@ export default function Locations() {
                   </div>
                   {/* /. End Subtitle */}
                   {/* Start Section Header title */}
-                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Get The <span className="underline position-relative text-primary">Answers</span> You Need</h2>
+                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                    Get The{" "}
+                    <span className="underline position-relative text-primary">
+                      Answers
+                    </span>{" "}
+                    You Need
+                  </h2>
                   {/* /.End Section Header Title */}
                   {/* Start Section Header Sub Title */}
                   <div className="sub-title fs-16">
-                    
-                    It is a long established fact that a reader will be distracted
-                    by the
-                    <br className="d-none d-lg-block" /> readable content of a page
-                    when looking at its layout.
+                    It is a long established fact that a reader will be
+                    distracted by the
+                    <br className="d-none d-lg-block" /> readable content of a
+                    page when looking at its layout.
                   </div>
                   {/* /.End Section Header Sub Title */}
                 </div>
@@ -93,16 +98,17 @@ export default function Locations() {
                     >
                       <div className="accordion-body p-4 pt-0">
                         Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a
-                        type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining
-                        essentially unchanged. It was <code>.accordion-body</code>
-                        popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum passages, and more recently with
-                        desktop publishing software like Aldus PageMaker including
-                        versions.
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was <code>.accordion-body</code>
+                        popularised in the 1960s with the release of Letraset
+                        sheets containing Lorem Ipsum passages, and more
+                        recently with desktop publishing software like Aldus
+                        PageMaker including versions.
                       </div>
                     </div>
                   </div>
@@ -126,16 +132,17 @@ export default function Locations() {
                     >
                       <div className="accordion-body p-4 pt-0">
                         Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a
-                        type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining
-                        essentially unchanged. It was <code>.accordion-body</code>
-                        popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum passages, and more recently with
-                        desktop publishing software like Aldus PageMaker including
-                        versions.
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was <code>.accordion-body</code>
+                        popularised in the 1960s with the release of Letraset
+                        sheets containing Lorem Ipsum passages, and more
+                        recently with desktop publishing software like Aldus
+                        PageMaker including versions.
                       </div>
                     </div>
                   </div>
@@ -159,16 +166,17 @@ export default function Locations() {
                     >
                       <div className="accordion-body p-4 pt-0">
                         Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a
-                        type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining
-                        essentially unchanged. It was <code>.accordion-body</code>
-                        popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum passages, and more recently with
-                        desktop publishing software like Aldus PageMaker including
-                        versions.
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was <code>.accordion-body</code>
+                        popularised in the 1960s with the release of Letraset
+                        sheets containing Lorem Ipsum passages, and more
+                        recently with desktop publishing software like Aldus
+                        PageMaker including versions.
                       </div>
                     </div>
                   </div>
@@ -192,16 +200,17 @@ export default function Locations() {
                     >
                       <div className="accordion-body p-4 pt-0">
                         Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a
-                        type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining
-                        essentially unchanged. It was <code>.accordion-body</code>
-                        popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum passages, and more recently with
-                        desktop publishing software like Aldus PageMaker including
-                        versions.
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was <code>.accordion-body</code>
+                        popularised in the 1960s with the release of Letraset
+                        sheets containing Lorem Ipsum passages, and more
+                        recently with desktop publishing software like Aldus
+                        PageMaker including versions.
                       </div>
                     </div>
                   </div>
@@ -225,16 +234,17 @@ export default function Locations() {
                     >
                       <div className="accordion-body p-4 pt-0">
                         Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a
-                        type specimen book. It has survived not only five centuries,
-                        but also the leap into electronic typesetting, remaining
-                        essentially unchanged. It was <code>.accordion-body</code>
-                        popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum passages, and more recently with
-                        desktop publishing software like Aldus PageMaker including
-                        versions.
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged.
+                        It was <code>.accordion-body</code>
+                        popularised in the 1960s with the release of Letraset
+                        sheets containing Lorem Ipsum passages, and more
+                        recently with desktop publishing software like Aldus
+                        PageMaker including versions.
                       </div>
                     </div>
                   </div>
@@ -245,8 +255,6 @@ export default function Locations() {
         </div>
       </div>
       {/* /. End Main Content */}
-
-
     </Layout>
   );
 }

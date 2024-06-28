@@ -1,6 +1,5 @@
-
-"use client"
-import Layout from "@/components/Layout";
+"use client";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -9,9 +8,8 @@ export default function SignIn() {
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
-  const inputType = isPasswordVisible ? 'text' : 'password';
+  const inputType = isPasswordVisible ? "text" : "password";
   return (
-
     <Layout>
       {/* Start Main Content */}
       <div className="main-content">
@@ -36,8 +34,15 @@ export default function SignIn() {
                   <div className="col-lg-6 col-xl-5 text-center">
                     {/* Start Header Text */}
                     <div className="text-center mb-4">
-                      <h3 className="fw-semibold">Sign into your <span className="underline position-relative text-primary">account!</span></h3>
-                      <p className="text-muted text-center mb-0">Nice to see you! Please log in with your account.</p>
+                      <h3 className="fw-semibold">
+                        Sign into your{" "}
+                        <span className="underline position-relative text-primary">
+                          account!
+                        </span>
+                      </h3>
+                      <p className="text-muted text-center mb-0">
+                        Nice to see you! Please log in with your account.
+                      </p>
                     </div>
                     {/* /.End Header Text */}
                     {/* Start Social Button Wrapper */}
@@ -98,9 +103,12 @@ export default function SignIn() {
                           className="form-control password"
                           autoComplete="off"
                         />
-                         <i
-                          className={`toggle-password ${isPasswordVisible ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'
-                            }`}
+                        <i
+                          className={`toggle-password ${
+                            isPasswordVisible
+                              ? "fa-regular fa-eye"
+                              : "fa-regular fa-eye-slash"
+                          }`}
                           onClick={togglePasswordVisibility}
                         ></i>
                       </div>
@@ -131,8 +139,22 @@ export default function SignIn() {
                       {/* /.End Button */}
                     </form>
                     {/* Start Bottom Text */}
-                    <div className="bottom-text text-center my-3"> Don't have an account? <Link href="signup" className="fw-medium text-decoration-underline">Sign Up</Link>
-                      <br></br> Remind <Link href="forgot-password" className="fw-medium text-decoration-underline">Password</Link>
+                    <div className="bottom-text text-center my-3">
+                      {" "}
+                      Don't have an account?{" "}
+                      <Link
+                        href="signup"
+                        className="fw-medium text-decoration-underline"
+                      >
+                        Sign Up
+                      </Link>
+                      <br></br> Remind{" "}
+                      <Link
+                        href="forgot-password"
+                        className="fw-medium text-decoration-underline"
+                      >
+                        Password
+                      </Link>
                     </div>
                     {/* /.End Bottom Text */}
                   </div>
@@ -153,6 +175,5 @@ export default function SignIn() {
       </div>
       {/* /. End Main Content */}
     </Layout>
-
   );
 }

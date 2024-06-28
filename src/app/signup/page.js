@@ -1,20 +1,21 @@
-"use client"
+"use client";
 
-import Layout from "@/components/Layout";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function SignUp() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
   const toggleConfirmPasswordVisibility = () => {
     setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
   };
-  const confirmInputType = isConfirmPasswordVisible ? 'text' : 'password';
-  const inputType = isPasswordVisible ? 'text' : 'password';
+  const confirmInputType = isConfirmPasswordVisible ? "text" : "password";
+  const inputType = isPasswordVisible ? "text" : "password";
   return (
     <Layout>
       {/* Start Main Content */}
@@ -40,7 +41,12 @@ export default function SignUp() {
                   <div className="col-lg-6 col-xl-5 text-center">
                     {/* Start Header Text */}
                     <div className="text-center mb-4">
-                      <h3 className="fw-semibold">Sign up your your <span className="underline position-relative text-primary">account!</span></h3>
+                      <h3 className="fw-semibold">
+                        Sign up your your{" "}
+                        <span className="underline position-relative text-primary">
+                          account!
+                        </span>
+                      </h3>
                       <p className="text-muted text-center mb-0">
                         Start your 15-day trial, no credit card required
                       </p>
@@ -104,8 +110,11 @@ export default function SignUp() {
                           autoComplete="off"
                         />
                         <i
-                          className={`toggle-password ${isPasswordVisible ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'
-                            }`}
+                          className={`toggle-password ${
+                            isPasswordVisible
+                              ? "fa-regular fa-eye"
+                              : "fa-regular fa-eye-slash"
+                          }`}
                           onClick={togglePasswordVisibility}
                         ></i>
                       </div>
@@ -119,17 +128,37 @@ export default function SignUp() {
                           className="form-control c-password"
                           autoComplete="off"
                         />
-                         <i
-                          className={`toggle-password ${isConfirmPasswordVisible ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash'
-                            }`}
+                        <i
+                          className={`toggle-password ${
+                            isConfirmPasswordVisible
+                              ? "fa-regular fa-eye"
+                              : "fa-regular fa-eye-slash"
+                          }`}
                           onClick={toggleConfirmPasswordVisibility}
                         ></i>
                       </div>
                       {/* /.End Form Group */}
                       {/* Start Checkbox */}
                       <div className="form-check mb-4 text-start">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault"> By signing up, you agree to the <Link href="terms-conditions" className="text-decoration-underline">terms of service</Link> </label>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="flexCheckDefault"
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="flexCheckDefault"
+                        >
+                          {" "}
+                          By signing up, you agree to the{" "}
+                          <Link
+                            href="terms-conditions"
+                            className="text-decoration-underline"
+                          >
+                            terms of service
+                          </Link>{" "}
+                        </label>
                       </div>
                       {/* /.End Checkbox */}
                       {/* Start Button */}
@@ -142,7 +171,16 @@ export default function SignUp() {
                       {/* End Button */}
                     </form>
                     {/* Start Bottom Text */}
-                    <div className="bottom-text text-center mt-3"> Already have an account? <Link href="signin" className="fw-medium text-decoration-underline">Sign In</Link> </div>
+                    <div className="bottom-text text-center mt-3">
+                      {" "}
+                      Already have an account?{" "}
+                      <Link
+                        href="signin"
+                        className="fw-medium text-decoration-underline"
+                      >
+                        Sign In
+                      </Link>{" "}
+                    </div>
                     {/* /.End Bottom Text */}
                   </div>
                   <div className="col-lg-6 col-xl-7 order-lg-first pe-xl-5">

@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 
 export default function PostProperty() {
@@ -16,7 +16,7 @@ export default function PostProperty() {
               <div className="border-start col-auto">
                 <ol className="align-items-center breadcrumb fw-medium mb-0">
                   <li className="breadcrumb-item d-flex align-items-center">
-                    <Link href="/" className="text-decoration-none"> 
+                    <Link href="/" className="text-decoration-none">
                       <i className="fa-solid fa-house-chimney-crack fs-18" />
                     </Link>
                   </li>
@@ -39,14 +39,20 @@ export default function PostProperty() {
                 {/* Start Section Header Title */}
                 <div className="section-header text-center mb-5">
                   {/* Start Section Header title */}
-               <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Post a property for <span className="underline position-relative text-primary">sale</span> or rent</h2>
+                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                    Post a property for{" "}
+                    <span className="underline position-relative text-primary">
+                      sale
+                    </span>{" "}
+                    or rent
+                  </h2>
                   {/* /.End Section Header Title */}
                   {/* Start Section Header Sub Title */}
                   <div className="sub-title fs-16">
-                    It is a long established fact that a reader will be distracted
-                    by the
-                    <br className="d-none d-lg-block" /> readable content of a page
-                    when looking at its layout.
+                    It is a long established fact that a reader will be
+                    distracted by the
+                    <br className="d-none d-lg-block" /> readable content of a
+                    page when looking at its layout.
                   </div>
                   {/* /.End Section Header Sub Title */}
                 </div>
@@ -59,9 +65,7 @@ export default function PostProperty() {
                   <div className="align-items-sm-center border-bottom d-sm-flex mb-5 pb-4">
                     <div className="d-flex flex-shrink-0 gap-1">
                       <span className="fw-semibold text-dark">01/</span>
-                      <div
-                        className="icon-box align-items-center bg-soft-primary d-flex justify-content-center mb-2 rounded-circle"
-                      >
+                      <div className="icon-box align-items-center bg-soft-primary d-flex justify-content-center mb-2 rounded-circle">
                         <i className="fa-solid fa-user fs-3 text-primary" />
                       </div>
                     </div>
@@ -120,9 +124,7 @@ export default function PostProperty() {
                   <div className="align-items-sm-center border-bottom d-sm-flex mb-5 pb-4">
                     <div className="d-flex flex-shrink-0 gap-1">
                       <span className="fw-semibold text-dark">02/</span>
-                      <div
-                        className="icon-box align-items-center bg-soft-primary d-flex justify-content-center mb-2 rounded-circle"
-                      >
+                      <div className="icon-box align-items-center bg-soft-primary d-flex justify-content-center mb-2 rounded-circle">
                         <i className="fa-solid fa-house-chimney fs-3 text-primary" />
                       </div>
                     </div>
@@ -155,7 +157,11 @@ export default function PostProperty() {
                       {/* Start Form Group */}
                       <div className="form-group">
                         <label className="required">Address</label>
-                        <input type="email" className="form-control" required="" />
+                        <input
+                          type="email"
+                          className="form-control"
+                          required=""
+                        />
                       </div>
                       {/* /.End Form Group */}
                     </div>
@@ -163,7 +169,11 @@ export default function PostProperty() {
                       {/* Start Form Group */}
                       <div className="form-group">
                         <label className="required">City</label>
-                        <input type="number" className="form-control" required="" />
+                        <input
+                          type="number"
+                          className="form-control"
+                          required=""
+                        />
                       </div>
                       {/* /.End Form Group */}
                     </div>
@@ -174,7 +184,7 @@ export default function PostProperty() {
                         <select
                           className="form-select"
                           aria-label="Default select example"
-                          defaultValue="" 
+                          defaultValue=""
                         >
                           <option value="">Select</option>
                           <option value={1}>Apartment</option>
@@ -191,7 +201,7 @@ export default function PostProperty() {
                         <select
                           className="form-select"
                           aria-label="Default select example"
-                          defaultValue="" 
+                          defaultValue=""
                         >
                           <option value="">Select</option>
                           <option value={1}>For Rent</option>
@@ -230,7 +240,11 @@ export default function PostProperty() {
                       {/* Start Form Group */}
                       <div className="form-group">
                         <label className="required">Bedrooms</label>
-                        <input type="number" className="form-control" required="" />
+                        <input
+                          type="number"
+                          className="form-control"
+                          required=""
+                        />
                       </div>
                       {/* /.End Form Group */}
                     </div>
@@ -238,7 +252,11 @@ export default function PostProperty() {
                       {/* Start Form Group */}
                       <div className="form-group">
                         <label className="required">Bathrooms</label>
-                        <input type="number" className="form-control" required="" />
+                        <input
+                          type="number"
+                          className="form-control"
+                          required=""
+                        />
                       </div>
                       {/* /.End Form Group */}
                     </div>
@@ -246,7 +264,11 @@ export default function PostProperty() {
                       {/* Start Form Group */}
                       <div className="form-group">
                         <label className="required">Parking lots</label>
-                        <input type="number" className="form-control" required="" />
+                        <input
+                          type="number"
+                          className="form-control"
+                          required=""
+                        />
                       </div>
                       {/* /.End Form Group */}
                     </div>
@@ -294,7 +316,9 @@ export default function PostProperty() {
                     <div className="col-md-12">
                       {/* Start Form Group */}
                       <div className="form-group">
-                        <label className="required">Listing long description</label>
+                        <label className="required">
+                          Listing long description
+                        </label>
                         <textarea
                           className="form-control"
                           placeholder="Please enter up to 4000 characters."
@@ -486,8 +510,8 @@ export default function PostProperty() {
                       </div>
                       {/* /.End Form Group */}
                       <p className="mb-0 mt-2">
-                        Please share a Google Drive or Imgur link of your listing
-                        images
+                        Please share a Google Drive or Imgur link of your
+                        listing images
                       </p>
                     </div>
                   </div>
@@ -511,6 +535,5 @@ export default function PostProperty() {
       </div>
       {/* /. End Main Content */}
     </Layout>
-
   );
 }

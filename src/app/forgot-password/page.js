@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 
 export default function ForgotPassword() {
@@ -46,10 +46,15 @@ export default function ForgotPassword() {
                   {/* /.End Illustration Image */}
                   {/* Start Header Text */}
                   <div className="text-center mb-4">
-                  <h3 className="fw-semibold">Password <span className="underline position-relative text-primary">Reset</span></h3>
+                    <h3 className="fw-semibold">
+                      Password{" "}
+                      <span className="underline position-relative text-primary">
+                        Reset
+                      </span>
+                    </h3>
                     <p className="text-muted text-center mb-0">
-                      Fill with your mail to receive instructions on how to reset
-                      your password.
+                      Fill with your mail to receive instructions on how to
+                      reset your password.
                     </p>
                   </div>
                   {/* /.End Header Text */}
@@ -61,14 +66,26 @@ export default function ForgotPassword() {
                     </div>
                     {/* /.End Form Group */}
                     {/* Start Button */}
-                    <button type="submit" className="btn btn-primary btn-lg w-100">
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg w-100"
+                    >
                       Reset password
                     </button>
                     {/* /.End Button */}
                   </form>
                   {/* Start Bottom Text */}
-                  <div className="bottom-text text-center mt-3"> Remember your password? <Link href="signin" className="fw-medium text-decoration-underline">Log in</Link> </div>
-                
+                  <div className="bottom-text text-center mt-3">
+                    {" "}
+                    Remember your password?{" "}
+                    <Link
+                      href="signin"
+                      className="fw-medium text-decoration-underline"
+                    >
+                      Log in
+                    </Link>{" "}
+                  </div>
+
                   {/* /.End Bottom Text */}
                 </div>
               </div>
@@ -78,6 +95,5 @@ export default function ForgotPassword() {
       </div>
       {/* /. End Main Content */}
     </Layout>
-
   );
 }

@@ -1,6 +1,6 @@
-import Layout from "@/components/Layout";
-import AboutVideoContainer from "@/components/about-video-container";
-import ReusableCountUp from "@/components/counter";
+import Layout from "../../components/Layout";
+import AboutVideoContainer from "../../components/about-video-container";
+import ReusableCountUp from "../../components/counter";
 import Link from "next/link";
 
 export default function About() {
@@ -39,13 +39,19 @@ export default function About() {
             <div className="row">
               <div className="col-xl-8 mb-5">
                 {/* Start Title */}
-                <h1 className="display-4 fw-bold">We <span className="underline position-relative text-primary">believe</span> in the success of every business.</h1>
+                <h1 className="display-4 fw-bold">
+                  We{" "}
+                  <span className="underline position-relative text-primary">
+                    believe
+                  </span>{" "}
+                  in the success of every business.
+                </h1>
                 {/* /.End Title */}
                 {/* Start Short Sescription */}
                 <p className="fs-17 mb-0">
-                  It is a long established fact that a reader will be distracted by
-                  the readable content of a page when looking at its layout. The
-                  point of using Lorem Ipsum is that it has
+                  It is a long established fact that a reader will be distracted
+                  by the readable content of a page when looking at its layout.
+                  The point of using Lorem Ipsum is that it has
                 </p>
                 {/* /.End Short Sescription */}
               </div>
@@ -57,33 +63,62 @@ export default function About() {
                   <div className="g-4 justify-content-center row">
                     <div className="col-sm-6 col-xl-3 text-center">
                       <div className="display-4 fw-semibold numscroller text-primary justify-content-center d-flex gap-1">
-                        <span className="counter"><ReusableCountUp separator=""
+                        <span className="counter">
+                          <ReusableCountUp
+                            separator=""
                             decimals={""}
-                            decimal="" start={0} end={3000} /> </span>+
+                            decimal=""
+                            start={0}
+                            end={3000}
+                          />{" "}
+                        </span>
+                        +
                       </div>
                       <h5 className="mt-3 mb-0">Properties Listed</h5>
                     </div>
                     <div className="col-sm-6 col-xl-3 text-center">
                       <div className="display-4 fw-semibold numscroller text-primary justify-content-center d-flex gap-1">
-                        <span className="counter"> <ReusableCountUp separator=""
+                        <span className="counter">
+                          {" "}
+                          <ReusableCountUp
+                            separator=""
                             decimals={""}
-                            decimal="" start={0} end={2500} /> </span>+
+                            decimal=""
+                            start={0}
+                            end={2500}
+                          />{" "}
+                        </span>
+                        +
                       </div>
                       <h5 className="mt-3 mb-0">Satisfied Clients</h5>
                     </div>
                     <div className="col-sm-6 col-xl-3 text-center">
                       <div className="display-4 fw-semibold numscroller text-primary justify-content-center d-flex gap-1">
-                        <span className="counter"><ReusableCountUp separator=""
-                              decimals={1}
-                              decimal="." start={0.0} end={6.8} /></span>B +
+                        <span className="counter">
+                          <ReusableCountUp
+                            separator=""
+                            decimals={1}
+                            decimal="."
+                            start={0.0}
+                            end={6.8}
+                          />
+                        </span>
+                        B +
                       </div>
                       <h5 className="mt-3 mb-0">Total sales since 2023</h5>
                     </div>
                     <div className="col-sm-6 col-xl-3 text-center">
                       <div className="display-4 fw-semibold numscroller text-primary justify-content-center d-flex gap-1">
-                        <span className="counter"><ReusableCountUp separator=""
+                        <span className="counter">
+                          <ReusableCountUp
+                            separator=""
                             decimals={""}
-                            decimal="" start={0} end={593} /> </span>+
+                            decimal=""
+                            start={0}
+                            end={593}
+                          />{" "}
+                        </span>
+                        +
                       </div>
                       <h5 className="mt-3 mb-0">Total Agents</h5>
                     </div>
@@ -136,34 +171,35 @@ export default function About() {
                   </h6>
                   <h2 className="mb-4">We make a Difference in your lives</h2>
                   <p className="mb-4">
-                    It is a long established fact that a reader will be distracted
-                    by the readable content of a page when looking at its layout.
-                    The point of using Lorem Ipsum is that it has a more-or-less
-                    normal distribution of letters, as opposed to using 'Content
-                    here, content here', making it look like readable English. Many
-                    desktop publishing packages and web page editors now use Lorem
-                    Ipsum as their default model text, and a search for 'lorem
-                    ipsum' will uncover many web sites still.
+                    It is a long established fact that a reader will be
+                    distracted by the readable content of a page when looking at
+                    its layout. The point of using Lorem Ipsum is that it has a
+                    more-or-less normal distribution of letters, as opposed to
+                    using 'Content here, content here', making it look like
+                    readable English. Many desktop publishing packages and web
+                    page editors now use Lorem Ipsum as their default model
+                    text, and a search for 'lorem ipsum' will uncover many web
+                    sites still.
                   </p>
                   <ul className="list-checked mb-9 mb-md-10 ps-0">
                     <li>
-                      It is a long established fact that a reader will be distracted
-                      by the readable content of a page when looking.
+                      It is a long established fact that a reader will be
+                      distracted by the readable content of a page when looking.
                     </li>
                     <li>
-                      The point of using Lorem Ipsum is that it has a more-or-less
-                      normal distribution of letters.
+                      The point of using Lorem Ipsum is that it has a
+                      more-or-less normal distribution of letters.
                     </li>
                     <li>
-                      Many desktop publishing packages and web page editors now use
-                      Lorem Ipsum.
+                      Many desktop publishing packages and web page editors now
+                      use Lorem Ipsum.
                     </li>
                   </ul>
                   <hr className="mt-5" />
                   <blockquote className="blockquote quote-text">
                     <p className="fst-italic mb-0">
-                      “The mind has great influence over the body and maladies often
-                      have their origin there.”
+                      “The mind has great influence over the body and maladies
+                      often have their origin there.”
                     </p>
                     <cite className="fs-14 fw-semibold quote-attribution text-dark">
                       — John Doe Molicere
@@ -178,7 +214,7 @@ export default function About() {
           </div>
         </div>
         {/* Start About Video Section */}
-        <AboutVideoContainer/>
+        <AboutVideoContainer />
         {/* /. End About Video Section */}
         {/* Start Customers Section */}
         <div className="py-5 bg-gradient-primary border-bottom">
@@ -193,14 +229,20 @@ export default function About() {
                   </div>
                   {/* /. End Subtitle */}
                   {/* Start Section Header title */}
-                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Trusted by <span className="underline position-relative text-primary">thousands</span> of companies</h2>
+                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                    Trusted by{" "}
+                    <span className="underline position-relative text-primary">
+                      thousands
+                    </span>{" "}
+                    of companies
+                  </h2>
                   {/* /.End Section Header Title */}
                   {/* Start Section Header Sub Title */}
                   <div className="sub-title fs-16">
-                    
-                    Our guests always travel the world in style. Mention @Kempinski
-                    <br className="d-none d-lg-block" /> on Instagram for a chance
-                    to be featured!
+                    Our guests always travel the world in style. Mention
+                    @Kempinski
+                    <br className="d-none d-lg-block" /> on Instagram for a
+                    chance to be featured!
                   </div>
                   {/* /.End Section Header Sub Title */}
                 </div>
@@ -297,14 +339,19 @@ export default function About() {
                   </div>
                   {/* /. End Subtitle */}
                   {/* Start Section Header title */}
-                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Meet our <span className="underline position-relative text-primary">team</span></h2>
+                  <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                    Meet our{" "}
+                    <span className="underline position-relative text-primary">
+                      team
+                    </span>
+                  </h2>
                   {/* /.End Section Header Title */}
                   {/* Start Section Header Sub Title */}
                   <div className="sub-title fs-16">
-                    
-                    Our guests always travel the world in style. Mention @Kempinski
-                    <br className="d-none d-lg-block" /> on Instagram for a chance
-                    to be featured!
+                    Our guests always travel the world in style. Mention
+                    @Kempinski
+                    <br className="d-none d-lg-block" /> on Instagram for a
+                    chance to be featured!
                   </div>
                   {/* /.End Section Header Sub Title */}
                 </div>
@@ -514,8 +561,6 @@ export default function About() {
         {/* /. End Team Content */}
       </div>
       {/* /. End Main Content */}
-
-
     </Layout>
   );
 }

@@ -1,7 +1,7 @@
-import Layout from "@/components/Layout";
-import ReusableCountUp from "@/components/counter";
-import DropdownTwo from "@/components/form-control";
-import VideoContainer from "@/components/video-container";
+import Layout from "../../components/Layout";
+import ReusableCountUp from "../../components/counter";
+import DropdownTwo from "../../components/form-control";
+import VideoContainer from "../../components/video-container";
 import Link from "next/link";
 
 export default function HomeThree() {
@@ -13,13 +13,20 @@ export default function HomeThree() {
           <div className="row justify-content-center justify-content-lg-between align-items-center">
             <div className="col-sm-10 col-md-10 col-lg-6 col-xl-6 col-xxl-6 pe-xxl-5">
               {/* Start Title */}
-              <h1 className="hero-header_title display-2 fw-bold text-capitalize">We help people <span className="underline position-relative text-primary">Find</span> Their Dream Property.</h1>
+              <h1 className="hero-header_title display-2 fw-bold text-capitalize">
+                We help people{" "}
+                <span className="underline position-relative text-primary">
+                  Find
+                </span>{" "}
+                Their Dream Property.
+              </h1>
               {/* /.End Title */}
               {/* Start Text */}
               <p className="fs-18 mb-5">
-                It is a long established fact that a reader will be distracted by
-                the readable content of a page when looking at its layout. The point
-                of using Lorem Ipsum is that it has a more-or-less normal
+                It is a long established fact that a reader will be distracted
+                by the readable content of a page when looking at its layout.
+                The point of using Lorem Ipsum is that it has a more-or-less
+                normal
               </p>
               {/* /.End Text */}
               {/* Start Main Search Content */}
@@ -27,7 +34,10 @@ export default function HomeThree() {
               {/* /.End Main Search Content */}
               <h6 className="mt-5">
                 Are you a agent?
-                <Link className="btn btn-outline-danger btn-sm ms-2 py-1" href="">
+                <Link
+                  className="btn btn-outline-danger btn-sm ms-2 py-1"
+                  href=""
+                >
                   Join as a agent
                 </Link>
               </h6>
@@ -84,22 +94,30 @@ export default function HomeThree() {
           <div className="row">
             <div className="col-md-10 offset-md-1">
               {/* Start Section Header Title */}
-              <div className="section-header text-center mb-5" data-aos="fade-down">
+              <div
+                className="section-header text-center mb-5"
+                data-aos="fade-down"
+              >
                 {/* Start Subtitle */}
                 <div className="bg-soft-primary d-inline-block fw-medium mb-3 rounded-pill section-header__subtitle text-capitalize text-primary">
                   Best Way
                 </div>
                 {/* /. End Subtitle */}
                 {/* Start Section Header title */}
-                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Find your <span className="underline position-relative text-primary">dream home</span>the best way</h2>
+                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                  Find your{" "}
+                  <span className="underline position-relative text-primary">
+                    dream home
+                  </span>
+                  the best way
+                </h2>
                 {/* /.End Section Header Title */}
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
-
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -211,16 +229,20 @@ export default function HomeThree() {
                 {/* /. End Subtitle */}
                 {/* Start Section Header title */}
 
-                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Featured <span className="underline position-relative text-primary">Properties</span></h2>
+                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                  Featured{" "}
+                  <span className="underline position-relative text-primary">
+                    Properties
+                  </span>
+                </h2>
 
                 {/* /.End Section Header Title */}
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
-
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -257,7 +279,9 @@ export default function HomeThree() {
                     <div> /night</div>
                   </div>
                   {/* /. End Card Property Price */}
-                  <h4 className="property-card-title mb-3">Koh Samui, Thailand</h4>
+                  <h4 className="property-card-title mb-3">
+                    Koh Samui, Thailand
+                  </h4>
                   <div className="card-property-description mb-3">
                     37 Ambleside Gardens, Ilford, IG4
                   </div>
@@ -483,7 +507,9 @@ export default function HomeThree() {
                     <div> /night</div>
                   </div>
                   {/* /. End Card Property Price */}
-                  <h4 className="property-card-title mb-3">Koh Samui, Thailand</h4>
+                  <h4 className="property-card-title mb-3">
+                    Koh Samui, Thailand
+                  </h4>
                   <div className="card-property-description mb-3">
                     37 Ambleside Gardens, Ilford, IG4
                   </div>
@@ -697,8 +723,8 @@ export default function HomeThree() {
       </div>
       {/* /.End Featured Properties Section */}
       {/* About And Counter Section */}
-   {/* About And Counter Section */}
-   <div className="container-fluid p-0">
+      {/* About And Counter Section */}
+      <div className="container-fluid p-0">
         <div className="row g-0">
           <div
             className="col-xl-4 d-xl-flex align-items-xl-center bg-primary px-3 py-5 px-sm-5 px-md-3 px-xxl-5 counter-content__two background-image"
@@ -709,9 +735,13 @@ export default function HomeThree() {
                 <i className="fa-igloo fa-solid display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
                   <strong className="counter">
-                     <ReusableCountUp separator=""
-                            decimals={""}
-                            decimal="" start={0} end={3000} /> 
+                    <ReusableCountUp
+                      separator=""
+                      decimals={""}
+                      decimal=""
+                      start={0}
+                      end={3000}
+                    />
                   </strong>
                   <small> +</small>
                 </p>
@@ -720,10 +750,15 @@ export default function HomeThree() {
               <div className="col-6 col-md-3 col-xl-6 p-3 p-sm-4 p-md-3 p-xxl-5">
                 <i className="fa-solid fa-user-group display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
-                  <strong className="counter"><ReusableCountUp separator=""
-                            decimals={""}
-                            decimal="" start={0} end={2500} />
-                            </strong>
+                  <strong className="counter">
+                    <ReusableCountUp
+                      separator=""
+                      decimals={""}
+                      decimal=""
+                      start={0}
+                      end={2500}
+                    />
+                  </strong>
                   <small> +</small>
                 </p>
                 <p className="fw-semibold mb-0 text-white">Satisfied Clients</p>
@@ -732,9 +767,17 @@ export default function HomeThree() {
                 <i className="fa-solid fa-sack-dollar display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
                   <strong>
-                  $ <span className="counter"><ReusableCountUp separator=""
-                              decimals={1}
-                              decimal="." start={0.0} end={6.8} /></span>B
+                    ${" "}
+                    <span className="counter">
+                      <ReusableCountUp
+                        separator=""
+                        decimals={1}
+                        decimal="."
+                        start={0.0}
+                        end={6.8}
+                      />
+                    </span>
+                    B
                   </strong>
                   <small> +</small>
                 </p>
@@ -745,17 +788,25 @@ export default function HomeThree() {
               <div className="col-6 col-md-3 col-xl-6 p-3 p-sm-4 p-md-3 p-xxl-5">
                 <i className="fa-solid fa-user-tie display-4 mb-3 text-white fw-black" />
                 <p className="fs-1 text-white mb-0">
-                  <strong className="counter">  <strong className="counter"><ReusableCountUp separator=""
-                            decimals={""}
-                            decimal="" start={0} end={593} />
-                          </strong></strong>
+                  <strong className="counter">
+                    {" "}
+                    <strong className="counter">
+                      <ReusableCountUp
+                        separator=""
+                        decimals={""}
+                        decimal=""
+                        start={0}
+                        end={593}
+                      />
+                    </strong>
+                  </strong>
                   <small> +</small>
                 </p>
                 <p className="fw-semibold mb-0 text-white">Total Agents</p>
               </div>
             </div>
           </div>
-          <VideoContainer/>
+          <VideoContainer />
         </div>
       </div>
       {/* /. About And Counter Section */}
@@ -766,22 +817,30 @@ export default function HomeThree() {
           <div className="row">
             <div className="col-md-10 offset-md-1">
               {/* Start Section Header Title */}
-              <div className="section-header text-center mb-5" data-aos="fade-down">
+              <div
+                className="section-header text-center mb-5"
+                data-aos="fade-down"
+              >
                 {/* Start Subtitle */}
                 <div className="bg-soft-primary d-inline-block fw-medium mb-3 rounded-pill section-header__subtitle text-capitalize text-primary">
                   Top Regions
                 </div>
                 {/* /. End Subtitle */}
                 {/* Start Section Header title */}
-                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Explore unique <span className="underline position-relative text-primary">properties</span> in top regions</h2>
+                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                  Explore unique{" "}
+                  <span className="underline position-relative text-primary">
+                    properties
+                  </span>{" "}
+                  in top regions
+                </h2>
                 {/* /.End Section Header Title */}
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
-
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -799,7 +858,6 @@ export default function HomeThree() {
               >
                 {/* Start image Container */}
                 <div className="img-container overflow-hidden position-relative rounded-3 shadow">
-
                   <img
                     src="assets/img/regions/01.jpg"
                     className="w-100"
@@ -833,9 +891,7 @@ export default function HomeThree() {
                             transform="translate(-714.000000, -120.000000)"
                             fill="#000000"
                           >
-                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z">
-
-                            </path>
+                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z"></path>
                           </g>
                         </g>
                       </svg>
@@ -855,7 +911,6 @@ export default function HomeThree() {
               >
                 {/* Start image Container */}
                 <div className="img-container overflow-hidden position-relative rounded-3 shadow">
-
                   <img
                     src="assets/img/regions/02.jpg"
                     className="w-100"
@@ -889,9 +944,7 @@ export default function HomeThree() {
                             transform="translate(-714.000000, -120.000000)"
                             fill="#000000"
                           >
-                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z">
-
-                            </path>
+                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z"></path>
                           </g>
                         </g>
                       </svg>
@@ -911,7 +964,6 @@ export default function HomeThree() {
               >
                 {/* Start image Container */}
                 <div className="img-container overflow-hidden position-relative rounded-3 shadow">
-
                   <img
                     src="assets/img/regions/03.jpg"
                     className="w-100"
@@ -945,9 +997,7 @@ export default function HomeThree() {
                             transform="translate(-714.000000, -120.000000)"
                             fill="#000000"
                           >
-                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z">
-
-                            </path>
+                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z"></path>
                           </g>
                         </g>
                       </svg>
@@ -967,7 +1017,6 @@ export default function HomeThree() {
               >
                 {/* Start image Container */}
                 <div className="img-container overflow-hidden position-relative rounded-3 shadow">
-
                   <img
                     src="assets/img/regions/04.jpg"
                     className="w-100"
@@ -1001,9 +1050,7 @@ export default function HomeThree() {
                             transform="translate(-714.000000, -120.000000)"
                             fill="#000000"
                           >
-                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z">
-
-                            </path>
+                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z"></path>
                           </g>
                         </g>
                       </svg>
@@ -1023,7 +1070,6 @@ export default function HomeThree() {
               >
                 {/* Start image Container */}
                 <div className="img-container overflow-hidden position-relative rounded-3 shadow">
-
                   <img
                     src="assets/img/regions/05.jpg"
                     className="w-100"
@@ -1057,9 +1103,7 @@ export default function HomeThree() {
                             transform="translate(-714.000000, -120.000000)"
                             fill="#000000"
                           >
-                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z">
-
-                            </path>
+                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z"></path>
                           </g>
                         </g>
                       </svg>
@@ -1079,7 +1123,6 @@ export default function HomeThree() {
               >
                 {/* Start image Container */}
                 <div className="img-container overflow-hidden position-relative rounded-3 shadow">
-
                   <img
                     src="assets/img/regions/06.jpg"
                     className="w-100"
@@ -1113,9 +1156,7 @@ export default function HomeThree() {
                             transform="translate(-714.000000, -120.000000)"
                             fill="#000000"
                           >
-                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z">
-
-                            </path>
+                            <path d="M737.608907,124.700519 L734.322602,121.414214 L735.736815,120 L739.990251,124.253436 L740.001047,124.242641 L741.41526,125.656854 L741.404465,125.66765 L741.41526,125.678445 L740.001047,127.092659 L739.990251,127.081863 L735.736815,131.3353 L734.322602,129.921086 L737.543169,126.700519 L714,126.700519 L714,124.700519 L737.608907,124.700519 Z"></path>
                           </g>
                         </g>
                       </svg>
@@ -1154,15 +1195,20 @@ export default function HomeThree() {
                 </div>
                 {/* /. End Subtitle */}
                 {/* Start Section Header title */}
-                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">Browse Our Latest <span className="underline position-relative text-primary">Articles</span> & News</h2>
+                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                  Browse Our Latest{" "}
+                  <span className="underline position-relative text-primary">
+                    Articles
+                  </span>{" "}
+                  & News
+                </h2>
                 {/* /.End Section Header Title */}
                 {/* Start Section Header Sub Title */}
                 <div className="sub-title fs-16">
-
-                  It is a long established fact that a reader will be distracted by
-                  the
-                  <br className="d-none d-lg-block" /> readable content of a page
-                  when looking at its layout.
+                  It is a long established fact that a reader will be distracted
+                  by the
+                  <br className="d-none d-lg-block" /> readable content of a
+                  page when looking at its layout.
                 </div>
                 {/* /.End Section Header Sub Title */}
               </div>
@@ -1194,8 +1240,8 @@ export default function HomeThree() {
                     <div className="bottom-0 left-0 p-3 p-sm-4 position-absolute post-block w-100 z-1">
                       <h3 className="fw-semibold mb-3 post-title_hover ">
                         <Link href="blog-details">
-                          Eu Feugiat Pretium Nibh Ipsum Consequat Nisl Vel Pretium
-                          Lectus
+                          Eu Feugiat Pretium Nibh Ipsum Consequat Nisl Vel
+                          Pretium Lectus
                         </Link>
                       </h3>
                       {/* /.End Meta Info */}
@@ -1219,8 +1265,8 @@ export default function HomeThree() {
                     <div className="bottom-0 left-0 p-3 p-sm-4 position-absolute post-block w-100 z-1">
                       <h3 className="fw-semibold mb-3 post-title_hover ">
                         <Link href="blog-details">
-                          Ullamcorper A Lacus Vestibulum Sed Arcu Non Odio Euismod
-                          Lacinia
+                          Ullamcorper A Lacus Vestibulum Sed Arcu Non Odio
+                          Euismod Lacinia
                         </Link>
                       </h3>
                       {/* Start Meta Info */}
@@ -1264,8 +1310,8 @@ export default function HomeThree() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          eu feugiat pretium nibh ipsum consequat nisl vel pretium
-                          lectus
+                          eu feugiat pretium nibh ipsum consequat nisl vel
+                          pretium lectus
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1293,7 +1339,6 @@ export default function HomeThree() {
                         href="blog-details"
                         className="thumb position-relative d-block overflow-hidden position-relative rounded"
                       >
-
                         <img
                           src="assets/img/blog/02-sm.jpg"
                           alt=""
@@ -1307,8 +1352,8 @@ export default function HomeThree() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          ut faucibus pulvinar elementum integer enim neque volutpat
-                          ac tincidunt?
+                          ut faucibus pulvinar elementum integer enim neque
+                          volutpat ac tincidunt?
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1336,7 +1381,6 @@ export default function HomeThree() {
                         href="blog-details"
                         className="thumb position-relative d-block overflow-hidden position-relative rounded"
                       >
-
                         <img
                           src="assets/img/blog/03-sm.jpg"
                           alt=""
@@ -1350,8 +1394,8 @@ export default function HomeThree() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          fames ac turpis egestas integer eget aliquet nibh praesent
-                          tristique
+                          fames ac turpis egestas integer eget aliquet nibh
+                          praesent tristique
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1379,7 +1423,6 @@ export default function HomeThree() {
                         href="blog-details"
                         className="thumb position-relative d-block overflow-hidden position-relative rounded"
                       >
-
                         <img
                           src="assets/img/blog/04-sm.jpg"
                           alt=""
@@ -1393,8 +1436,8 @@ export default function HomeThree() {
                       {/* Start Title */}
                       <h3 className="news-title fs-17 mb-2 overflow-hidden text-capitalize">
                         <Link href="blog-details">
-                          ullamcorper a lacus vestibulum sed arcu non odio euismod
-                          lacinia
+                          ullamcorper a lacus vestibulum sed arcu non odio
+                          euismod lacinia
                         </Link>
                       </h3>
                       {/* /.End Title */}
@@ -1417,8 +1460,6 @@ export default function HomeThree() {
         </div>
       </div>
       {/* /. End Blog Section */}
-
-
     </Layout>
   );
 }

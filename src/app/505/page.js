@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 
 export default function ErrorPageTwo() {
@@ -49,9 +49,9 @@ export default function ErrorPageTwo() {
                     Internal server error.
                   </h2>
                   <p className="fs-16">
-                    The server encountered something unexpected that didn't allow it
-                    to complete the request. We apologize. You can go back to main
-                    page:
+                    The server encountered something unexpected that didn't
+                    allow it to complete the request. We apologize. You can go
+                    back to main page:
                   </p>
                   {/* Start Button */}
                   <Link
@@ -72,6 +72,5 @@ export default function ErrorPageTwo() {
       </div>
       {/* /. End Main Content */}
     </Layout>
-
   );
 }

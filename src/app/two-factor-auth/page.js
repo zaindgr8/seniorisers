@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "../../components/Layout";
 import Link from "next/link";
 
 export default function TwoFactor() {
@@ -46,8 +46,18 @@ export default function TwoFactor() {
                   {/* /.End Illustration Image */}
                   {/* Start Header Text */}
                   <div className="text-center mb-4">
-                  <h3 className="fw-semibold">Two factor <span className="underline position-relative text-primary">authentication</span></h3>
-                  <p className="text-muted text-center mb-0">We have to send a code to <span className="fw-medium text-dark">example@gmail.com</span></p>
+                    <h3 className="fw-semibold">
+                      Two factor{" "}
+                      <span className="underline position-relative text-primary">
+                        authentication
+                      </span>
+                    </h3>
+                    <p className="text-muted text-center mb-0">
+                      We have to send a code to{" "}
+                      <span className="fw-medium text-dark">
+                        example@gmail.com
+                      </span>
+                    </p>
                   </div>
                   {/* /.End Header Text */}
                   <p className="mb-2 text-start">
@@ -88,7 +98,10 @@ export default function TwoFactor() {
                     </Link>
                   </div>
                   {/* Start Button */}
-                  <button type="submit" className="btn btn-primary btn-lg w-100">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg w-100"
+                  >
                     Verify and Process
                   </button>
                   {/* /.End Button */}
@@ -99,7 +112,6 @@ export default function TwoFactor() {
         </div>
       </div>
       {/* /. End Main Content */}
-
     </Layout>
   );
 }

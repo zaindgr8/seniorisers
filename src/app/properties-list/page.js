@@ -1,8 +1,7 @@
-import Layout from "@/components/Layout";
-import Dropdown from "@/components/form-control-two";
-import GooglePropertyMapsComponent from "@/components/property-map";
+import Layout from "../../components/Layout";
+import Dropdown from "../../components/form-control-two";
+import GooglePropertyMapsComponent from "../../components/property-map";
 import Link from "next/link";
-
 
 export default function PropertyList() {
   return (
@@ -20,7 +19,10 @@ export default function PropertyList() {
                 <div className="border-start col-auto">
                   <ol className="align-items-center breadcrumb fw-medium mb-0">
                     <li className="breadcrumb-item d-flex align-items-center">
-                      <Link href="/property-details" className="text-decoration-none">
+                      <Link
+                        href="/property-details"
+                        className="text-decoration-none"
+                      >
                         <i className="fa-solid fa-house-chimney-crack fs-18" />
                       </Link>
                     </li>
