@@ -1,5 +1,5 @@
-import Layout from "@/components/Layout";
-import AgentGridData from "@/components/agent-grid";
+import Layout from "../../components/Layout";
+import AgentGridData from "../../components/agent-grid";
 import Link from "next/link";
 
 export default async function AgentGrid() {

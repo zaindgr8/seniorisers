@@ -1,6 +1,6 @@
-import Layout from "@/components/Layout";
-import PopUpImageGallery from "@/components/magnific-pop-up-gallery";
-import PropertySticky from "@/components/property-sticky";
+import Layout from "../../components/Layout";
+import PopUpImageGallery from "../../components/magnific-pop-up-gallery";
+import PropertySticky from "../../components/property-sticky";
 import Link from "next/link";
 
 export default function PropertyDetails() {
@@ -42,7 +42,8 @@ export default function PropertyDetails() {
                     className="breadcrumb-item d-flex align-items-center active"
                     aria-current="page"
                   >
-Service Provider                  </li>
+                    Service Provider{" "}
+                  </li>
                 </ol>
               </div>
             </div>
@@ -64,13 +65,13 @@ Service Provider                  </li>
                 <div className="section-header text-center mb-5">
                   {/* Start Section Header title */}
                   <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
-                    More available
-                    in the same area{" "}
+                    More available in the same area{" "}
                   </h2>
                   {/* /.End Section Header Title */}
                   {/* Start Section Header Sub Title */}
                   <div className="sub-title fs-16">
-                  Explore more agents in your area expert service providers they are.
+                    Explore more agents in your area expert service providers
+                    they are.
                   </div>
                   {/* /.End Section Header Sub Title */}
                 </div>
@@ -91,12 +92,11 @@ Service Provider                  </li>
                       alt=""
                       className="img-fluid"
                     />
-                   
                   </div>
                   {/* /. End Property Image */}
                   <div className="card-property-content-wrap d-flex flex-column h-100 position-relative p-4">
                     {/* Start Card Property Price */}
-                   
+
                     {/* /. End Card Property Price */}
                     <h4 className="property-card-title mb-3">
                       Koh Samui, Thailand
@@ -105,7 +105,7 @@ Service Provider                  </li>
                       37 Ambleside Gardens, Ilford, IG4
                     </div>
                     {/* Start Card Property Facilities */}
-                 
+
                     {/* /. End Card Property Facilities */}
                   </div>
                 </div>
@@ -124,15 +124,11 @@ Service Provider                  </li>
                       alt=""
                       className="img-fluid"
                     />
-                   
                   </div>
                   {/* /. End Property Image */}
                   <div className="card-property-content-wrap d-flex flex-column h-100 position-relative p-4">
                     {/* Start Card Property Price */}
-                    <div className="align-items-end card-property-price d-flex flex-row mb-1 gap-1">
-                 
-                     
-                    </div>
+                    <div className="align-items-end card-property-price d-flex flex-row mb-1 gap-1"></div>
                     {/* /. End Card Property Price */}
                     <h4 className="property-card-title mb-3">
                       Belle Mare, Mauritius
@@ -141,7 +137,7 @@ Service Provider                  </li>
                       37 Ambleside Gardens, Ilford, IG4
                     </div>
                     {/* Start Card Property Facilities */}
-                 
+
                     {/* /. End Card Property Facilities */}
                   </div>
                 </div>
@@ -167,7 +163,7 @@ Service Provider                  </li>
                   {/* /. End Property Image */}
                   <div className="card-property-content-wrap d-flex flex-column h-100 position-relative p-4">
                     {/* Start Card Property Price */}
-                   
+
                     {/* /. End Card Property Price */}
                     <h4 className="property-card-title mb-3">
                       Balian Beach, Indonesia
@@ -176,7 +172,7 @@ Service Provider                  </li>
                       37 Ambleside Gardens, Ilford, IG4
                     </div>
                     {/* Start Card Property Facilities */}
-                    
+
                     {/* /. End Card Property Facilities */}
                   </div>
                 </div>
@@ -195,12 +191,11 @@ Service Provider                  </li>
                       alt=""
                       className="img-fluid"
                     />
-                    
                   </div>
                   {/* /. End Property Image */}
                   <div className="card-property-content-wrap d-flex flex-column h-100 position-relative p-4">
                     {/* Start Card Property Price */}
-                    
+
                     {/* /. End Card Property Price */}
                     <h4 className="property-card-title mb-3">
                       Pantai Nyanyi, Indonesia
@@ -209,7 +204,7 @@ Service Provider                  </li>
                       37 Ambleside Gardens, Ilford, IG4
                     </div>
                     {/* Start Card Property Facilities */}
-                
+
                     {/* /. End Card Property Facilities */}
                   </div>
                 </div>

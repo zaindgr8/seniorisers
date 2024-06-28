@@ -1,13 +1,12 @@
-
-import Header from "@/components/Header";
-import Carousel from "@/components/corousel";
-import FeaturesProperties from "@/components/feature-properties";
-import FooterWhite from "@/components/footer-white";
-import Dropdown from "@/components/form-control-two";
+import Header from "../components/Header";
+import Carousel from "../components/corousel";
+import FeaturesProperties from "../components/feature-properties";
+import FooterWhite from "../components/footer-white";
+import Dropdown from "../components/form-control-two";
 import img1 from "../../public/assets/img/senior1.jpeg";
 import img2 from "../../public/assets/img/senior2.jpeg";
 import img3 from "../../public/assets/img/senior3.jpeg";
-import Slideshow from "@/components/slideshow";
+import Slideshow from "../components/slideshow";
 import Link from "next/link";
 
 export default function HomeTwo() {
@@ -93,7 +92,11 @@ export default function HomeTwo() {
                 <div className="avatar rounded-circle p-1 border border-primary">
                   {/* Start Avatar Image */}
                   <Link href="">
-                    <img src="assets/my_imgs/agent.jpg" alt="" className="avatar-img rounded-circle" />
+                    <img
+                      src="assets/my_imgs/agent.jpg"
+                      alt=""
+                      className="avatar-img rounded-circle"
+                    />
                     {/* <BsPersonBoundingBox className="avatar-img rounded-circle" /> */}
                   </Link>
                   {/* /.End Avatar Image */}
@@ -162,7 +165,7 @@ export default function HomeTwo() {
       </div>
       {/* /. End Articles Section */}
       {/* Start Newslatter */}
-      <div className="bg-primary newslatter position-relative py-5 mx-3 mx-xl-5 rounded-4 position-relative overflow-hidden">
+      <div className=" bg-primary newslatter position-relative py-5 mx-3 mx-xl-5 rounded-4 position-relative overflow-hidden">
         <div className="container p-4 position-relative z-1">
           <div className="row">
             <div className="col-md-10 offset-md-1">
@@ -250,5 +253,3 @@ export default function HomeTwo() {
     </>
   );
 }
-
-
