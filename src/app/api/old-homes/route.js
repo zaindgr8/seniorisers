@@ -26,3 +26,13 @@ export async function POST(req) {
     }
   }
 }
+
+export async function GET(req) {
+  try {
+    await dbConnect();
+    const houses = await House.find({});
+    return NextResponse.json(houses);
+  } catch (error) {
+    return NextResponse.json({ msg: "Unable to fetch house data.", error });
+  }
+}

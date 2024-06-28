@@ -26,3 +26,13 @@ export async function POST(req) {
     }
   }
 }
+
+export async function GET(req) {
+  try {
+    await dbConnect();
+    const agents = await Agents.find({});
+    return NextResponse.json(agents);
+  } catch (error) {
+    return NextResponse.json({ msg: "Unable to fetch agent data.", error });
+  }
+}
