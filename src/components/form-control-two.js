@@ -1,61 +1,71 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import Link from 'next/link';
-import {Building} from "lucide"
 
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
 });
+
 function Dropdown() {
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState(null);
+  const [companyName, setCompanyName] = useState("");
+  const [houses, setHouses] = useState([]);
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`/api/old-homes?search=${companyName}`);
+      const data = await response.json();
+      setHouses(data);
+    } catch (error) {
+      console.error("Error fetching house data:", error);
+    }
+  };
+
   const options = [
     { value: "1234", label: "1234" },
     { value: "5678", label: "5678" },
     { value: "9090", label: "9090" },
-  ]
+  ];
   const optionsTwo = [
     { value: "Las Vegas", label: "Las Vegas" },
     { value: "NewYork", label: "NewYork" },
     { value: "Washington", label: "Washington" },
-  ]
+  ];
   const optionsThree = [
     { value: "Texas", label: "Texas" },
     { value: "California", label: "California" },
-  ]
+  ];
   const customSelectStyle = {
     control: (provided) => ({
       ...provided,
-      // Adjust the padding as needed
-      minHeight: '68px', // Add min-height
-      borderRadius: '0.5rem', // Add border-radius
-      border: '0', // Add border
-      boxShadow: '0px 0px 40px rgba(29, 58, 83, 0.1)', // Add box-shadow
+      minHeight: "68px",
+      borderRadius: "0.5rem",
+      border: "0",
+      boxShadow: "0px 0px 40px rgba(29, 58, 83, 0.1)",
     }),
     valueContainer: (provided) => ({
       ...provided,
-      paddingLeft: '2.25rem', // Add padding-left
+      paddingLeft: "2.25rem",
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? '#0a73c0' : 'white', // Change the background color when an option is selected
-      color: state.isSelected ? 'white' : 'black', // Change the text color when an option is selected
+      backgroundColor: state.isSelected ? "#0a73c0" : "white",
+      color: state.isSelected ? "white" : "black",
     }),
     indicatorSeparator: (provided) => ({
       ...provided,
-      display: 'none', // Hide the indicator separator
+      display: "none",
     }),
   };
+
   return (
-    // Start form
-    <form className="row g-2 main-search">
+    <form className="row g-2 main-search" onSubmit={(e) => e.preventDefault()}>
       <div className="col-md-7 mb-[20vh]">
-        {/* Start Select Field */}
-        <div className='row g-2'>
+        <div className="row g-2">
           <div className="col-md-4">
             <div className="search-select ">
               <Select
-                id='test'
+                id="test"
                 options={options}
                 defaultValue={value}
                 onChange={setValue}
@@ -63,7 +73,6 @@ function Dropdown() {
                 placeholder="ZIP"
                 styles={customSelectStyle}
               />
-              {/* <i className="fa-solid fa-location-crosshairs search-icon" /> */}
             </div>
           </div>
           <div className="col-md-4">
@@ -76,7 +85,6 @@ function Dropdown() {
                 styles={customSelectStyle}
                 placeholder="City"
               />
-              {/* <i className="fa-solid fa-user fs-17 search-icon"></i> */}
             </div>
           </div>
           <div className="col-md-4">
@@ -89,33 +97,41 @@ function Dropdown() {
                 styles={customSelectStyle}
                 placeholder="State"
               />
-              {/* <i className="fa-solid fa-building fs-18 search-icon"></i> */}
-
             </div>
           </div>
         </div>
-        {/* End Select Field */}
       </div>
       <div className="col-md-5">
-        {/* Start Search Input */}
         <div className="search-input">
           <i className="fa-solid fa-magnifying-glass search-icon" />
           <input
             type="text"
             className="form-control"
             placeholder="Business Name"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
           />
-          <Link
-            href="properties-list"
+          <button
             className="btn btn-primary search-btn position-absolute top-50"
+            onClick={handleSearch}
           >
             <i className="fa-solid fa-angle-right" />
-          </Link>
+          </button>
         </div>
-        {/* /.End Search Input */}
+      </div>
+      {/* Display fetched houses */}
+      <div className="col-md-12">
+        {houses.map((house) => (
+          <div key={house._id}>
+            <h3>{house.CompanyName}</h3>
+            <p>{house.Address}</p>
+            <p>
+              {house.City}, {house.state} {house.Zip}
+            </p>
+          </div>
+        ))}
       </div>
     </form>
-    // End Form
   );
 }
 

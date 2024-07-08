@@ -4,27 +4,14 @@ import { useState } from "react";
 
 export default function HouseForm() {
   const initialFormData = {
-    title: "",
-    description: "",
-    address: "",
-    city: "",
+    Type: "",
+    DateAdded: "",
+    CompanyName: "",
+    Address: "",
+    City: "",
     state: "",
-    zipCode: "",
-    country: "",
-    propertyType: "",
-    bedrooms: 0,
-    bathrooms: 0,
-    squareFootage: 0,
-    lotSize: 0,
-    yearBuilt: 0,
-    price: 0.0,
-    currency: "",
-    sellerName: "",
-    sellerEmail: "",
-    sellerPhone: "",
-    parkingSpaces: 0,
-    videoUrl: "",
-    status: "",
+    Zip: "",
+    SellerEmail: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -91,17 +78,7 @@ export default function HouseForm() {
                         {field.charAt(0).toUpperCase() + field.slice(1)}
                       </label>
                       <input
-                        type={
-                          field === "price" ||
-                          field === "bedrooms" ||
-                          field === "bathrooms" ||
-                          field === "squareFootage" ||
-                          field === "lotSize" ||
-                          field === "yearBuilt" ||
-                          field === "parkingSpaces"
-                            ? "number"
-                            : "text"
-                        }
+                        type="text"
                         className="form-control bg-transparent"
                         name={field}
                         value={formData[field]}
@@ -119,7 +96,7 @@ export default function HouseForm() {
                   </button>
                 </div>
                 {success && (
-                  <div className="col-12 text-center  text-white text-success mt-3">
+                  <div className="col-12 text-center text-white text-success mt-3">
                     Property listed successfully!
                   </div>
                 )}

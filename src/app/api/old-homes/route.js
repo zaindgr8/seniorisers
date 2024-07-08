@@ -30,7 +30,12 @@ export async function POST(req) {
 export async function GET(req) {
   try {
     await dbConnect();
-    const houses = await House.find({});
+    const search = req.nextUrl.searchParams.get("search");
+    let query = {};
+    if (search) {
+      query.CompanyName = { $regex: search, $options: "i" }; // Case-insensitive search
+    }
+    const houses = await House.find(query);
     return NextResponse.json(houses);
   } catch (error) {
     return NextResponse.json({ msg: "Unable to fetch house data.", error });
