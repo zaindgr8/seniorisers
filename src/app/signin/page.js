@@ -1,14 +1,44 @@
 "use client";
 import Layout from "../../components/Layout";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // Correct import path
+import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SignIn() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+  const router = useRouter();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const [buttonDisabled, setButtonDisabled] = useState(false); // Correct usage of useState
+  const [loading, setLoading] = useState(false); // Correct usage of useState
+
+  const onLogin = async (e) => {
+    // Renamed function to onLogin and added event parameter
+    e.preventDefault(); // Prevent form submission from reloading the page
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/login", user);
+      console.log("Login success", response.data);
+      router.push("/profile");
+    } catch (error) {
+      console.log("Login failed", error.message);
+      toast.error(error.response?.data?.error || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
-  const inputType = isPasswordVisible ? "text" : "password";
+
+  useEffect(() => {
+    if (user.email.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
+
   return (
     <Layout>
       {/* Start Main Content */}
@@ -79,38 +109,38 @@ export default function SignIn() {
                       <span className="fs-16 fw-bold px-3 text-dark">Or</span>
                       <hr className="flex-grow-1 m-0" />
                     </div>
-                    {/* /.End Divider */}
-                    <form className="register-form">
+                    <form className="register-form" onSubmit={onLogin}>
                       {/* Start Form Group */}
                       <div className="form-group mb-4">
                         <label className="required">Enter Email</label>
                         <input
+                          id="email"
                           type="email"
+                          placeholder="Email"
+                          value={user.email}
+                          onChange={(e) =>
+                            setUser({ ...user, email: e.target.value })
+                          }
                           className="form-control is-invalid"
                           required
                         />
-                        <div className="invalid-feedback text-start">
-                          Enter your valid email
-                        </div>
                       </div>
                       {/* /.End Form Group */}
                       {/* Start Form Group */}
                       <div className="form-group mb-4">
                         <label className="required">Password</label>
                         <input
+                          type="password"
                           id="password"
-                          type={inputType}
+                          name="password"
+                          placeholder="password"
+                          value={user.password}
+                          onChange={(e) =>
+                            setUser({ ...user, password: e.target.value })
+                          }
                           className="form-control password"
-                          autoComplete="off"
+                          required
                         />
-                        <i
-                          className={`toggle-password ${
-                            isPasswordVisible
-                              ? "fa-regular fa-eye"
-                              : "fa-regular fa-eye-slash"
-                          }`}
-                          onClick={togglePasswordVisibility}
-                        ></i>
                       </div>
                       {/* /.End Form Group */}
                       {/* Start Checkbox */}
@@ -133,8 +163,9 @@ export default function SignIn() {
                       <button
                         type="submit"
                         className="btn btn-primary btn-lg w-100"
+                        disabled={buttonDisabled}
                       >
-                        Sign in
+                        {loading ? "Signing in..." : "Sign in"}
                       </button>
                       {/* /.End Button */}
                     </form>
