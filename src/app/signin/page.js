@@ -22,7 +22,7 @@ export default function SignIn() {
       setLoading(true);
       const response = await axios.post("/api/login", user);
       console.log("Login success", response.data);
-      router.push("/profile");
+      router.push("/admin");
     } catch (error) {
       console.log("Login failed", error.message);
       toast.error(error.response?.data?.error || "Login failed");
