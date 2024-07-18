@@ -1,4 +1,4 @@
-import dbConnect from "../../../utils/dbConnect";
+import { connect } from "../../../utils/dbConnect";
 import Agents from "../../../models/Agents";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
@@ -7,7 +7,7 @@ export async function POST(req) {
   const agentsData = await req.json();
 
   try {
-    await dbConnect();
+    await connect();
     await Agents.create(agentsData);
 
     return NextResponse.json({

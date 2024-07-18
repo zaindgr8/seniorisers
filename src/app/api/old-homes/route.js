@@ -1,4 +1,4 @@
-import dbConnect from "../../../utils/dbConnect";
+import { connect } from "../../../utils/dbConnect";
 import House from "../../../models/Old-Homes";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
@@ -7,7 +7,7 @@ export async function POST(req) {
   const houseData = await req.json();
 
   try {
-    await dbConnect();
+    await connect();
     await House.create(houseData);
 
     return NextResponse.json({

@@ -1,14 +1,44 @@
+"use client";
 import Layout from "../../components/Layout";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
-export default function ForgotPassword() {
+const Page = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      setError("Please enter your email");
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/forgot_password", { email });
+      if (response.status === 200) {
+        setMessage(response.data.message);
+        setError("");
+        setEmail("");
+      }
+    } catch (error) {
+      setMessage("");
+      setError(error.response?.data?.error || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Layout>
-      {/* Start Main Content */}
       <div className="main-content">
         <div className="border-bottom py-3">
           <div className="container">
-            {/* Start Breadcrumbs */}
             <div className="row gy-2 gx-4 gx-md-5">
               <h4 className="col-auto fs-18 fw-semibold mb-0 page-title text-capitalize">
                 Forgot Password
@@ -29,7 +59,6 @@ export default function ForgotPassword() {
                 </ol>
               </div>
             </div>
-            {/* End Breadcrumbs */}
           </div>
         </div>
         <div className="py-5">
@@ -37,14 +66,11 @@ export default function ForgotPassword() {
             <div className="row justify-content-center">
               <div className="col-sm-8 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
                 <div className="p-4 p-sm-5 rounded-4 shadow bg-white">
-                  {/* Start Illustration Image */}
                   <img
-                    src="assets/img/png-img/forgot-password.png"
+                    src="/assets/img/png-img/forgot-password.png"
                     alt=""
                     className="img-fluid mb-4 w-75"
                   />
-                  {/* /.End Illustration Image */}
-                  {/* Start Header Text */}
                   <div className="text-center mb-4">
                     <h3 className="fw-semibold">
                       Password{" "}
@@ -57,43 +83,48 @@ export default function ForgotPassword() {
                       reset your password.
                     </p>
                   </div>
-                  {/* /.End Header Text */}
-                  <form className="register-form">
-                    {/* Start Form Group */}
+                  <form onSubmit={handleSubmit}>
                     <div className="form-group mb-4">
                       <label className="required">Enter Email</label>
-                      <input type="email" className="form-control" required />
+                      <input
+                        type="email"
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
                     </div>
-                    {/* /.End Form Group */}
-                    {/* Start Button */}
                     <button
                       type="submit"
                       className="btn btn-primary btn-lg w-100"
+                      disabled={loading}
                     >
-                      Reset password
+                      {loading ? "Sending..." : "Reset password"}
                     </button>
-                    {/* /.End Button */}
                   </form>
-                  {/* Start Bottom Text */}
+                  {message && (
+                    <div className="alert alert-success mt-3">{message}</div>
+                  )}
+                  {error && (
+                    <div className="alert alert-danger mt-3">{error}</div>
+                  )}
                   <div className="bottom-text text-center mt-3">
-                    {" "}
                     Remember your password?{" "}
                     <Link
-                      href="signin"
+                      href="/signin"
                       className="fw-medium text-decoration-underline"
                     >
                       Log in
-                    </Link>{" "}
+                    </Link>
                   </div>
-
-                  {/* /.End Bottom Text */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* /. End Main Content */}
     </Layout>
   );
-}
+};
+
+export default Page;
