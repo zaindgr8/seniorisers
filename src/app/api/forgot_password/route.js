@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { connect } from "../../../utils/dbConnect";
 import User from "../../../models/usermodule";
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { sendEmail } from "../../../utils/mailer";
 
 export async function POST(request) {
@@ -21,7 +21,7 @@ export async function POST(request) {
     }
     const token = await jwt.sign(
       { userId: user._id },
-      process.env.TOKEN_SECRET!,
+      process.env.TOKEN_SECRET,
       { expiresIn: "1d" }
     );
     const templateName = "password_reset_email_template.html";
@@ -35,7 +35,7 @@ export async function POST(request) {
     return NextResponse.json({
       message: "Password reset email sent successfully",
     });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
