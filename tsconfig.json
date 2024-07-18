@@ -23,7 +23,11 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/api/upload-csv/route.js"
+    "src/app/api/upload-csv/route.js",
+    "src/app/api/reset_password/route.js",
+    "src/app/api/logout/route.js",
+    "src/app/api/forgot_password/route.js",
+    "src/app/api/agents/route.js"
   ],
   "exclude": ["node_modules"]
 }
