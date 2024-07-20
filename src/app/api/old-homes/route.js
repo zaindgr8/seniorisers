@@ -29,7 +29,7 @@ export async function POST(req) {
 
 export async function GET(req) {
   try {
-    await dbConnect();
+    await connect();
     const search = req.nextUrl.searchParams.get("search");
     let query = {};
     if (search) {

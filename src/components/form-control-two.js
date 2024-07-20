@@ -120,16 +120,27 @@ function Dropdown() {
         </div>
       </div>
       {/* Display fetched houses */}
-      <div className="col-md-12">
-        {houses.map((house) => (
-          <div key={house._id}>
-            <h3>{house.CompanyName}</h3>
-            <p>{house.Address}</p>
-            <p>
-              {house.City}, {house.state} {house.Zip}
-            </p>
-          </div>
-        ))}
+      <div className="col-md-12 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.isArray(houses) && houses.length > 0 ? (
+          houses.map((house) => (
+            <div
+              key={house._id}
+              className="border rounded-lg shadow-lg p-4 bg-white"
+            >
+              <h3 className="text-xl font-bold text-gray-900">
+                {house.CompanyName}
+              </h3>
+              <p className="text-gray-700">{house.Address}</p>
+              <p className="text-gray-700">{house.City}</p>
+              <p className="text-gray-700">{house.state}</p>
+              <p className="text-gray-700">{house.Zip}</p>
+            </div>
+          ))
+        ) : (
+          <p className="col-span-full text-center text-gray-600">
+            No houses found.
+          </p>
+        )}
       </div>
     </form>
   );
