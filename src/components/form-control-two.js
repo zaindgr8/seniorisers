@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-
+import Link from "next/link";
 const Select = dynamic(() => import("react-select"), {
   ssr: false,
 });
@@ -59,7 +59,10 @@ function Dropdown() {
   };
 
   return (
-    <form className="row g-2 main-search" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="row mb-5 overflow-hidden g-2 main-search"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="col-md-7 mb-[20vh]">
         <div className="row g-2">
           <div className="col-md-4">
@@ -119,21 +122,62 @@ function Dropdown() {
           </button>
         </div>
       </div>
-      {/* Display fetched houses */}
-      <div className="col-md-12 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="col-md-12  mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
-            <div
-              key={house._id}
-              className="border rounded-lg shadow-lg p-4 bg-white"
-            >
-              <h3 className="text-xl font-bold text-gray-900">
-                {house.CompanyName}
-              </h3>
-              <p className="text-gray-700">{house.Address}</p>
-              <p className="text-gray-700">{house.City}</p>
-              <p className="text-gray-700">{house.state}</p>
-              <p className="text-gray-700">{house.Zip}</p>
+            // <div
+            //   key={house._id}
+            //   className="border rounded-lg shadow-lg p-4 bg-white"
+            // >
+            //   <h3 className="text-xl font-bold text-gray-900">
+            //     {house.CompanyName}
+            //   </h3>
+            //   <p className="text-gray-700">{house.Address}</p>
+            //   <p className="text-gray-700">{house.City}</p>
+            //   <p className="text-gray-700">{house.state}</p>
+            //   <p className="text-gray-700">{house.Zip}</p>
+            // </div>
+            <div className=" card mb-4   bg-grey border-0 shadow rounded-3">
+              <Link href="" className="card-link" />
+              <div className="card-body p-0">
+                <div className="g-0 row">
+                  <div className="bg-white col-lg-5 col-md-6 col-xl-5 position-relative">
+                    <div className="card-image-hover  position-relative h-100">
+                      <img
+                        src="assets/img/properties/02.jpg"
+                        alt=""
+                        className="h-100 w-100 object-fit-cover"
+                      />
+
+                      <div className="bg-primary card-property-badge d-inline-block end-1 fs-13 fw-semibold position-absolute property-tags px-2 py-1 rounded-3 text-white top-1">
+                        Community Center
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-white col-lg-7 col-md-6 col-xl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                    <div className="d-flex flex-column h-100">
+                      <div className="mb-4">
+                        <div className="d-flex align-items-end card-property-price flex-row gap-1 mb-2">
+                          <h2 className="m-0 fw-semibold text-primary"></h2>
+                          <div> </div>
+                        </div>
+
+                        <h6 className="fs-23 mb-2">{house.CompanyName}</h6>
+
+                        <div className="fs-16">
+                          <i className="fa-solid fa-location-dot" />
+                          <span>{house.Address}</span>
+                        </div>
+
+                        <div className="mt-3">
+                          Reach out to the community service center today and
+                          submit your application as a service provider.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           ))
         ) : (

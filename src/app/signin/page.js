@@ -12,17 +12,21 @@ export default function SignIn() {
     email: "",
     password: "",
   });
+  const [userType, setUserType] = useState(""); // Track user type
   const [buttonDisabled, setButtonDisabled] = useState(false); // Correct usage of useState
   const [loading, setLoading] = useState(false); // Correct usage of useState
 
   const onLogin = async (e) => {
-    // Renamed function to onLogin and added event parameter
     e.preventDefault(); // Prevent form submission from reloading the page
     try {
       setLoading(true);
       const response = await axios.post("/api/login", user);
       console.log("Login success", response.data);
-      router.push("/admin");
+      if (userType === "agent") {
+        router.push("/agent");
+      } else if (userType === "community member") {
+        router.push("/community");
+      }
     } catch (error) {
       console.log("Login failed", error.message);
       toast.error(error.response?.data?.error || "Login failed");
@@ -62,42 +66,6 @@ export default function SignIn() {
               <div className="col-sm-10 col-lg-10">
                 <div className="align-items-center g-4 row">
                   <div className="col-lg-6 col-xl-5 text-center">
-                    {/* Start Header Text */}
-                    <div className="text-center mb-4">
-                      <h3 className="fw-semibold">
-                        Sign into your{" "}
-                        <span className="underline position-relative text-primary">
-                          account!
-                        </span>
-                      </h3>
-                      <p className="text-muted text-center mb-0">
-                        Nice to see you! Please log in with your account.
-                      </p>
-                    </div>
-                    {/* /.End Header Text */}
-                    {/* Start Social Button Wrapper */}
-                    <div className="d-grid gap-3 mb-3">
-                      {/* Start Social login Button */}
-                      <Link
-                        className="align-items-center bg-grey btn btn-lg d-flex linkedin-btn position-relative text-start"
-                        href="#"
-                      >
-                        <img src="assets/img/linkdin.svg" alt="" />
-                        <span className="ms-3">Sign up with LinkedIn</span>
-                      </Link>
-                      {/* /.End Social login Button */}
-                      {/* Start Social login Button */}
-                      <Link
-                        className="bg-grey btn btn-lg google-btn d-flex align-items-center position-relative text-start"
-                        href="#"
-                      >
-                        <img src="assets/img/google.svg" alt="" />
-                        <span className="ms-3">Sign up with Google</span>
-                      </Link>
-                      {/* Start Social login Button */}
-                    </div>
-                    {/* /.End Social Button Wrapper */}
-                    {/* Start Text */}
                     <p>
                       We won't post anything without your permission and your
                       personal details are kept private
@@ -141,6 +109,25 @@ export default function SignIn() {
                           className="form-control password"
                           required
                         />
+                      </div>
+                      <div className="form-group mb-4">
+                        <label className="required">
+                          Are you a community member or an agent?
+                        </label>
+                        <select
+                          className="form-control"
+                          value={userType}
+                          onChange={(e) => setUserType(e.target.value)}
+                          required
+                        >
+                          <option value="" disabled>
+                            Select an option
+                          </option>
+                          <option value="community member">
+                            Community Member
+                          </option>
+                          <option value="agent">Agent</option>
+                        </select>
                       </div>
                       {/* /.End Form Group */}
                       {/* Start Checkbox */}

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 export default function AgentForm() {
@@ -15,6 +13,7 @@ export default function AgentForm() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [error, setError] = useState([]);
   const [success, setSuccess] = useState(false);
 
@@ -23,15 +22,22 @@ export default function AgentForm() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    setProfilePicture(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formDataToSubmit = new FormData();
+    for (const key in formData) {
+      formDataToSubmit.append(key, formData[key]);
+    }
+    formDataToSubmit.append("profilePicture", profilePicture);
+
     const res = await fetch("/api/agents", {
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
+      body: formDataToSubmit,
     });
 
     const { msg, success } = await res.json();
@@ -40,6 +46,7 @@ export default function AgentForm() {
 
     if (success) {
       setFormData(initialFormData);
+      setProfilePicture(null);
     }
   };
 
@@ -67,7 +74,7 @@ export default function AgentForm() {
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="row justify-content-center">
             <div className="col-lg-10 col-xl-8">
               <div className="row g-4 align-items-end newslatter-form">
@@ -77,13 +84,22 @@ export default function AgentForm() {
                       <label className="text-white bg-primary fw-semibold">
                         {field.charAt(0).toUpperCase() + field.slice(1)}
                       </label>
-                      <input
-                        type="text"
-                        className="form-control bg-transparent"
-                        name={field}
-                        value={formData[field]}
-                        onChange={handleChange}
-                      />
+                      {field === "profilePicture" ? (
+                        <input
+                          type="file"
+                          className="form-control bg-transparent"
+                          name={field}
+                          onChange={handleFileChange}
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          className="form-control bg-transparent"
+                          name={field}
+                          value={formData[field]}
+                          onChange={handleChange}
+                        />
+                      )}
                     </div>
                   </div>
                 ))}

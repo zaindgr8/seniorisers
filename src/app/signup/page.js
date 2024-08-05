@@ -13,6 +13,7 @@ export default function SignIn() {
     email: "",
     password: "",
     username: "",
+    userType: "", // new field
   });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,9 @@ export default function SignIn() {
   };
 
   useEffect(() => {
-    setButtonDisabled(!user.email || !user.password || !user.username);
+    setButtonDisabled(
+      !user.email || !user.password || !user.username || !user.userType
+    );
   }, [user]);
 
   const togglePasswordVisibility = () => {
@@ -42,7 +45,6 @@ export default function SignIn() {
 
   return (
     <Layout>
-      {/* Start Main Content */}
       <div className="main-content">
         <div className="border-bottom py-3">
           <div className="container">
@@ -61,33 +63,6 @@ export default function SignIn() {
               <div className="col-sm-10 col-lg-10">
                 <div className="align-items-center g-4 row">
                   <div className="col-lg-6 col-xl-5 text-center">
-                    <div className="text-center mb-4">
-                      <h3 className="fw-semibold">
-                        Sign into your{" "}
-                        <span className="underline position-relative text-primary">
-                          account!
-                        </span>
-                      </h3>
-                      <p className="text-muted text-center mb-0">
-                        Nice to see you! Please log in with your account.
-                      </p>
-                    </div>
-                    <div className="d-grid gap-3 mb-3">
-                      <Link
-                        className="align-items-center bg-grey btn btn-lg d-flex linkedin-btn position-relative text-start"
-                        href="#"
-                      >
-                        <img src="assets/img/linkdin.svg" alt="LinkedIn" />
-                        <span className="ms-3">Sign up with LinkedIn</span>
-                      </Link>
-                      <Link
-                        className="bg-grey btn btn-lg google-btn d-flex align-items-center position-relative text-start"
-                        href="#"
-                      >
-                        <img src="assets/img/google.svg" alt="Google" />
-                        <span className="ms-3">Sign up with Google</span>
-                      </Link>
-                    </div>
                     <p>
                       We won't post anything without your permission and your
                       personal details are kept private
@@ -144,6 +119,27 @@ export default function SignIn() {
                           onClick={togglePasswordVisibility}
                         ></i>
                       </div>
+                      <div className="form-group mb-4">
+                        <label className="required">
+                          Are you a community member or an agent?
+                        </label>
+                        <select
+                          className="form-control"
+                          required
+                          value={user.userType}
+                          onChange={(e) =>
+                            setUser({ ...user, userType: e.target.value })
+                          }
+                        >
+                          <option value="" disabled>
+                            Select an option
+                          </option>
+                          <option value="community member">
+                            Community Member
+                          </option>
+                          <option value="agent">Agent</option>
+                        </select>
+                      </div>
                       <div className="form-check mb-4 text-start">
                         <input
                           className="form-check-input"
@@ -196,7 +192,6 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-      {/* /. End Main Content */}
     </Layout>
   );
 }

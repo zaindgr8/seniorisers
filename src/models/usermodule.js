@@ -27,6 +27,14 @@ const userSchema = new mongoose.Schema({
   forgotPasswordTokenExpiry: Date,
   verifyToken: String,
   verifyTokenExpiry: Date,
+  userType: {
+    type: String,
+    required: [
+      true,
+      "Please specify if you are a community member or an agent",
+    ],
+    enum: ["community member", "agent"],
+  },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

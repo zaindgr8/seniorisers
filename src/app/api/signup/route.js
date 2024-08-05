@@ -1,18 +1,16 @@
 import { connect } from "../../../utils/dbConnect";
 import User from "../../../models/usermodule";
 import { NextResponse } from "next/server";
-import bcryptjs, { hash } from "bcryptjs";
+import bcryptjs from "bcryptjs";
 
 connect();
 
 export async function POST(request) {
   try {
     const reqBody = await request.json();
-    const { username, email, password } = reqBody;
+    const { username, email, password, userType } = reqBody;
 
-    console.log(reqBody);
-
-    //check if user already exists
+    // Check if user already exists
     const user = await User.findOne({ email });
 
     if (user) {
@@ -22,7 +20,7 @@ export async function POST(request) {
       );
     }
 
-    //hash password
+    // Hash password
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
@@ -30,12 +28,12 @@ export async function POST(request) {
       username,
       email,
       password: hashedPassword,
+      userType,
     });
 
     const savedUser = await newUser.save();
-    console.log(savedUser);
 
-    //send verification email
+    // Send verification email (this part is assumed and not shown)
 
     return NextResponse.json({
       message: "User created successfully",

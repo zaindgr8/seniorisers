@@ -11,7 +11,7 @@ export async function POST(req) {
     await Agents.create(agentsData);
 
     return NextResponse.json({
-      msg: [" Data submitted successfully"],
+      msg: ["Data submitted successfully"],
       success: true,
     });
   } catch (error) {
@@ -27,9 +27,9 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET() {
   try {
-    await dbConnect();
+    await connect();
     const agents = await Agents.find({});
     return NextResponse.json(agents);
   } catch (error) {
