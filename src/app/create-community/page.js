@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import CommunityType from "../community/Community-Type";
 export default function AgentFormInitial() {
   const [formData, setFormData] = useState({
     businessName: "",
@@ -13,13 +13,11 @@ export default function AgentFormInitial() {
   });
 
   const router = useRouter();
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     console.log(`Updated ${name}:`, value); // Log the updated value
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting data:", formData); // Confirm formData here
@@ -29,7 +27,7 @@ export default function AgentFormInitial() {
       toast.success("Data submitted successfully!");
 
       // Navigate to the second page
-      router.push("/agent-listing"); // Replace 'secondPage' with your actual route
+      router.push("/community-listing"); // Replace 'secondPage' with your actual route
     } catch (error) {
       console.error("Submission error:", error);
       const errorMsg =
@@ -41,19 +39,16 @@ export default function AgentFormInitial() {
   return (
     <>
       <Header />
-      <div className="bg-primary newslatter position-relative overflow-hidden">
+      <div className="newslatter position-relative overflow-hidden">
         <div className="container p-4 mt-10 position-relative z-1">
           <div className="row">
             <div className="col-md-10 offset-md-1">
-              <div
-                className="section-header text-center mb-5"
-                data-aos="fade-down"
-              >
-                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize text-white">
+              <div className=" text-center mb-5">
+                <h2 className="h1 fw-semibold mb-3    text-black">
                   Let's Get Started!
                 </h2>
-                <div className="sub-title fs-16 text-white">
-                  Please enter your business name, address, and type
+                <div className="sub-title fs-16   text-black">
+                  Please enter your Community name, address, and type
                 </div>
               </div>
             </div>
@@ -64,46 +59,35 @@ export default function AgentFormInitial() {
                 <div className="row g-4 align-items-end newslatter-form">
                   <div className="space-y-8">
                     <div className="form-group">
-                      <label className="text-white bg-primary fw-semibold">
-                        Business Name
+                      <label className="text-black bg-transparent fw-semibold">
+                        Community Name
                       </label>
                       <input
                         type="text"
-                        className="form-control bg-transparent"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         name="businessName"
                         value={formData.businessName}
                         onChange={handleChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label className="text-white bg-primary fw-semibold">
+                      <label className="bg-transparent text-black fw-semibold">
                         Address
                       </label>
                       <input
                         type="text"
-                        className="form-control bg-transparent"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
                       />
                     </div>
-                    <div className="form-group">
-                      <label className="text-white bg-primary fw-semibold">
-                        Business Type
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control bg-transparent"
-                        name="businessType"
-                        value={formData.businessType}
-                        onChange={handleChange}
-                      />
-                    </div>
                   </div>
+                  <CommunityType />
                   <div className="col-12 text-center">
                     <button
                       type="submit"
-                      className="btn text-white btn-lg btn-light"
+                      className="btn bg-gray-50 text-black btn-lg btn-light"
                     >
                       Continue
                     </button>

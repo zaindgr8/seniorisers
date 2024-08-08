@@ -3,37 +3,21 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useMemo } from "react";
 import classNames from "classnames";
-import {
-  ArticleIcon,
-  CollapsIcon,
-  HomeIcon,
-  UsersIcon,
-  VideosIcon,
-} from "../icons";
+import { ArticleIcon, HomeIcon } from "../../icons";
 
 const menuItems = [
-  { id: 1, label: "Home", icon: HomeIcon, link: "/" },
-  { id: 2, label: "Manage Posts", icon: ArticleIcon, link: "/posts" },
-  { id: 3, label: "Manage Users", icon: UsersIcon, link: "/users" },
-  { id: 4, label: "Manage Tutorials", icon: VideosIcon, link: "/tutorials" },
+  { id: 1, label: "Edit Listig", icon: HomeIcon, link: "/community-listing" },
+  { id: 2, label: "Connection", icon: ArticleIcon, link: "/Connection" },
 ];
 
 const Sidebar = () => {
   const [toggleCollapse, setToggleCollapse] = useState(false);
-  const [isCollapsible, setIsCollapsible] = useState(false);
 
   const router = useRouter();
 
   const activeMenu = useMemo(
     () => menuItems.find((menu) => menu.link === router.pathname),
     [router.pathname]
-  );
-
-  const collapseIconClasses = classNames(
-    "p-4 rounded bg-light-lighter absolute right-0",
-    {
-      "rotate-180": toggleCollapse,
-    }
   );
 
   const getNavItemClasses = (menu) => {
