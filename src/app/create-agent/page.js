@@ -41,7 +41,7 @@ export default function AgentFormInitial() {
   return (
     <>
       <Header />
-      <div className="bg-primary newslatter position-relative overflow-hidden">
+      <div className=" newslatter position-relative overflow-hidden">
         <div className="container p-4 mt-10 position-relative z-1">
           <div className="row">
             <div className="col-md-10 offset-md-1">
@@ -49,10 +49,10 @@ export default function AgentFormInitial() {
                 className="section-header text-center mb-5"
                 data-aos="fade-down"
               >
-                <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize text-white">
+                <h2 className="h1  fw-semibold mb-3 section-header__title text-capitalize  text-black">
                   Let's Get Started!
                 </h2>
-                <div className="sub-title fs-16 text-white">
+                <div className="sub-title fs-16  text-black">
                   Please enter your business name, address, and type
                 </div>
               </div>
@@ -64,7 +64,7 @@ export default function AgentFormInitial() {
                 <div className="row g-4 align-items-end newslatter-form">
                   <div className="space-y-8">
                     <div className="form-group">
-                      <label className="text-white bg-primary fw-semibold">
+                      <label className=" text-black  fw-semibold">
                         Business Name
                       </label>
                       <input
@@ -76,7 +76,7 @@ export default function AgentFormInitial() {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="text-white bg-primary fw-semibold">
+                      <label className=" text-black  fw-semibold">
                         Address
                       </label>
                       <input
@@ -88,7 +88,7 @@ export default function AgentFormInitial() {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="text-white bg-primary fw-semibold">
+                      <label className=" text-black  fw-semibold">
                         Business Type
                       </label>
                       <input
@@ -103,7 +103,7 @@ export default function AgentFormInitial() {
                   <div className="col-12 text-center">
                     <button
                       type="submit"
-                      className="btn text-white btn-lg btn-light"
+                      className="btn  text-black btn-lg btn-light"
                     >
                       Continue
                     </button>

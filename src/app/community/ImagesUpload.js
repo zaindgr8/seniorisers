@@ -1,16 +1,76 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 const ImagesUpload = () => {
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
-    // You can upload the files to your server or display them in the UI
+  const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
+  const [businessInfoId, setBusinessInfoId] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "/api/community_businessinfo?endpoint=business-info"
+        );
+        const latestEntry = response.data[response.data.length - 1];
+        setBusinessInfoId(latestEntry._id);
+      } catch (error) {
+        console.error("Fetching error:", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+
+    const newPreviews = acceptedFiles.map((file) => URL.createObjectURL(file));
+    setPreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (files.length === 0) {
+      alert("Please select some files.");
+      return;
+    }
+    if (!businessInfoId) {
+      alert("Business Info ID is missing.");
+      return;
+    }
+
+    const data = new FormData();
+    files.forEach((file) => data.append("files", file)); // Ensure all files are appended
+    data.append("businessInfoId", businessInfoId);
+
+    try {
+      let result = await fetch(
+        "/api/community_businessinfo?endpoint=property-images",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      result = await result.json();
+      console.log("result", result);
+
+      if (result.success) {
+        alert("Successfully Uploaded!!");
+      } else {
+        alert("Failed!!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Failed!!");
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: "image/*",
-    multiple: true,
+    multiple: true, // Ensure multiple files can be selected
   });
 
   return (
@@ -26,10 +86,24 @@ const ImagesUpload = () => {
         ) : (
           <p>Drag 'n' drop some files here, or click to select files</p>
         )}
-        <button className="mt-4 btn bg-blue-500 text-white px-4 py-2 rounded">
-          Upload Images
-        </button>
       </div>
+      <div className="flex flex-wrap mt-4">
+        {previews.map((preview, index) => (
+          <div key={index} className="w-32 h-32 m-2">
+            <img
+              src={preview}
+              alt={`Preview ${index}`}
+              className="w-full h-full object-cover rounded"
+            />
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={handleSubmit}
+        className="mt-4 btn bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Upload Images
+      </button>
     </div>
   );
 };

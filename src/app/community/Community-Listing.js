@@ -1,16 +1,19 @@
-import InputField from "../../components/InputField";
-import SectionContainer from "../../components/SectionContainer";
-import UploadField from "../../components/UploadField";
-import Checkbox from "../../components/Checkbox";
-import axios from "axios";
-import { toast } from "react-toastify";
+"use client";
 
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import InputField from "../../components/InputField";
+import SectionContainer from "../../components/SectionContainer";
+import Checkbox from "../../components/Checkbox";
+
 const Communitylisting = () => {
+  const [filePreview, setFilePreview] = useState(null);
+  const [file, setFile] = useState();
   const [initialData, setInitialData] = useState({
     businessName: "",
     address: "",
-    businessType: "",
+    id: "",
   });
 
   const [formData, setFormData] = useState({
@@ -24,21 +27,31 @@ const Communitylisting = () => {
     website: "",
     primaryPhone: "",
     ext: "",
-    callPhone: "",
+    cellPhone: "",
     fax: "",
     services: "",
     companyOverview: "",
+    Corporation: [],
+    Status: [],
+    businessInfoId: "",
   });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/agent_BusinessInfo");
-        const latestEntry = response.data[response.data.length - 1]; // Get the latest entry
+        const response = await axios.get(
+          "/api/community_businessinfo?endpoint=business-info"
+        );
+        const latestEntry = response.data[response.data.length - 1];
         setInitialData({
-          businessName: latestEntry.businessName,
+          businessName: latestEntry.CommunityName,
           address: latestEntry.address,
-          businessType: latestEntry.businessType,
+          id: latestEntry._id,
         });
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          businessInfoId: latestEntry._id,
+        }));
       } catch (error) {
         console.error("Fetching error:", error);
       }
@@ -50,30 +63,67 @@ const Communitylisting = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(`Updated ${name}:`, value); // Log the updated value
+  };
+
+  const handleCheckboxChange = (name, value) => {
+    setFormData((prevState) => {
+      const updatedArray = prevState[name].includes(value)
+        ? prevState[name].filter((item) => item !== value)
+        : [...prevState[name], value];
+      return { ...prevState, [name]: updatedArray };
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.businessInfoId) {
+      alert("Business Info ID is missing");
+      return;
+    }
+
+    // First, submit the business details
     const combinedData = { ...initialData, ...formData };
-    console.log("Submitting data:", combinedData); // Confirm formData here
     try {
       const response = await axios.post(
-        "/api/agent_BusinessInfo",
+        "/api/community_businessinfo?endpoint=business-details",
         combinedData
       );
-      console.log("Response:", response);
-      toast.success("Data submitted successfully!");
+
+      if (file) {
+        // If there is a file, submit it
+        const data = new FormData();
+        data.append("file", file);
+        data.append("businessInfoId", formData.businessInfoId);
+
+        let result = await fetch(
+          "/api/community_businessinfo?endpoint=CompanyImage",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+
+        result = await result.json();
+
+        if (result.success) {
+          toast.success("Data and file uploaded successfully!");
+        } else {
+          toast.error("Data uploaded, but file upload failed!");
+        }
+      } else {
+        toast.success("Data submitted successfully!");
+      }
     } catch (error) {
-      console.error("Submission error:", error);
       const errorMsg =
         error.response?.data?.msg || "Unable to submit business data.";
       toast.error(errorMsg);
     }
   };
+
   return (
     <div>
-      {" "}
+      <ToastContainer />
       <SectionContainer title="Basic Information">
         <form onSubmit={handleSubmit} className="m-2">
           <div className="flex flex-wrap justify-center gap-2">
@@ -112,7 +162,7 @@ const Communitylisting = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="  gap-2 mt-6 md:mx-20">
+          <div className="gap-2 mt-6 md:mx-20">
             <InputField
               label="Number of Units"
               id="business_type"
@@ -122,31 +172,43 @@ const Communitylisting = () => {
               readOnly
             />
           </div>
-          <div className="md:mx-20  gap-60 mt-3 flex">
+          <div className="md:mx-20 gap-60 mt-3 flex">
             <div>
-              <h1 className=" pb-2">Corporation Type</h1>
+              <h1 className="pb-2">Corporation Type</h1>
               <Checkbox
-                id="disabled-checkbox1"
-                label="Disabled checkbox"
-                disabled
+                id="corporation1"
+                label="Corporation Type 1"
+                value="Corporation Type 1"
+                checked={formData.Corporation.includes("Corporation Type 1")}
+                onChange={(e) =>
+                  handleCheckboxChange("Corporation", e.target.value)
+                }
               />
               <Checkbox
-                id="disabled-checkbox2"
-                label="Disabled checkbox"
-                disabled
+                id="corporation2"
+                label="Corporation Type 2"
+                value="Corporation Type 2"
+                checked={formData.Corporation.includes("Corporation Type 2")}
+                onChange={(e) =>
+                  handleCheckboxChange("Corporation", e.target.value)
+                }
               />
             </div>
             <div>
-              <h1 className=" pb-2">Status</h1>
+              <h1 className="pb-2">Status</h1>
               <Checkbox
-                id="disabled-checkbox3"
-                label="Disabled checkbox"
-                disabled
+                id="status1"
+                label="Status 1"
+                value="Status 1"
+                checked={formData.Status.includes("Status 1")}
+                onChange={(e) => handleCheckboxChange("Status", e.target.value)}
               />
               <Checkbox
-                id="disabled-checkbox4"
-                label="Disabled checkbox"
-                disabled
+                id="status2"
+                label="Status 2"
+                value="Status 2"
+                checked={formData.Status.includes("Status 2")}
+                onChange={(e) => handleCheckboxChange("Status", e.target.value)}
               />
             </div>
           </div>
@@ -161,24 +223,6 @@ const Communitylisting = () => {
                 readOnly
               />
               <InputField
-                label="Website"
-                id="website"
-                placeholder="Website"
-                name="website"
-                value={formData.website}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <InputField
-                label="Country"
-                id="country"
-                placeholder="Country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-              />
-              <InputField
                 label="City"
                 id="city"
                 placeholder="City"
@@ -186,6 +230,8 @@ const Communitylisting = () => {
                 value={formData.city}
                 onChange={handleChange}
               />
+            </div>
+            <div className="flex flex-wrap justify-center gap-2 mt-4">
               <InputField
                 label="State"
                 id="state"
@@ -200,6 +246,22 @@ const Communitylisting = () => {
                 placeholder="Zip"
                 name="zip"
                 value={formData.zip}
+                onChange={handleChange}
+              />
+              <InputField
+                label="Country"
+                id="country"
+                placeholder="Country"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+              />
+              <InputField
+                label="Website"
+                id="website"
+                placeholder="Website"
+                name="website"
+                value={formData.website}
                 onChange={handleChange}
               />
             </div>
@@ -221,11 +283,11 @@ const Communitylisting = () => {
                 onChange={handleChange}
               />
               <InputField
-                label="Call Phone"
-                id="call_phone"
-                placeholder="Call Phone"
-                name="callPhone"
-                value={formData.callPhone}
+                label="Cell Phone"
+                id="cell_phone"
+                placeholder="Cell Phone"
+                name="cellPhone"
+                value={formData.cellPhone}
                 onChange={handleChange}
               />
               <InputField
@@ -247,8 +309,7 @@ const Communitylisting = () => {
             </div>
           </SectionContainer>
           <SectionContainer title="Company Overview">
-            <div className="flex flex-wrap -mx-3">
-              <UploadField label="Company Logo" id="upload-logo" />
+            <div className="flex flex-wrap">
               <div className="w-full md:w-3/4 px-3 mb-4">
                 <label
                   className="block text-sm font-medium mb-1"
@@ -265,10 +326,30 @@ const Communitylisting = () => {
                   onChange={handleChange}
                 ></textarea>
               </div>
+              <div>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    setFile(file);
+                    if (file) {
+                      setFilePreview(URL.createObjectURL(file));
+                    }
+                  }}
+                />
+                {filePreview && (
+                  <img
+                    src={filePreview}
+                    alt="Preview"
+                    className="h-32 w-32 object-cover mt-4"
+                  />
+                )}
+              </div>
             </div>
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 w-24 rounded"
+              className="bg-blue-500  text-white py-2 px-4 w-24 rounded"
             >
               Submit
             </button>

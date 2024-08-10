@@ -6,7 +6,7 @@ import Sidebar from "../community/Community-Sidebar";
 import SectionHeader from "../../components/SectionHeader";
 import Button from "../../components/Button";
 import Communitylisting from "../community/Community-Listing";
-import CommunityType from "../community/Community-Type";
+import GetCommunityType from "../community/Get-Community-Type";
 import CheckboxAmenitIes from "../community/CheckboxAmenitIes";
 import SpecialtiesBox from "../community/SpecialtiesBox";
 import PriceBox from "../community/PriceBox";
@@ -19,7 +19,7 @@ const Page = () => {
       case "GENERAL":
         return <Communitylisting />;
       case "TYPE":
-        return <CommunityType />;
+        return <GetCommunityType />;
       case "AMENITIES":
         return (
           <div>

@@ -1,33 +1,73 @@
 "use client";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 import axios from "axios";
-import { toast } from "react-toastify";
-import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
-import CommunityType from "../community/Community-Type";
+import CommunityType from "../community/Community-Type"; // Ensure the path is correct
+import "react-toastify/dist/ReactToastify.css";
+
 export default function AgentFormInitial() {
   const [formData, setFormData] = useState({
-    businessName: "",
+    CommunityName: "",
     address: "",
-    businessType: "",
+    communityType: {
+      "55+ Community": false,
+      "Community Center for Seniors": false,
+      "Group Home/Residential Care Home": false,
+      "Independent Living/Senior Community": false,
+      "Memory Care Community": false,
+      "Skilled Nursing Facility/Nursing Home": false,
+      "Assisted Living Community": false,
+      "Continuing Care Retirement Community": false,
+      Hospital: false,
+      "Long-Term Care Acute Care Hospital": false,
+      "Rehab License": false,
+      "Transitional Care Hospital": false,
+    },
   });
 
   const router = useRouter();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(`Updated ${name}:`, value); // Log the updated value
   };
+
+  const handleCheckboxChange = (name, checked) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      communityType: {
+        ...prevFormData.communityType,
+        [name]: checked,
+      },
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting data:", formData); // Confirm formData here
     try {
-      const response = await axios.post("/api/agent_BusinessInfo", formData);
+      // Convert communityType to an array of selected options
+      const selectedCommunityTypes = Object.keys(formData.communityType).filter(
+        (type) => formData.communityType[type]
+      );
+
+      const submissionData = {
+        CommunityName: formData.CommunityName,
+        address: formData.address,
+        communityType: selectedCommunityTypes,
+      };
+
+      const response = await axios.post(
+        "/api/community_businessinfo?endpoint=business-info", // Ensure endpoint is correctly defined
+        submissionData
+      );
       console.log("Response:", response);
       toast.success("Data submitted successfully!");
 
-      // Navigate to the second page
-      router.push("/community-listing"); // Replace 'secondPage' with your actual route
+      // Navigate to the community listing page
+      router.push("/community-listing"); // Replace 'community-listing' with your actual route
     } catch (error) {
       console.error("Submission error:", error);
       const errorMsg =
@@ -39,15 +79,16 @@ export default function AgentFormInitial() {
   return (
     <>
       <Header />
+      <ToastContainer />
       <div className="newslatter position-relative overflow-hidden">
         <div className="container p-4 mt-10 position-relative z-1">
           <div className="row">
             <div className="col-md-10 offset-md-1">
-              <div className=" text-center mb-5">
-                <h2 className="h1 fw-semibold mb-3    text-black">
+              <div className="text-center mb-5">
+                <h2 className="h1 fw-semibold mb-3 text-black">
                   Let's Get Started!
                 </h2>
-                <div className="sub-title fs-16   text-black">
+                <div className="sub-title fs-16 text-black">
                   Please enter your Community name, address, and type
                 </div>
               </div>
@@ -65,8 +106,8 @@ export default function AgentFormInitial() {
                       <input
                         type="text"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        name="businessName"
-                        value={formData.businessName}
+                        name="CommunityName"
+                        value={formData.CommunityName}
                         onChange={handleChange}
                       />
                     </div>
@@ -83,7 +124,10 @@ export default function AgentFormInitial() {
                       />
                     </div>
                   </div>
-                  <CommunityType />
+                  <CommunityType
+                    selectedOptions={formData.communityType}
+                    handleCheckboxChange={handleCheckboxChange}
+                  />
                   <div className="col-12 text-center">
                     <button
                       type="submit"

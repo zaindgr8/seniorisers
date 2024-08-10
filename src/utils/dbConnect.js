@@ -20,3 +20,5 @@ export async function connect() {
     console.log(error);
   }
 }
+export const connectionString =
+  "mongodb+srv://fazalwahab:fazalwahab123@fazalcloser.bgb9cun.mongodb.net";

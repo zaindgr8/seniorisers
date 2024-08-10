@@ -1,38 +1,74 @@
-import React from "react";
+"use client";
 
-const UploadField = ({ label, id }) => {
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const UploadField = () => {
+  const [file, setFile] = useState();
+  const [businessInfoId, setBusinessInfoId] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "/api/community_businessinfo?endpoint=business-info"
+        );
+        console.log("response", response);
+
+        const latestEntry = response.data[response.data.length - 1];
+        console.log("latestEntry", latestEntry);
+
+        setBusinessInfoId(latestEntry._id);
+      } catch (error) {
+        console.error("Fetching error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      alert("Please Select a File");
+      return;
+    }
+    if (!businessInfoId) {
+      alert("Business Info ID is missing");
+      return;
+    }
+    const data = new FormData();
+    data.append("file", file);
+    data.append("businessInfoId", businessInfoId);
+
+    try {
+      let result = await fetch("/api/community_businessinfo?endpoint=images", {
+        method: "POST",
+        body: data,
+      });
+      result = await result.json();
+      console.log("result", result);
+
+      if (result.success) {
+        alert("Successfully Uploaded!!");
+      } else {
+        alert("Failed!!");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Failed!!");
+    }
+  };
   return (
-    <div className="w-full md:w-1/4 px-3 mb-4">
-      <label className="block text-sm font-medium mb-1">{label}</label>
-      <div className="flex items-center justify-center w-full">
-        <label
-          htmlFor={id}
-          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-500"
-        >
-          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg
-              aria-hidden="true"
-              className="w-10 h-10 mb-3 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M7 16V12m0 0l5-5m-5 5h3m4 0v4m0 0h4m-4 0l5 5m-5-5H4m16-6H4m4-4v12m4 4H4"
-              />
-            </svg>
-            <p className="mb-2 text-sm text-gray-500">
-              <span className="font-semibold">Click to upload photo</span>
-            </p>
-          </div>
-          <input id={id} type="file" className="hidden" />
-        </label>
-      </div>
-    </div>
+    <>
+      <form onSubmit={handleSubmit} className=" mx-3 mb-4">
+        <input
+          type="file"
+          name="file"
+          onChange={(e) => setFile(e.target.files?.[0])}
+        />
+      </form>
+    </>
   );
 };
 

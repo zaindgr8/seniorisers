@@ -3,11 +3,57 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useMemo } from "react";
 import classNames from "classnames";
-import { ArticleIcon, HomeIcon } from "../../icons";
+import {
+  MdEdit,
+  MdEvent,
+  MdLoyalty,
+  MdPeople,
+  MdBusiness,
+  MdNotifications,
+  MdAssessment,
+  MdStar,
+} from "react-icons/md";
 
 const menuItems = [
-  { id: 1, label: "Edit Listig", icon: HomeIcon, link: "/community-listing" },
-  { id: 2, label: "Connection", icon: ArticleIcon, link: "/Connection" },
+  {
+    id: 1,
+    label: "Edit Listing",
+    icon: MdEdit,
+    link: "/community-listing",
+    isChecked: true,
+  },
+  { id: 2, label: "Events", icon: MdEvent, link: "/community-events" },
+  {
+    id: 3,
+    label: "Incentives",
+    icon: MdLoyalty,
+    link: "/community-incentives",
+  },
+  {
+    id: 4,
+    label: "Connections",
+    icon: MdPeople,
+    link: "/community-connections",
+  },
+  { id: 5, label: "Sponsors", icon: MdBusiness, link: "/community-sponsors" },
+  {
+    id: 6,
+    label: "Notifications",
+    icon: MdNotifications,
+    link: "/community-notifications",
+  },
+  {
+    id: 7,
+    label: "Analytics",
+    icon: MdAssessment,
+    link: "/community-analytics",
+  },
+  {
+    id: 8,
+    label: "Featured Listing",
+    icon: MdStar,
+    link: "/community-featured-listing",
+  },
 ];
 
 const Sidebar = () => {
@@ -22,7 +68,7 @@ const Sidebar = () => {
 
   const getNavItemClasses = (menu) => {
     return classNames(
-      "flex items-center cursor-pointer hover:bg-light-lighter rounded  overflow-hidden whitespace-nowrap",
+      "flex items-center cursor-pointer hover:bg-light-lighter rounded overflow-hidden whitespace-nowrap",
       {
         "bg-light-lighter": activeMenu?.id === menu.id,
       }
@@ -30,15 +76,15 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" bg-gray-100 rounded-lg m-2 h-full">
-      <div className="flex flex-col items-start  p-4">
+    <div className="bg-gray-100 rounded-lg m-2 h-full">
+      <div className="flex flex-col items-start p-4">
         {menuItems.map(({ icon: Icon, ...menu }) => {
           const classes = getNavItemClasses(menu);
           return (
             <div key={menu.id} className={classes}>
-              <Link className="flex py-3  items-center  " href={menu.link}>
+              <Link className="flex py-3 items-center" href={menu.link}>
                 <div style={{ width: "2rem" }}>
-                  <Icon />
+                  <Icon size={24} />
                 </div>
                 {!toggleCollapse && (
                   <span
