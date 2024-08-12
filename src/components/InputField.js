@@ -8,6 +8,7 @@ const InputField = ({
   name,
   value,
   onChange,
+  readOnly = false, // Add readOnly prop for conditional readonly fields
 }) => {
   return (
     <div className="w-full md:w-[40%]">
@@ -20,12 +21,13 @@ const InputField = ({
       <input
         type={type}
         id={id}
-        name={name} // Ensure this is set
-        value={value} // Ensure this is set
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        name={name}
+        value={value}
         placeholder={placeholder}
-        onChange={onChange} // Ensure this is set
+        onChange={onChange}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         required
+        readOnly={readOnly} // Apply the readOnly prop
       />
     </div>
   );

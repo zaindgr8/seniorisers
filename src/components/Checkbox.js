@@ -1,11 +1,10 @@
 import React from "react";
 
-const Checkbox = ({ label, value, checked, onChange }) => {
+const Checkbox = ({ label, checked, onChange }) => {
   return (
     <div className="flex items-center mb-4">
       <input
         type="checkbox"
-        value={value}
         checked={checked}
         onChange={onChange}
         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"

@@ -1,6 +1,8 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ImagesUpload = () => {
   const [files, setFiles] = useState([]);
@@ -32,17 +34,19 @@ const ImagesUpload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (files.length === 0) {
-      alert("Please select some files.");
+      toast.error("Please select some files.");
       return;
     }
+
     if (!businessInfoId) {
-      alert("Business Info ID is missing.");
+      toast.error("Business Info ID is missing.");
       return;
     }
 
     const data = new FormData();
-    files.forEach((file) => data.append("files", file)); // Ensure all files are appended
+    files.forEach((file) => data.append("files", file)); // Append all files
     data.append("businessInfoId", businessInfoId);
 
     try {
@@ -57,13 +61,13 @@ const ImagesUpload = () => {
       console.log("result", result);
 
       if (result.success) {
-        alert("Successfully Uploaded!!");
+        toast.success("Successfully Uploaded!!");
       } else {
-        alert("Failed!!");
+        toast.error("Failed to upload images.");
       }
     } catch (error) {
       console.log(error);
-      alert("Failed!!");
+      toast.error("Failed to upload images.");
     }
   };
 
@@ -75,6 +79,7 @@ const ImagesUpload = () => {
 
   return (
     <div className="container mx-auto mt-4">
+      <ToastContainer />
       <h2 className="text-2xl font-semibold mb-4">Listing Photos / Ads</h2>
       <div
         {...getRootProps()}

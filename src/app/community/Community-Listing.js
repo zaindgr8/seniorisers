@@ -9,7 +9,7 @@ import Checkbox from "../../components/Checkbox";
 
 const Communitylisting = () => {
   const [filePreview, setFilePreview] = useState(null);
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [initialData, setInitialData] = useState({
     businessName: "",
     address: "",
@@ -82,8 +82,8 @@ const Communitylisting = () => {
       return;
     }
 
-    // First, submit the business details
     const combinedData = { ...initialData, ...formData };
+
     try {
       const response = await axios.post(
         "/api/community_businessinfo?endpoint=business-details",
@@ -91,7 +91,6 @@ const Communitylisting = () => {
       );
 
       if (file) {
-        // If there is a file, submit it
         const data = new FormData();
         data.append("file", file);
         data.append("businessInfoId", formData.businessInfoId);
@@ -133,7 +132,7 @@ const Communitylisting = () => {
               placeholder="Business Name"
               name="businessName"
               value={initialData.businessName}
-              readOnly
+              readOnly // This field is read-only
             />
             <InputField
               label="DBA"
@@ -165,11 +164,10 @@ const Communitylisting = () => {
           <div className="gap-2 mt-6 md:mx-20">
             <InputField
               label="Number of Units"
-              id="business_type"
+              id="units"
               placeholder="Number of Units"
               name="Units"
               value={initialData.businessType}
-              readOnly
             />
           </div>
           <div className="md:mx-20 gap-60 mt-3 flex">
@@ -178,19 +176,17 @@ const Communitylisting = () => {
               <Checkbox
                 id="corporation1"
                 label="Corporation Type 1"
-                value="Corporation Type 1"
                 checked={formData.Corporation.includes("Corporation Type 1")}
                 onChange={(e) =>
-                  handleCheckboxChange("Corporation", e.target.value)
+                  handleCheckboxChange("Corporation", "Corporation Type 1")
                 }
               />
               <Checkbox
                 id="corporation2"
                 label="Corporation Type 2"
-                value="Corporation Type 2"
                 checked={formData.Corporation.includes("Corporation Type 2")}
                 onChange={(e) =>
-                  handleCheckboxChange("Corporation", e.target.value)
+                  handleCheckboxChange("Corporation", "Corporation Type 2")
                 }
               />
             </div>
@@ -199,16 +195,14 @@ const Communitylisting = () => {
               <Checkbox
                 id="status1"
                 label="Status 1"
-                value="Status 1"
                 checked={formData.Status.includes("Status 1")}
-                onChange={(e) => handleCheckboxChange("Status", e.target.value)}
+                onChange={(e) => handleCheckboxChange("Status", "Status 1")}
               />
               <Checkbox
                 id="status2"
                 label="Status 2"
-                value="Status 2"
                 checked={formData.Status.includes("Status 2")}
-                onChange={(e) => handleCheckboxChange("Status", e.target.value)}
+                onChange={(e) => handleCheckboxChange("Status", "Status 2")}
               />
             </div>
           </div>
@@ -220,7 +214,7 @@ const Communitylisting = () => {
                 placeholder="Address"
                 name="address"
                 value={initialData.address}
-                readOnly
+                readOnly // This field is read-only
               />
               <InputField
                 label="City"
@@ -302,10 +296,38 @@ const Communitylisting = () => {
           </SectionContainer>
           <SectionContainer title="External Website">
             <div className="grid md:grid-flow-row gap-2 grid-flow-col">
-              <InputField label="Link" id="link1" placeholder="Link" />
-              <InputField label="Link" id="link2" placeholder="Link" />
-              <InputField label="Link" id="link3" placeholder="Link" />
-              <InputField label="Link" id="link4" placeholder="Link" />
+              <InputField
+                label="Link"
+                id="link1"
+                placeholder="Link"
+                name="link1"
+                value={formData.link1}
+                onChange={handleChange}
+              />
+              <InputField
+                label="Link"
+                id="link2"
+                placeholder="Link"
+                name="link2"
+                value={formData.link2}
+                onChange={handleChange}
+              />
+              <InputField
+                label="Link"
+                id="link3"
+                placeholder="Link"
+                name="link3"
+                value={formData.link3}
+                onChange={handleChange}
+              />
+              <InputField
+                label="Link"
+                id="link4"
+                placeholder="Link"
+                name="link4"
+                value={formData.link4}
+                onChange={handleChange}
+              />
             </div>
           </SectionContainer>
           <SectionContainer title="Company Overview">
@@ -349,7 +371,7 @@ const Communitylisting = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-500  text-white py-2 px-4 w-24 rounded"
+              className="bg-blue-500 text-white py-2 px-4 w-24 rounded"
             >
               Submit
             </button>

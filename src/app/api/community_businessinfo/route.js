@@ -48,6 +48,19 @@ async function handleGetRequest(model) {
     return NextResponse.json({ msg: "Unable to fetch data.", error });
   }
 }
+async function handlePropertyGetRequest(model) {
+  try {
+    await connect();
+    const documents = await model.find({});
+    return NextResponse.json({
+      success: true,
+      images: documents, // Wrap the results in the 'images' field
+    });
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    return NextResponse.json({ msg: "Unable to fetch data.", success: false });
+  }
+}
 
 async function handleImagePostRequest(req) {
   try {
@@ -91,7 +104,7 @@ async function handleMultipleImagesPostRequest(req) {
     await connect();
 
     const data = await req.formData();
-    const files = data.getAll("files");
+    const files = data.getAll("files"); // Get all the files
     const businessInfoId = data.get("businessInfoId");
 
     if (!files || files.length === 0 || !businessInfoId) {
@@ -101,6 +114,7 @@ async function handleMultipleImagesPostRequest(req) {
       });
     }
 
+    // Process each file and save it to the database
     const imageDocuments = await Promise.all(
       files.map(async (file) => {
         const bufferData = await file.arrayBuffer();
@@ -125,6 +139,23 @@ async function handleMultipleImagesPostRequest(req) {
   } catch (error) {
     console.log(error);
     return NextResponse.json({ response: "Failed", success: false });
+  }
+}
+
+async function handleImageGetRequest() {
+  try {
+    await connect();
+    const images = await CompanyImage.find({});
+    return NextResponse.json({
+      success: true,
+      images,
+    });
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    return NextResponse.json({
+      msg: "Unable to fetch images.",
+      success: false,
+    });
   }
 }
 
@@ -170,7 +201,7 @@ export async function GET(req) {
     case "CompanyImage":
       return handleImageGetRequest();
     case "property-images":
-      return handleMultipleImagesPostRequest();
+      return handlePropertyGetRequest(PropertyImages); // Ensure that this returns { success: true, images: [ ... ] }
     default:
       return NextResponse.json({ msg: "Invalid endpoint." }, { status: 400 });
   }
