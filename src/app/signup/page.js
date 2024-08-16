@@ -12,8 +12,8 @@ export default function SignIn() {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    username: "",
-    userType: "", // new field
+    fullName: "",
+    userType: "", // userType field
   });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export default function SignIn() {
 
   useEffect(() => {
     setButtonDisabled(
-      !user.email || !user.password || !user.username || !user.userType
+      !user.email || !user.password || !user.fullName || !user.userType // Ensure fullName is used here instead of username
     );
   }, [user]);
 
@@ -74,14 +74,14 @@ export default function SignIn() {
                     </div>
                     <form className="register-form" onSubmit={onSignup}>
                       <div className="form-group mb-4">
-                        <label className="required">Enter Username</label>
+                        <label className="required">Enter Full Name</label>
                         <input
                           type="text"
                           className="form-control"
                           required
-                          value={user.username}
+                          value={user.fullName}
                           onChange={(e) =>
-                            setUser({ ...user, username: e.target.value })
+                            setUser({ ...user, fullName: e.target.value })
                           }
                         />
                       </div>
@@ -134,10 +134,10 @@ export default function SignIn() {
                           <option value="" disabled>
                             Select an option
                           </option>
-                          <option value="community member">
+                          <option value="COMMUNITY_MEMBER">
                             Community Member
                           </option>
-                          <option value="agent">Agent</option>
+                          <option value="AGENT">Agent</option>
                         </select>
                       </div>
                       <div className="form-check mb-4 text-start">
@@ -164,7 +164,7 @@ export default function SignIn() {
                     <div className="bottom-text text-center my-3">
                       Don't have an account?{" "}
                       <Link
-                        href="signup"
+                        href="/signup"
                         className="fw-medium text-decoration-underline"
                       >
                         Sign Up
@@ -172,7 +172,7 @@ export default function SignIn() {
                       <br />
                       Forgot your password?{" "}
                       <Link
-                        href="forgot-password"
+                        href="/forgot-password"
                         className="fw-medium text-decoration-underline"
                       >
                         Reset here

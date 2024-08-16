@@ -19,11 +19,13 @@ export default function SignIn() {
     try {
       setLoading(true);
       const response = await axios.post("/api/login", user);
+      console.log(response);
+
       toast.success("Login successful!");
 
-      if (userType === "agent") {
+      if (userType === "AGENT") {
         router.push("/create-agent");
-      } else if (userType === "community member") {
+      } else if (userType === "COMMUNITY_MEMBER") {
         router.push("/create-community");
       }
     } catch (error) {
@@ -88,7 +90,7 @@ export default function SignIn() {
                           type="password"
                           id="password"
                           name="password"
-                          placeholder="password"
+                          placeholder="Password"
                           value={user.password}
                           onChange={(e) =>
                             setUser({ ...user, password: e.target.value })
@@ -110,17 +112,16 @@ export default function SignIn() {
                           <option value="" disabled>
                             Select an option
                           </option>
-                          <option value="community member">
+                          <option value="COMMUNITY_MEMBER">
                             Community Member
                           </option>
-                          <option value="agent">Agent</option>
+                          <option value="AGENT">Agent</option>
                         </select>
                       </div>
                       <div className="form-check mb-4 text-start">
                         <input
                           className="form-check-input"
                           type="checkbox"
-                          defaultValue=""
                           id="flexCheckDefault"
                         />
                         <label
@@ -141,14 +142,14 @@ export default function SignIn() {
                     <div className="bottom-text text-center my-3">
                       Don't have an account?{" "}
                       <Link
-                        href="signup"
+                        href="/signup"
                         className="fw-medium text-decoration-underline"
                       >
                         Sign Up
                       </Link>
                       <br /> Remind{" "}
                       <Link
-                        href="forgot-password"
+                        href="/forgot-password"
                         className="fw-medium text-decoration-underline"
                       >
                         Password
@@ -158,7 +159,7 @@ export default function SignIn() {
                   <div className="col-lg-6 col-xl-7 order-lg-first pe-xl-5">
                     <img
                       src="assets/img/png-img/login.png"
-                      alt=""
+                      alt="Login Illustration"
                       className="img-fluid"
                     />
                   </div>

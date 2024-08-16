@@ -25,9 +25,7 @@ function CommunityType() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/community_businessinfo?endpoint=business-info"
-        );
+        const response = await axios.get("/api/communtyinfo");
         console.log("API Response:", response.data);
         const communityType = response.data[0]?.communityType || [];
         setInitialData((prevState) => ({

@@ -28,119 +28,121 @@ const paymentOptions = [
 ];
 
 const PriceBox = () => {
-  const [formData, setFormData] = useState({
-    pricing: [],
-
-    businessInfoId: "",
-  });
-
   const [selectedPricing, setSelectedPricing] = useState({});
   const [selectedPayments, setSelectedPayments] = useState({});
+  const [businessInfoId, setBusinessInfoId] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBusinessInfo = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/community_businessinfo?endpoint=business-info"
-        );
-        const latestEntry = response.data[response.data.length - 1];
-        setFormData((prevData) => ({
-          ...prevData,
-          businessInfoId: latestEntry._id,
-        }));
+        const response = await axios.get("/api/communtyinfo");
+        const latestEntry = response.data.data?.[response.data.data.length - 1];
+
+        if (latestEntry && latestEntry.id) {
+          setBusinessInfoId(latestEntry.id); // Assuming the ID is stored as `id`
+        } else {
+          throw new Error("No valid entry found in the response data.");
+        }
       } catch (error) {
         console.error("Fetching error:", error);
-        toast.error("Failed to fetch the latest business info.");
+        toast.error("Failed to fetch initial data.");
       }
     };
 
-    fetchData();
+    fetchBusinessInfo();
   }, []);
 
-  const handleCheckboxChange = (label, type) => {
+  const handleCheckboxChange = (option, type) => {
     if (type === "pricing") {
-      setSelectedPricing({
-        ...selectedPricing,
-        [label]: !selectedPricing[label],
-      });
+      setSelectedPricing((prev) => ({
+        ...prev,
+        [option]: !prev[option],
+      }));
     } else if (type === "payment") {
-      setSelectedPayments({
-        ...selectedPayments,
-        [label]: !selectedPayments[label],
-      });
+      setSelectedPayments((prev) => ({
+        ...prev,
+        [option]: !prev[option],
+      }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const selectedPricingOptions = Object.keys(selectedPricing).filter(
+    const pricing = Object.keys(selectedPricing).filter(
       (key) => selectedPricing[key]
     );
-    const selectedPaymentOptions = Object.keys(selectedPayments).filter(
+    const payments = Object.keys(selectedPayments).filter(
       (key) => selectedPayments[key]
     );
 
-    const combinedData = {
-      ...formData,
-      pricing: selectedPricingOptions,
-      payments: selectedPaymentOptions,
-    };
-
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/community_businessinfo?endpoint=pricing",
-        combinedData
-      );
-      if (response.status === 200) {
-        toast.success(
-          "Pricing and Payment data submitted successfully! Go to PHOTOS."
-        );
+      const response = await fetch("/api/communitypricing", {
+        method: "POST", // Specify the method as POST
+        headers: {
+          "Content-Type": "application/json", // Set the content type to JSON
+        },
+        body: JSON.stringify({
+          pricing,
+          payments,
+          businessInfoId, // Use the dynamically fetched ID
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Pricing and payment options created successfully!");
+        setSelectedPricing({});
+        setSelectedPayments({});
       } else {
-        toast.error("Failed to submit Pricing and Payment data.");
+        toast.error(
+          "Failed to create pricing and payment options. Please try again."
+        );
       }
     } catch (error) {
-      const errorMsg = error.response?.data?.msg || "Unable to submit data.";
-      toast.error(errorMsg);
-      console.error("Error:", error);
+      toast.error(
+        "Failed to create pricing and payment options. Please try again."
+      );
     }
   };
+
+  console.log(selectedPayments);
+  console.log(selectedPricing);
 
   return (
     <div>
       <ToastContainer />
-      <div className="h-full border-blue-500 rounded-lg border-2 pt-4 shadow-sm w-full mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <p className="text-red-500">
-            *Prices are currently hidden from public view.
-          </p>
-          {pricingOptions.map((option, index) => (
-            <Checkbox
-              key={index}
-              label={option}
-              checked={selectedPricing[option] || false}
-              onChange={() => handleCheckboxChange(option, "pricing")}
-            />
-          ))}
+      <form onSubmit={handleSubmit}>
+        <div className="h-full border-blue-500 rounded-lg border-2 pt-4 shadow-sm w-full mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p className="text-red-500">
+              *Prices are currently hidden from public view.
+            </p>
+            {pricingOptions.map((option, index) => (
+              <Checkbox
+                key={index}
+                label={option}
+                checked={selectedPricing[option] || false}
+                onChange={() => handleCheckboxChange(option, "pricing")}
+              />
+            ))}
+          </div>
+          <div>
+            {paymentOptions.map((option, index) => (
+              <Checkbox
+                key={index}
+                label={option}
+                checked={selectedPayments[option] || false}
+                onChange={() => handleCheckboxChange(option, "payment")}
+              />
+            ))}
+          </div>
         </div>
-        <div>
-          {paymentOptions.map((option, index) => (
-            <Checkbox
-              key={index}
-              label={option}
-              checked={selectedPayments[option] || false}
-              onChange={() => handleCheckboxChange(option, "payment")}
-            />
-          ))}
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
+        <button
+          type="submit"
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

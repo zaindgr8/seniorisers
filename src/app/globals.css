@@ -961,10 +961,9 @@ textarea.form-control {
   left: 10px;
   pointer-events: none;
   z-index: 1;
-  background: #fff;
+
   padding: 0 10px;
   font-weight: 500;
-  color: var(--bs-dark);
 }
 
 .form-group textarea.form-control {
@@ -1751,7 +1750,7 @@ textarea.form-control {
 /* Newslatter -------------*/
 
 .newslatter-form .form-control {
-  color: #fff;
+  color: #110202;
 }
 
 .newslatter-form .form-control:focus {

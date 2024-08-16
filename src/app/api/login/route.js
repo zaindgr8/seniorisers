@@ -1,10 +1,7 @@
-import { connect } from "../../../utils/dbConnect";
-import User from "../../../models/usermodule";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-connect();
+import prisma from "../../../utils/prisma";
 
 export async function POST(request) {
   try {
@@ -12,25 +9,25 @@ export async function POST(request) {
     const { email, password } = requestBody;
 
     // Check if the user exists
-    const user = await User.findOne({ email });
+    const user = await prisma.userauth.findUnique({ where: { email } });
 
     if (!user) {
-      return NextResponse.json({ error: "User not fount" }, { status: 400 });
+      return NextResponse.json({ error: "User not found" }, { status: 400 });
     }
 
     // Check password validity
-    const validPassword = await bcryptjs.compare(password, user.password);
+    const validPassword = await bcryptjs.compare(password, user.password || "");
 
     if (!validPassword) {
-      return NextResponse.json({ error: "invied passward" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid password" }, { status: 400 });
     }
 
     // Create token data
     const tokenData = {
-      userId: user._id,
+      userId: user.id,
       email: user.email,
-      password: user.passward,
-    }; // Example data, adjust as needed
+      userType: user.userType, // Include userType in token data
+    };
 
     // Create a JWT token
     const jwtToken = jwt.sign(tokenData, process.env.TOKEN_SECRET, {

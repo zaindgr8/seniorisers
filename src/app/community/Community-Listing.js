@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -30,6 +29,8 @@ const Communitylisting = () => {
     cellPhone: "",
     fax: "",
     services: "",
+    image: "",
+    units: "3",
     companyOverview: "",
     Corporation: [],
     Status: [],
@@ -39,21 +40,20 @@ const Communitylisting = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "/api/community_businessinfo?endpoint=business-info"
-        );
-        const latestEntry = response.data[response.data.length - 1];
+        const response = await axios.get("/api/communtyinfo");
+        const latestEntry = response.data.data[response.data.data.length - 1]; // Adjusting for the correct data structure
         setInitialData({
           businessName: latestEntry.CommunityName,
           address: latestEntry.address,
-          id: latestEntry._id,
+          id: latestEntry.id, // Assuming it's `id` instead of `_id`
         });
         setFormData((prevFormData) => ({
           ...prevFormData,
-          businessInfoId: latestEntry._id,
+          businessInfoId: latestEntry.id, // Assuming it's `id` instead of `_id`
         }));
       } catch (error) {
         console.error("Fetching error:", error);
+        toast.error("Failed to fetch initial data.");
       }
     };
 
@@ -73,47 +73,41 @@ const Communitylisting = () => {
       return { ...prevState, [name]: updatedArray };
     });
   };
+  const handleImageUpload = (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result;
+        if (typeof result === "string") {
+          setFilePreview(result); // Display the image preview
+          setFormData((prevState) => ({
+            ...prevState,
+            image: result, // Save the image URL to the image field in formData
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.businessInfoId) {
-      alert("Business Info ID is missing");
-      return;
-    }
-
-    const combinedData = { ...initialData, ...formData };
-
     try {
+      const submissionData = {
+        ...formData,
+      };
+
       const response = await axios.post(
-        "/api/community_businessinfo?endpoint=business-details",
-        combinedData
+        "/api/communitlistning",
+        submissionData
       );
 
-      if (file) {
-        const data = new FormData();
-        data.append("file", file);
-        data.append("businessInfoId", formData.businessInfoId);
-
-        let result = await fetch(
-          "/api/community_businessinfo?endpoint=CompanyImage",
-          {
-            method: "POST",
-            body: data,
-          }
-        );
-
-        result = await result.json();
-
-        if (result.success) {
-          toast.success("Data and file uploaded successfully!");
-        } else {
-          toast.error("Data uploaded, but file upload failed!");
-        }
-      } else {
-        toast.success("Data submitted successfully!");
-      }
+      console.log("Response:", response);
+      toast.success("Data submitted successfully!");
     } catch (error) {
+      console.error("Submission error:", error);
       const errorMsg =
         error.response?.data?.msg || "Unable to submit business data.";
       toast.error(errorMsg);
@@ -167,7 +161,7 @@ const Communitylisting = () => {
               id="units"
               placeholder="Number of Units"
               name="Units"
-              value={initialData.businessType}
+              value={formData.units}
             />
           </div>
           <div className="md:mx-20 gap-60 mt-3 flex">
@@ -177,7 +171,7 @@ const Communitylisting = () => {
                 id="corporation1"
                 label="Corporation Type 1"
                 checked={formData.Corporation.includes("Corporation Type 1")}
-                onChange={(e) =>
+                onChange={() =>
                   handleCheckboxChange("Corporation", "Corporation Type 1")
                 }
               />
@@ -185,7 +179,7 @@ const Communitylisting = () => {
                 id="corporation2"
                 label="Corporation Type 2"
                 checked={formData.Corporation.includes("Corporation Type 2")}
-                onChange={(e) =>
+                onChange={() =>
                   handleCheckboxChange("Corporation", "Corporation Type 2")
                 }
               />
@@ -196,13 +190,13 @@ const Communitylisting = () => {
                 id="status1"
                 label="Status 1"
                 checked={formData.Status.includes("Status 1")}
-                onChange={(e) => handleCheckboxChange("Status", "Status 1")}
+                onChange={() => handleCheckboxChange("Status", "Status 1")}
               />
               <Checkbox
                 id="status2"
                 label="Status 2"
                 checked={formData.Status.includes("Status 2")}
-                onChange={(e) => handleCheckboxChange("Status", "Status 2")}
+                onChange={() => handleCheckboxChange("Status", "Status 2")}
               />
             </div>
           </div>
@@ -352,13 +346,7 @@ const Communitylisting = () => {
                 <input
                   type="file"
                   name="file"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    setFile(file);
-                    if (file) {
-                      setFilePreview(URL.createObjectURL(file));
-                    }
-                  }}
+                  onChange={handleImageUpload} // Use the updated handleImageUpload function
                 />
                 {filePreview && (
                   <img

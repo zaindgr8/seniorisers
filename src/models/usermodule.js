@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Basic User Schema
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -37,6 +38,67 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+// Extended User Profile Schema
+const userProfileSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  jobTitle: {
+    type: String,
+    required: false,
+  },
+  startedInIndustry: {
+    type: Date,
+    required: false,
+  },
+  aboutYou: {
+    type: String,
+    required: false,
+  },
+  education: {
+    type: String,
+    required: false,
+  },
+  profilePhoto: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      data: {
+        type: Buffer,
+        required: true,
+      },
+      contentType: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  certificatesAndAwards: [
+    {
+      name: {
+        type: String,
+        required: false,
+      },
+      data: {
+        type: Buffer,
+        required: false,
+      },
+      contentType: {
+        type: String,
+        required: false,
+      },
+    },
+  ],
+});
 
-export default User;
+// Models
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+const UserProfile =
+  mongoose.models.UserProfile ||
+  mongoose.model("UserProfile", userProfileSchema);
+
+export { User, UserProfile };

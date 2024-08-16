@@ -22,7 +22,14 @@ const menuItems = [
     link: "/community-listing",
     isChecked: true,
   },
-  { id: 2, label: "Events", icon: MdEvent, link: "/community-events" },
+  {
+    id: 9,
+    label: "Edit Profile",
+    icon: MdEdit,
+    link: "/userProfile",
+    isChecked: true,
+  },
+  { id: 2, label: "Events", icon: MdEvent, link: "/events" },
   {
     id: 3,
     label: "Incentives",

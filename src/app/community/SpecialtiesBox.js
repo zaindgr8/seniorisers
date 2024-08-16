@@ -45,17 +45,20 @@ const SpecialtiesBox = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/community_businessinfo?endpoint=business-info"
-        );
-        const latestEntry = response.data[response.data.length - 1];
-        setFormData((prevData) => ({
-          ...prevData,
-          businessInfoId: latestEntry._id,
-        }));
+        const response = await axios.get("/api/communtyinfo");
+        const latestEntry = response.data.data?.[response.data.data.length - 1];
+
+        if (latestEntry && latestEntry.id) {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            businessInfoId: latestEntry.id, // Assuming it's `id` instead of `_id`
+          }));
+        } else {
+          throw new Error("No valid entry found in the response data.");
+        }
       } catch (error) {
         console.error("Fetching error:", error);
-        toast.error("Failed to fetch the latest business info.");
+        toast.error("Failed to fetch initial data.");
       }
     };
 
@@ -92,7 +95,7 @@ const SpecialtiesBox = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/community_businessinfo?endpoint=specialties",
+        "/api/CommunitySpecialties",
         combinedData
       );
       if (response.status === 200) {

@@ -1,0 +1,178 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  COMMUNITY_MEMBER
+  AGENT
+}
+
+model Userauth {
+  id        Int       @id @default(autoincrement())
+  fullName  String
+  email     String    @unique
+  password  String?
+  userType  UserType
+  UserProfile      UserProfile[]
+}
+
+
+model CommunityBusinessinfo {
+  id                  Int                   @id @default(autoincrement())
+  CommunityName       String
+  address             String
+  communityType       String[]
+  businessDetails     CommunityBusinessDetails[]
+  amenities           CommunityAmenities[]
+  specialties         CommunitySpecialties[]
+  pricing             CommunityPricing[]
+  propertyImages      PropertyImages[]
+ 
+}
+model UserProfile {
+  id                  Int         @id @default(autoincrement())
+  jobTitle            String?
+  startedInIndustry   DateTime?
+  aboutYou            String?
+  education           String ?
+  fullName            String ?
+  profilePhoto        String?
+  certificatesAndAwards String[] @default([])
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  User          Userauth @relation(fields: [UserauthId], references: [id])
+  UserauthId Int
+}
+
+model CommunityBusinessDetails {
+  id             Int                   @id @default(autoincrement())
+  dba            String
+  yearFounded    String
+  license        String
+  country        String
+  city           String
+  state          String
+  zip            String
+  website        String
+  units           String
+  image          String
+  primaryPhone   String
+  ext            String
+  cellPhone      String
+  fax            String
+  Corporation    String[]
+  Status         String[]
+  companyOverview String?
+  businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
+  businessInfoId Int
+}
+
+
+
+model PropertyImages {
+  id             Int                   @id @default(autoincrement()) // Add this line
+  image          String[]
+  businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
+  businessInfoId Int
+}
+
+
+model CommunitySpecialties {
+  id             Int                   @id @default(autoincrement())
+  specialties    String[]
+  businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
+  businessInfoId Int
+}
+model CommunityAmenities {
+  id             Int                   @id @default(autoincrement())
+  amenities      String[]
+  businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
+  businessInfoId Int
+}
+model CommunityPricing {
+  id             Int                   @id @default(autoincrement())
+  pricing        String[]
+  payments       String[]
+  businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
+  businessInfoId Int
+}
+
+
+
+
+
+
+model AgentBusinessinfo {
+  id             Int                   @id @default(autoincrement())
+  agentName      String
+  address        String
+  businessType   String
+  services       String[]              // Array of services
+  agentBusiness  AgentBusinessDetails[] 
+   images       AgentImage[]
+}
+
+model AgentBusinessDetails {
+  id                  Int                  @id @default(autoincrement())
+  dba                 String
+  yearFounded         String
+  license             String
+  country             String
+  city                String
+  state               String
+  zip                 String
+  website             String
+  image               String
+  primaryPhone        String
+  ext                 String
+  cellPhone           String
+  fax                 String
+  Corporation         String[]
+  Status              String[]
+  companyOverview     String?
+  agentbusinessInfo   AgentBusinessinfo    @relation(fields: [agentbusinessInfoId], references: [id])
+  agentbusinessInfoId Int                  // Foreign key referencing AgentBusinessinfo
+}
+
+model AgentImage {
+  id             Int                   @id @default(autoincrement()) // Add this line
+  image          String[]
+   agentbusinessInfo   AgentBusinessinfo    @relation(fields: [agentbusinessInfoId], references: [id])
+  agentbusinessInfoId Int                  // Foreign key referencing AgentBusinessinfo
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+model Event {
+  id           String   @id @default(uuid())
+  eventName    String
+  eventDate    DateTime
+  startTime    String
+  endTime      String
+  repeatEvent  String
+  eventDetails String?
+  eventUrl     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

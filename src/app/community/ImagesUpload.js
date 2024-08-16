@@ -1,81 +1,60 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ImagesUpload = () => {
-  const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
-  const [businessInfoId, setBusinessInfoId] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "/api/community_businessinfo?endpoint=business-info"
-        );
-        const latestEntry = response.data[response.data.length - 1];
-        setBusinessInfoId(latestEntry._id);
-      } catch (error) {
-        console.error("Fetching error:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [images, setImages] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
-    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
-
     const newPreviews = acceptedFiles.map((file) => URL.createObjectURL(file));
-    setPreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
-  }, []);
+    setPreviews((prev) => [...prev, ...newPreviews]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (files.length === 0) {
-      toast.error("Please select some files.");
-      return;
-    }
-
-    if (!businessInfoId) {
-      toast.error("Business Info ID is missing.");
-      return;
-    }
-
-    const data = new FormData();
-    files.forEach((file) => data.append("files", file)); // Append all files
-    data.append("businessInfoId", businessInfoId);
-
-    try {
-      let result = await fetch(
-        "/api/community_businessinfo?endpoint=property-images",
-        {
-          method: "POST",
-          body: data,
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          setImages((prev) => [...prev, reader.result]);
         }
-      );
-      result = await result.json();
-      console.log("result", result);
-
-      if (result.success) {
-        toast.success("Successfully Uploaded!!");
-      } else {
-        toast.error("Failed to upload images.");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to upload images.");
-    }
-  };
+      };
+      reader.readAsDataURL(file);
+    });
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: "image/*",
-    multiple: true, // Ensure multiple files can be selected
   });
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("/api/propertyimages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          images,
+          businessInfoId: 1, // Replace with actual businessInfoId
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      toast.success("Images uploaded successfully!");
+      console.log(result.data);
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload images.");
+    }
+  };
+
+  console.log(images);
 
   return (
     <div className="container mx-auto mt-4">

@@ -46,6 +46,13 @@ export default function AgentFormInitial() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Basic validation
+    if (!formData.CommunityName || !formData.address) {
+      toast.error("Please fill out all required fields.");
+      return;
+    }
+
     console.log("Submitting data:", formData); // Confirm formData here
     try {
       // Convert communityType to an array of selected options
@@ -60,7 +67,7 @@ export default function AgentFormInitial() {
       };
 
       const response = await axios.post(
-        "/api/community_businessinfo?endpoint=business-info", // Ensure endpoint is correctly defined
+        "/api/communtyinfo", // Ensure endpoint is correctly defined
         submissionData
       );
       console.log("Response:", response);
@@ -109,6 +116,7 @@ export default function AgentFormInitial() {
                         name="CommunityName"
                         value={formData.CommunityName}
                         onChange={handleChange}
+                        required
                       />
                     </div>
                     <div className="form-group">
@@ -121,6 +129,7 @@ export default function AgentFormInitial() {
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
+                        required
                       />
                     </div>
                   </div>

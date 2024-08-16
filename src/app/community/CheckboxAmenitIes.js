@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios"; // Ensure axios is installed and imported
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,59 +42,29 @@ const amenities3 = [
 
 const CheckboxAmenities = () => {
   const [selectedAmenities, setSelectedAmenities] = useState({});
-  const [initialData, setInitialData] = useState({
-    id: "",
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "/api/community_businessinfo?endpoint=business-info"
-        );
-        const latestEntry = response.data[response.data.length - 1];
-        setInitialData({
-          id: latestEntry._id,
-        });
-      } catch (error) {
-        console.error("Fetching error:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleCheckboxChange = (amenity) => {
-    setSelectedAmenities((prevSelected) => ({
-      ...prevSelected,
-      [amenity]: !prevSelected[amenity],
+    setSelectedAmenities((prev) => ({
+      ...prev,
+      [amenity]: !prev[amenity],
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const selectedAmenityList = Object.keys(selectedAmenities).filter(
-      (amenity) => selectedAmenities[amenity]
+    const amenities = Object.keys(selectedAmenities).filter(
+      (key) => selectedAmenities[key]
     );
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/community_businessinfo?endpoint=amenities",
-        {
-          amenities: selectedAmenityList,
-          businessInfoId: initialData.id, // Using the fetched ID here
-        }
-      );
-
-      if (response.status === 200) {
-        toast.success("Amenities submitted successfully!");
-      } else {
-        toast.error("Failed to submit amenities.");
-      }
+      const response = await axios.post("/api/checkboxamenitIes", {
+        amenities,
+        businessInfoId: 1, // Replace with the actual businessInfoId
+      });
+      toast.success("Amenities created successfully!");
+      setSelectedAmenities({});
     } catch (error) {
-      toast.error("An error occurred while submitting amenities.");
-      console.error("Error:", error);
+      toast.error("Failed to create amenities. Please try again.");
     }
   };
 
@@ -102,7 +72,6 @@ const CheckboxAmenities = () => {
     <form onSubmit={handleSubmit}>
       <div className="p-4 border-blue-500 rounded-lg border-2 pt-4 shadow-sm mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
         <ToastContainer />
-
         <div>
           {amenities1.map((amenity, index) => (
             <Checkbox
