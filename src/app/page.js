@@ -13,7 +13,7 @@ import Link from "next/link";
 export default function HomeTwo() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <SeniorLivingProfile />
       {/* Start Hero Header Two */}
       <div className="align-items-center d-flex hero-header hero-header__two overflow-hidden position-relative">

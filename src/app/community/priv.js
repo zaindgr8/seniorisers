@@ -483,114 +483,108 @@
 // //   );
 // // }
 // components/PaymentOptions.js
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export default function PaymentOptions() {
+const AgentList = () => {
+  const [agents, setAgents] = useState([]);
+  const [loggedInUserId, setLoggedInUserId] = useState(null);
+
+  useEffect(() => {
+    // Fetch the logged-in user's ID
+    const fetchLoggedInUserId = async () => {
+      try {
+        const response = await axios.get("/api/getcookes"); // Replace with your GET endpoint
+        setLoggedInUserId(response.data.user.id);
+      } catch (error) {
+        console.error("Error fetching logged-in user ID:", error);
+      }
+    };
+
+    fetchLoggedInUserId();
+  }, []);
+
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        const response = await axios.get("/api/agentBusinessinfo");
+        setAgents(response.data);
+      } catch (error) {
+        console.error("Error fetching agents:", error);
+      }
+    };
+
+    fetchAgents();
+  }, []);
+
+  const handleConnectionRequest = async (receiverId) => {
+    if (!loggedInUserId) {
+      // If user is not logged in, show an alert message
+      alert("Please create an account to send a connection request.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/agent-connection", {
+        receiverId,
+        status: "PENDING",
+      });
+
+      if (response.status === 201) {
+        toast.success("Connection request sent successfully!");
+      } else {
+        toast.error("Failed to send connection request.");
+      }
+    } catch (error) {
+      console.error("Error sending connection request:", error);
+      toast.error("Failed to send connection request.");
+    }
+  };
+
   return (
-    <div className="max-w-lg mx-auto p-4">
-      {/* Accepted Credit Cards */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Accepted Credit Cards</h3>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="visa" className="form-checkbox" />
-            <label htmlFor="visa">
-              <img src="/images/visa.png" alt="Visa" className="h-8" />
-            </label>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Agent List</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {agents.map((agent) => (
+          <div
+            key={agent.id}
+            className="p-4 border rounded-lg shadow-md bg-white"
+          >
+            <h2 className="text-xl font-semibold">{agent.agentName}</h2>
+            <p className="text-gray-600">{agent.address}</p>
+            <p className="text-sm text-gray-500">
+              {agent.businessType} | Services: {agent.services.join(", ")}
+            </p>
+            <div className="mt-4 flex justify-center">
+              {loggedInUserId && agent.userauthId !== loggedInUserId ? (
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
+                  onClick={() => handleConnectionRequest(agent.userauthId)}
+                >
+                  Send Connection Request
+                </button>
+              ) : (
+                !loggedInUserId && (
+                  <button
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md"
+                    onClick={() =>
+                      alert(
+                        "Please create an account to send a connection request."
+                      )
+                    }
+                  >
+                    Send Connection Request
+                  </button>
+                )
+              )}
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="mastercard" className="form-checkbox" />
-            <label htmlFor="mastercard">
-              <img
-                src="/images/mastercard.png"
-                alt="Mastercard"
-                className="h-8"
-              />
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="amex" className="form-checkbox" />
-            <label htmlFor="amex">
-              <img
-                src="/images/amex.png"
-                alt="American Express"
-                className="h-8"
-              />
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="discover" className="form-checkbox" />
-            <label htmlFor="discover">
-              <img src="/images/discover.png" alt="Discover" className="h-8" />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      {/* Online Payment Options */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Online Payment Options</h3>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="paypal" className="form-checkbox" />
-            <label htmlFor="paypal">
-              <img src="/images/paypal.png" alt="PayPal" className="h-8" />
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="applepay" className="form-checkbox" />
-            <label htmlFor="applepay">
-              <img src="/images/applepay.png" alt="Apple Pay" className="h-8" />
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="skrill" className="form-checkbox" />
-            <label htmlFor="skrill">
-              <img src="/images/skrill.png" alt="Skrill" className="h-8" />
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="venmo" className="form-checkbox" />
-            <label htmlFor="venmo">
-              <img src="/images/venmo.png" alt="Venmo" className="h-8" />
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="googlepay" className="form-checkbox" />
-            <label htmlFor="googlepay">
-              <img
-                src="/images/googlepay.png"
-                alt="Google Pay"
-                className="h-8"
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      {/* Other Payment Types */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Other Payment Types</h3>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="cash" className="form-checkbox" />
-            <label htmlFor="cash" className="text-sm">
-              Cash
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="checks" className="form-checkbox" />
-            <label htmlFor="checks" className="text-sm">
-              Checks
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <input type="checkbox" id="moneyorder" className="form-checkbox" />
-            <label htmlFor="moneyorder" className="text-sm">
-              Money Order
-            </label>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default AgentList;

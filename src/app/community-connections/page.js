@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../components/Header";
 import Sidebar from "../community/Community-Sidebar";
-
 import SectionHeader from "../../components/SectionHeader";
-function page() {
+
+function Page() {
   const [selectedFilters, setSelectedFilters] = useState({
     community: false,
     provider: false,
@@ -18,19 +18,41 @@ function page() {
       [filter]: !selectedFilters[filter],
     });
   };
+
+  const handleApprove = async (requestId) => {
+    try {
+      const response = await fetch(`/api/agent-connection`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: requestId,
+          status: "APPROVED", // Or "DECLINED" or any other status you wish to update to
+        }),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        alert(`Error: ${result.error}`);
+        return;
+      }
+
+      alert("Connection request status updated successfully!");
+    } catch (error) {
+      console.error("Error updating connection request status:", error);
+    }
+  };
+
   return (
     <>
-      {" "}
-      <Header />{" "}
+      <Header />
       <div className="flex flex-col md:mt-10 md:flex-row">
-        {" "}
-        <Sidebar />{" "}
+        <Sidebar />
         <div className="flex flex-col md:mx-10">
-          {" "}
           <SectionHeader title="Dashboard">
-            {" "}
-            <p>Company Name: [Insert Company Name]</p>{" "}
-          </SectionHeader>{" "}
+            <p>Company Name: [Insert Company Name]</p>
+          </SectionHeader>
           <div className="p-4 border-blue-500 rounded-lg border-2 pt-4 shadow-sm mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="container mx-auto p-4">
               <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
@@ -85,12 +107,15 @@ function page() {
                       <th className="py-2 px-4 border-b border-gray-300">
                         Current Incentive
                       </th>
+                      <th className="py-2 px-4 border-b border-gray-300">
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td
-                        colSpan="4"
+                        colSpan="5"
                         className="text-center py-4 text-gray-500"
                       >
                         Looks like you need to make some connections.
@@ -102,6 +127,29 @@ function page() {
                         <a href="#" className="text-blue-500">
                           Find Nearby Providers
                         </a>
+                      </td>
+                    </tr>
+                    {/* Example row with status button */}
+                    <tr>
+                      <td className="py-2 px-4 border-b border-gray-300">
+                        PENDING
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-300">
+                        ABC Corp
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-300">
+                        John Doe
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-300">
+                        Summer Discount
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-300">
+                        <button
+                          className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600"
+                          onClick={() => handleApprove("request-id-here")}
+                        >
+                          Approve
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -117,4 +165,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

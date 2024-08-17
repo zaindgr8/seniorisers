@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -19,17 +13,20 @@ enum UserType {
 }
 
 model Userauth {
-  id        Int       @id @default(autoincrement())
-  fullName  String
-  email     String    @unique
-  password  String?
-  userType  UserType
-  UserProfile      UserProfile[]
+  id           Int          @id @default(autoincrement())
+  fullName     String
+  email        String       @unique
+  password     String?
+  userType     UserType
+  UserProfile  UserProfile[]
+  sentConnections AgentConnectionRequest[] @relation("UserSenderRelation")
+  receivedConnections AgentConnectionRequest[] @relation("UserReceiverRelation")
+  agentBusinessInfos  AgentBusinessinfo[]
+  communityBusinessinfos  CommunityBusinessinfo[]
 }
 
-
 model CommunityBusinessinfo {
-  id                  Int                   @id @default(autoincrement())
+  id                  Int                     @id @default(autoincrement())
   CommunityName       String
   address             String
   communityType       String[]
@@ -38,55 +35,56 @@ model CommunityBusinessinfo {
   specialties         CommunitySpecialties[]
   pricing             CommunityPricing[]
   propertyImages      PropertyImages[]
- 
+   userauth             Userauth               @relation(fields: [userauthId], references: [id])
+  userauthId           Int   
+  sentConnections     CommunityConnectionRequest[] @relation("CommunitySenderRelation")
+  receivedConnections CommunityConnectionRequest[] @relation("CommunityReceiverRelation")
 }
+
 model UserProfile {
-  id                  Int         @id @default(autoincrement())
-  jobTitle            String?
-  startedInIndustry   DateTime?
-  aboutYou            String?
-  education           String ?
-  fullName            String ?
-  profilePhoto        String?
-  certificatesAndAwards String[] @default([])
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
-  User          Userauth @relation(fields: [UserauthId], references: [id])
-  UserauthId Int
+  id                   Int          @id @default(autoincrement())
+  jobTitle             String?
+  startedInIndustry    DateTime?
+  aboutYou             String?
+  education            String?
+  fullName             String?
+  profilePhoto         String?
+  certificatesAndAwards String[]    @default([])
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  User                 Userauth     @relation(fields: [UserauthId], references: [id])
+  UserauthId           Int
 }
 
 model CommunityBusinessDetails {
-  id             Int                   @id @default(autoincrement())
-  dba            String
-  yearFounded    String
-  license        String
-  country        String
-  city           String
-  state          String
-  zip            String
-  website        String
+  id              Int                    @id @default(autoincrement())
+  dba             String
+  yearFounded     String
+  license         String
+  country         String
+  city            String
+  state           String
+  zip             String
+  website         String
   units           String
-  image          String
-  primaryPhone   String
-  ext            String
-  cellPhone      String
-  fax            String
-  Corporation    String[]
-  Status         String[]
+  image           String
+  primaryPhone    String
+  ext             String
+  cellPhone       String
+  fax             String
+  Corporation     String[]
+  Status          String[]
   companyOverview String?
-  businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
-  businessInfoId Int
+  businessInfo    CommunityBusinessinfo  @relation(fields: [businessInfoId], references: [id])
+  businessInfoId  Int
 }
 
-
-
 model PropertyImages {
-  id             Int                   @id @default(autoincrement()) // Add this line
+  id             Int                   @id @default(autoincrement())
   image          String[]
   businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
   businessInfoId Int
 }
-
 
 model CommunitySpecialties {
   id             Int                   @id @default(autoincrement())
@@ -94,12 +92,14 @@ model CommunitySpecialties {
   businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
   businessInfoId Int
 }
+
 model CommunityAmenities {
   id             Int                   @id @default(autoincrement())
   amenities      String[]
   businessInfo   CommunityBusinessinfo @relation(fields: [businessInfoId], references: [id])
   businessInfoId Int
 }
+
 model CommunityPricing {
   id             Int                   @id @default(autoincrement())
   pricing        String[]
@@ -108,61 +108,70 @@ model CommunityPricing {
   businessInfoId Int
 }
 
-
-
-
-
-
 model AgentBusinessinfo {
-  id             Int                   @id @default(autoincrement())
-  agentName      String
-  address        String
-  businessType   String
-  services       String[]              // Array of services
-  agentBusiness  AgentBusinessDetails[] 
-   images       AgentImage[]
+  id                   Int                    @id @default(autoincrement())
+  agentName            String
+  address              String
+  businessType         String
+  services             String[]               // Array of services
+  agentBusiness        AgentBusinessDetails[]
+  images               AgentImage[]
+  userauth             Userauth               @relation(fields: [userauthId], references: [id])
+  userauthId           Int                    // Foreign key referencing Userauth
 }
 
 model AgentBusinessDetails {
-  id                  Int                  @id @default(autoincrement())
-  dba                 String
-  yearFounded         String
-  license             String
-  country             String
-  city                String
-  state               String
-  zip                 String
-  website             String
-  image               String
-  primaryPhone        String
-  ext                 String
-  cellPhone           String
-  fax                 String
-  Corporation         String[]
-  Status              String[]
-  companyOverview     String?
-  agentbusinessInfo   AgentBusinessinfo    @relation(fields: [agentbusinessInfoId], references: [id])
-  agentbusinessInfoId Int                  // Foreign key referencing AgentBusinessinfo
+  id                   Int                    @id @default(autoincrement())
+  dba                  String
+  yearFounded          String
+  license              String
+  country              String
+  city                 String
+  state                String
+  zip                  String
+  website              String
+  image                String
+  primaryPhone         String
+  ext                  String
+  cellPhone            String
+  fax                  String
+  Corporation          String[]
+  Status               String[]
+  companyOverview      String?
+  agentbusinessInfo    AgentBusinessinfo      @relation(fields: [agentbusinessInfoId], references: [id])
+  agentbusinessInfoId  Int                    // Foreign key referencing AgentBusinessinfo
 }
 
 model AgentImage {
-  id             Int                   @id @default(autoincrement()) // Add this line
-  image          String[]
-   agentbusinessInfo   AgentBusinessinfo    @relation(fields: [agentbusinessInfoId], references: [id])
-  agentbusinessInfoId Int                  // Foreign key referencing AgentBusinessinfo
+  id                   Int                    @id @default(autoincrement())
+  image                String[]
+  agentbusinessInfo    AgentBusinessinfo      @relation(fields: [agentbusinessInfoId], references: [id])
+  agentbusinessInfoId  Int                    // Foreign key referencing AgentBusinessinfo
 }
 
+model AgentConnectionRequest {
+  id          Int               @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  status      String            // 'PENDING', 'ACCEPTED', 'DECLINED'
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
+  sender      Userauth          @relation("UserSenderRelation", fields: [senderId], references: [id])
+  receiver    Userauth          @relation("UserReceiverRelation", fields: [receiverId], references: [id])
+}
 
+model CommunityConnectionRequest {
+  id          Int                    @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  status      String                 // 'PENDING', 'ACCEPTED', 'DECLINED'
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
 
-
-
-
-
-
-
-
-
+  sender      CommunityBusinessinfo  @relation("CommunitySenderRelation", fields: [senderId], references: [id])
+  receiver    CommunityBusinessinfo  @relation("CommunityReceiverRelation", fields: [receiverId], references: [id])
+}
 
 model Event {
   id           String   @id @default(uuid())
@@ -175,4 +184,17 @@ model Event {
   eventUrl     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model Incentive {
+  id              Int      @id @default(autoincrement())
+  incentiveName   String
+  startDate       DateTime
+  endDate         DateTime
+  valueOfIncentive Float
+  inPercent       Boolean
+  description     String?
+  legalDisclaimer String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

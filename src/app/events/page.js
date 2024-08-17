@@ -145,70 +145,7 @@ const Page = () => {
             </div>
           </>
         );
-      case "TYPE":
-        return (
-          <div class="p-4 border-blue-500 rounded-lg border-2 pt-4 shadow-sm mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="flex justify-between items-center ">
-              <button class="bg-white text-blue-500 border border-blue-500 py-2 px-4 rounded-md hover:bg-blue-100 flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 mr-2"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v3H6a1 1 0 000 2h3v3a1 1 0 002 0V10h3a1 1 0 000-2h-3V5z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Refresh
-              </button>
-              <div class="text-sm text-gray-600">
-                Next email blast: 8/15/2024{" "}
-                <span class="italic">(in 4 days)</span>
-              </div>
-            </div>
 
-            <div class="mt-4 overflow-x-auto">
-              <table class="min-w-full bg-white">
-                <thead>
-                  <tr class="bg-gray-100">
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-700">
-                      DATE
-                    </th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-700">
-                      EVENT NAME
-                    </th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-700">
-                      LOCATION
-                    </th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-700">
-                      TIME
-                    </th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-700">
-                      ADDRESS
-                    </th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-700">
-                      OPTION
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="py-2 px-4 text-sm text-gray-600">08/10/2024</td>
-                    <td class="py-2 px-4 text-sm text-gray-600">
-                      Sample Event
-                    </td>
-                    <td class="py-2 px-4 text-sm text-gray-600">Location 1</td>
-                    <td class="py-2 px-4 text-sm text-gray-600">2:00 PM</td>
-                    <td class="py-2 px-4 text-sm text-gray-600">123 Main St</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
       case "AMENITIES":
         return (
           <div className="justify-between w-full  items-center p-4 border-blue-500 rounded-lg border-2 pt-4 shadow-sm mt-2  gap-4">
@@ -432,13 +369,6 @@ const Page = () => {
             >
               {" "}
               YOUR EVENTS{" "}
-            </Button>{" "}
-            <Button
-              isActive={activeTab === "TYPE"}
-              onClick={() => setActiveTab("TYPE")}
-            >
-              {" "}
-              YOU'RE ATTENDING{" "}
             </Button>{" "}
             <Button
               isActive={activeTab === "AMENITIES"}

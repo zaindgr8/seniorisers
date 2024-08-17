@@ -30,7 +30,7 @@ const Communitylisting = () => {
     fax: "",
     services: "",
     image: "",
-    units: "3",
+    units: "",
     companyOverview: "",
     Corporation: [],
     Status: [],
@@ -126,7 +126,6 @@ const Communitylisting = () => {
               placeholder="Business Name"
               name="businessName"
               value={initialData.businessName}
-              readOnly // This field is read-only
             />
             <InputField
               label="DBA"
@@ -160,8 +159,9 @@ const Communitylisting = () => {
               label="Number of Units"
               id="units"
               placeholder="Number of Units"
-              name="Units"
+              name="units" // Make sure this matches the key in formData
               value={formData.units}
+              onChange={handleChange}
             />
           </div>
           <div className="md:mx-20 gap-60 mt-3 flex">

@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 function CommunityType() {
-  const selectedOptions = {
+  const [communityOptions, setCommunityOptions] = useState({
     "55+ Community": false,
     "Community Center for Seniors": false,
     "Group Home/Residential Care Home": false,
@@ -16,35 +16,39 @@ function CommunityType() {
     "Long-Term Care Acute Care Hospital": false,
     "Rehab License": false,
     "Transitional Care Hospital": false,
-  };
-
-  const [initialData, setInitialData] = useState({
-    communityType: [],
   });
 
+  // Fetch community types from the database on component mount
   useEffect(() => {
-    async function fetchData() {
+    const fetchCommunityData = async () => {
       try {
-        const response = await axios.get("/api/communtyinfo");
-        console.log("API Response:", response.data);
-        const communityType = response.data[0]?.communityType || [];
-        setInitialData((prevState) => ({
-          ...prevState,
-          communityType,
-        }));
-      } catch (error) {
-        toast.error("Failed to fetch community type data.");
-        console.error("Error fetching data:", error);
-      }
-    }
+        const response = await axios.get("/api/communtyinfo"); // Ensure the endpoint is correct
+        const fetchedData = response.data;
+        console.log(fetchedData);
 
-    fetchData();
+        const updatedOptions = { ...communityOptions };
+        fetchedData.data.forEach((item) => {
+          // Note the .data here
+          if (item.communityType) {
+            item.communityType.forEach((type) => {
+              if (updatedOptions.hasOwnProperty(type)) {
+                updatedOptions[type] = true;
+              }
+            });
+          }
+        });
+        setCommunityOptions(updatedOptions);
+      } catch (error) {
+        toast.error("Failed to fetch community types");
+        console.error(error);
+      }
+    };
+
+    fetchCommunityData();
   }, []);
 
-  const firstColumnOptions = Object.keys(selectedOptions).slice(0, 6);
-  const secondColumnOptions = Object.keys(selectedOptions).slice(6);
-
-  const isChecked = (option) => initialData.communityType.includes(option);
+  const firstColumnOptions = Object.keys(communityOptions).slice(0, 6);
+  const secondColumnOptions = Object.keys(communityOptions).slice(6);
 
   return (
     <div className="p-6 bg-gray-50 rounded-lg border border-gray-300">
@@ -60,7 +64,7 @@ function CommunityType() {
                   type="checkbox"
                   name={option}
                   className="form-checkbox h-5 w-5 text-blue-600"
-                  checked={isChecked(option)}
+                  checked={communityOptions[option]}
                   readOnly
                 />
                 <span>{option}</span>
@@ -74,7 +78,7 @@ function CommunityType() {
                   type="checkbox"
                   name={option}
                   className="form-checkbox h-5 w-5 text-blue-600"
-                  checked={isChecked(option)}
+                  checked={communityOptions[option]}
                   readOnly
                 />
                 <span>{option}</span>

@@ -1,5 +1,6 @@
 import prisma from "../../../utils/prisma";
 import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
 export async function GET(request) {
   try {
@@ -10,8 +11,10 @@ export async function GET(request) {
         specialties: true,
         pricing: true,
         propertyImages: true,
+        userauth: true,
       },
     });
+    console.log(communityBusinesses);
 
     return NextResponse.json({ data: communityBusinesses });
   } catch (error) {
@@ -21,6 +24,33 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
+    const token = request.cookies.get("token")?.value;
+    console.log("token", token);
+
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { error: "No token found or invalid token" },
+        { status: 401 }
+      );
+    }
+
+    // Decode the token to get user ID
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log("decoded", decoded);
+
+    const userauthId = decoded.userId; // Assuming userId is stored in the token
+    console.log("userauthId", userauthId);
+
+    // Validate that the user exists
+    const existingUser = await prisma.userauth.findUnique({
+      where: { id: userauthId },
+    });
+    console.log("existingUser", existingUser);
+
+    if (!existingUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
     const reqBody = await request.json();
     const {
       CommunityName,
@@ -53,6 +83,7 @@ export async function POST(request) {
         propertyImages: {
           create: propertyImages,
         },
+        userauthId, // This should be within the data object
       },
       include: {
         amenities: true,
@@ -65,6 +96,7 @@ export async function POST(request) {
 
     return NextResponse.json({ data: newCommunityBusiness });
   } catch (error) {
+    console.error("Error in creating community business:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
