@@ -2,6 +2,19 @@
 CREATE TYPE "UserType" AS ENUM ('COMMUNITY_MEMBER', 'AGENT');
 
 -- CreateTable
+CREATE TABLE "SponsorConnectionRequest" (
+    "id" SERIAL NOT NULL,
+    "sponsorId" INTEGER NOT NULL,
+    "agentId" INTEGER NOT NULL,
+    "communityId" INTEGER NOT NULL,
+    "status" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "SponsorConnectionRequest_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Userauth" (
     "id" SERIAL NOT NULL,
     "fullName" TEXT NOT NULL,
@@ -207,6 +220,15 @@ CREATE TABLE "Incentive" (
 CREATE UNIQUE INDEX "Userauth_email_key" ON "Userauth"("email");
 
 -- AddForeignKey
+ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_sponsorId_fkey" FOREIGN KEY ("sponsorId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_agentId_fkey" FOREIGN KEY ("agentId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_communityId_fkey" FOREIGN KEY ("communityId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "CommunityBusinessinfo" ADD CONSTRAINT "CommunityBusinessinfo_userauthId_fkey" FOREIGN KEY ("userauthId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -243,7 +265,7 @@ ALTER TABLE "AgentConnectionRequest" ADD CONSTRAINT "AgentConnectionRequest_send
 ALTER TABLE "AgentConnectionRequest" ADD CONSTRAINT "AgentConnectionRequest_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CommunityConnectionRequest" ADD CONSTRAINT "CommunityConnectionRequest_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "CommunityBusinessinfo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "CommunityConnectionRequest" ADD CONSTRAINT "CommunityConnectionRequest_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CommunityConnectionRequest" ADD CONSTRAINT "CommunityConnectionRequest_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "CommunityBusinessinfo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "CommunityConnectionRequest" ADD CONSTRAINT "CommunityConnectionRequest_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

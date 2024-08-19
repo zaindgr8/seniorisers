@@ -7,6 +7,7 @@ import img1 from "../../public/assets/img/senior1.jpeg";
 import img2 from "../../public/assets/img/senior2.jpeg";
 import img3 from "../../public/assets/img/senior3.jpeg";
 import SeniorLivingProfile from "./community/priv";
+import Cpmuntydata from "./community/Cpmuntydata";
 import Slideshow from "../components/slideshow";
 import Link from "next/link";
 
@@ -16,6 +17,7 @@ export default function HomeTwo() {
       {/* <Header /> */}
       <SeniorLivingProfile />
       {/* Start Hero Header Two */}
+      <Cpmuntydata />
       <div className="align-items-center d-flex hero-header hero-header__two overflow-hidden position-relative">
         <img
           src="assets/img/png-img/section-bg.png"

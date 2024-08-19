@@ -9,6 +9,7 @@ import SectionHeader from "../../components/SectionHeader";
 function Page() {
   const [receivedConnections, setReceivedConnections] = useState([]);
   const [sentConnections, setSentConnections] = useState([]);
+  const [agents, setAgents] = useState([]);
   const [showEmptyMessage, setShowEmptyMessage] = useState(false);
 
   const updateConnectionStatus = async (connectionId, newStatus) => {
@@ -29,6 +30,19 @@ function Page() {
       console.error("Error updating connection status:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        const response = await axios.get("/api/agentBusinessinfo");
+        setAgents(response.data);
+      } catch (error) {
+        console.error("Error fetching agents:", error);
+      }
+    };
+
+    fetchAgents();
+  }, []);
 
   useEffect(() => {
     const fetchConnections = async () => {
@@ -58,6 +72,16 @@ function Page() {
     fetchConnections();
   }, []);
 
+  const getAgentBusinessName = (userauthId) => {
+    const agent = agents.find((agent) => agent.userauthId === userauthId);
+    return agent?.agentName || "N/A";
+  };
+
+  const getAgentFullName = (userauthId) => {
+    const agent = agents.find((agent) => agent.userauthId === userauthId);
+    return agent?.userauth?.fullName || "N/A";
+  };
+
   return (
     <>
       <Header />
@@ -69,13 +93,13 @@ function Page() {
           </SectionHeader>
           <div className="p-4 border-blue-500 rounded-lg border-2 pt-4 shadow-sm mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
             <>
-              <div className="container  ">
-                <div className="container j pb-2  pt-2">
-                  <h2 className="text-xl  font-semibold ">
+              <div className="container">
+                <div className="container j pb-2 pt-2">
+                  <h2 className="text-xl font-semibold">
                     Received Connections
                   </h2>
                   <tr>
-                    <td colSpan="5" className="text-center  text-gray-500">
+                    <td colSpan="5" className="text-center text-gray-500">
                       Looks like you need to make some connections.
                       <br />
                       <a href="#" className="text-blue-500">
@@ -114,10 +138,10 @@ function Page() {
                               {connection.status}
                             </td>
                             <td className="py-2 px-2 border-b border-gray-300">
-                              {connection.sender?.businessName || "N/A"}
+                              {getAgentBusinessName(connection.senderId)}
                             </td>
                             <td className="py-2 px-2 border-b border-gray-300">
-                              {connection.sender?.fullName || "N/A"}
+                              {getAgentFullName(connection.senderId)}
                             </td>
                             <td className="py-2 px-2 flex border-b border-gray-300">
                               <button
@@ -160,9 +184,9 @@ function Page() {
                 </div>
               </div>
 
-              <div className="container  p-2 mx-3">
+              <div className="container p-2 mx-3">
                 <div className="w-full">
-                  <h2 className="text-xl  font-semibold pb-2">
+                  <h2 className="text-xl font-semibold pb-2">
                     Sent Connections
                   </h2>
                   <table className="bg-white">
@@ -187,10 +211,10 @@ function Page() {
                               {connection.status}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-300">
-                              {connection.receiver?.businessName || "N/A"}
+                              {getAgentBusinessName(connection.receiverId)}
                             </td>
                             <td className="py-2 px-4 border-b border-gray-300">
-                              {connection.receiver?.fullName || "N/A"}
+                              {getAgentFullName(connection.receiverId)}
                             </td>
                           </tr>
                         ))

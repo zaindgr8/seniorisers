@@ -11,7 +11,17 @@ enum UserType {
   COMMUNITY_MEMBER
   AGENT
 }
+model SponsorConnectionRequest {
+  id          Int      @id @default(autoincrement())
+  sponsorId   Int      // The user sending the sponsorship
+  receiverId  Int      // The user receiving the sponsorship
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
+  sponsor     Userauth @relation("SentSponsorships", fields: [sponsorId], references: [id])
+  receiver    Userauth @relation("ReceivedSponsorships", fields: [receiverId], references: [id])
+}
 model Userauth {
   id           Int          @id @default(autoincrement())
   fullName     String
@@ -23,6 +33,11 @@ model Userauth {
   receivedConnections AgentConnectionRequest[] @relation("UserReceiverRelation")
   agentBusinessInfos  AgentBusinessinfo[]
   communityBusinessinfos  CommunityBusinessinfo[]
+   comsentConnections     CommunityConnectionRequest[] @relation("CommunitySenderRelation")
+  comreceivedConnections CommunityConnectionRequest[] @relation("CommunityReceiverRelation")
+
+   sentSponsorships      SponsorConnectionRequest[] @relation("SentSponsorships")
+  receivedSponsorships  SponsorConnectionRequest[] @relation("ReceivedSponsorships")
 }
 
 model CommunityBusinessinfo {
@@ -37,8 +52,7 @@ model CommunityBusinessinfo {
   propertyImages      PropertyImages[]
    userauth             Userauth               @relation(fields: [userauthId], references: [id])
   userauthId           Int   
-  sentConnections     CommunityConnectionRequest[] @relation("CommunitySenderRelation")
-  receivedConnections CommunityConnectionRequest[] @relation("CommunityReceiverRelation")
+ 
 }
 
 model UserProfile {
@@ -169,8 +183,8 @@ model CommunityConnectionRequest {
   createdAt   DateTime               @default(now())
   updatedAt   DateTime               @updatedAt
 
-  sender      CommunityBusinessinfo  @relation("CommunitySenderRelation", fields: [senderId], references: [id])
-  receiver    CommunityBusinessinfo  @relation("CommunityReceiverRelation", fields: [receiverId], references: [id])
+  sender      Userauth          @relation("CommunitySenderRelation", fields: [senderId], references: [id])
+  receiver    Userauth          @relation("CommunityReceiverRelation", fields: [receiverId], references: [id])
 }
 
 model Event {
