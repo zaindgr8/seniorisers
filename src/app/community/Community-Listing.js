@@ -16,6 +16,7 @@ const Communitylisting = () => {
   });
 
   const [formData, setFormData] = useState({
+    id: "", // The ID of the existing business detail (for updates)
     dba: "",
     yearFounded: "",
     license: "",
@@ -34,22 +35,23 @@ const Communitylisting = () => {
     companyOverview: "",
     Corporation: [],
     Status: [],
-    businessInfoId: "",
+    businessInfoId: "", // The ID of the related CommunityBusinessinfo
   });
 
+  // Fetch business name and address
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBusinessInfo = async () => {
       try {
         const response = await axios.get("/api/communtyinfo");
         const latestEntry = response.data.data[response.data.data.length - 1]; // Adjusting for the correct data structure
         setInitialData({
           businessName: latestEntry.CommunityName,
           address: latestEntry.address,
-          id: latestEntry.id, // Assuming it's `id` instead of `_id`
+          id: latestEntry.id, // Assuming it's id instead of _id
         });
         setFormData((prevFormData) => ({
           ...prevFormData,
-          businessInfoId: latestEntry.id, // Assuming it's `id` instead of `_id`
+          businessInfoId: latestEntry.id, // Assuming it's id instead of _id
         }));
       } catch (error) {
         console.error("Fetching error:", error);
@@ -57,8 +59,51 @@ const Communitylisting = () => {
       }
     };
 
-    fetchData();
+    fetchBusinessInfo();
   }, []);
+
+  // Fetch additional business details
+  useEffect(() => {
+    const fetchBusinessDetails = async () => {
+      try {
+        if (initialData.id) {
+          // Ensure businessInfoId is available before fetching
+          const response = await axios.get(
+            `/api/communitlistning?businessInfoId=${initialData.id}`
+          );
+          const businessDetail = response.data.data[0]; // Assuming only one detail set per business
+
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            id: businessDetail.id,
+            dba: businessDetail.dba || "",
+            yearFounded: businessDetail.yearFounded || "",
+            license: businessDetail.license || "",
+            country: businessDetail.country || "",
+            city: businessDetail.city || "",
+            state: businessDetail.state || "",
+            zip: businessDetail.zip || "",
+            website: businessDetail.website || "",
+            primaryPhone: businessDetail.primaryPhone || "",
+            ext: businessDetail.ext || "",
+            cellPhone: businessDetail.cellPhone || "",
+            fax: businessDetail.fax || "",
+            services: businessDetail.services || "",
+            image: businessDetail.image || "",
+            units: businessDetail.units || "",
+            companyOverview: businessDetail.companyOverview || "",
+            Corporation: businessDetail.Corporation || [],
+            Status: businessDetail.Status || [],
+          }));
+        }
+      } catch (error) {
+        console.error("Fetching error:", error);
+        toast.error("Failed to fetch business details.");
+      }
+    };
+
+    fetchBusinessDetails();
+  }, [initialData.id]); // Run this effect when the businessInfoId is set
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,6 +118,7 @@ const Communitylisting = () => {
       return { ...prevState, [name]: updatedArray };
     });
   };
+
   const handleImageUpload = (event) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
@@ -80,10 +126,10 @@ const Communitylisting = () => {
       reader.onloadend = () => {
         const result = reader.result;
         if (typeof result === "string") {
-          setFilePreview(result); // Display the image preview
+          setFilePreview(result);
           setFormData((prevState) => ({
             ...prevState,
-            image: result, // Save the image URL to the image field in formData
+            image: result,
           }));
         }
       };
@@ -99,10 +145,11 @@ const Communitylisting = () => {
         ...formData,
       };
 
-      const response = await axios.post(
-        "/api/communitlistning",
-        submissionData
-      );
+      const response = await axios({
+        method: formData.id ? "put" : "post", // Use PUT if updating, POST if creating
+        url: "/api/communitlistning",
+        data: submissionData,
+      });
 
       console.log("Response:", response);
       toast.success("Data submitted successfully!");
@@ -126,6 +173,7 @@ const Communitylisting = () => {
               placeholder="Business Name"
               name="businessName"
               value={initialData.businessName}
+              readOnly
             />
             <InputField
               label="DBA"
@@ -159,7 +207,7 @@ const Communitylisting = () => {
               label="Number of Units"
               id="units"
               placeholder="Number of Units"
-              name="units" // Make sure this matches the key in formData
+              name="units"
               value={formData.units}
               onChange={handleChange}
             />
@@ -208,7 +256,7 @@ const Communitylisting = () => {
                 placeholder="Address"
                 name="address"
                 value={initialData.address}
-                readOnly // This field is read-only
+                readOnly
               />
               <InputField
                 label="City"
@@ -343,11 +391,7 @@ const Communitylisting = () => {
                 ></textarea>
               </div>
               <div>
-                <input
-                  type="file"
-                  name="file"
-                  onChange={handleImageUpload} // Use the updated handleImageUpload function
-                />
+                <input type="file" name="file" onChange={handleImageUpload} />
                 {filePreview && (
                   <img
                     src={filePreview}

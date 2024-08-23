@@ -10,11 +10,12 @@ import SeniorLivingProfile from "./community/priv";
 import Cpmuntydata from "./community/Cpmuntydata";
 import Slideshow from "../components/slideshow";
 import Link from "next/link";
-
+import SponsorConnectionRequestForm from "../app/community/sposor";
 export default function HomeTwo() {
   return (
     <>
       {/* <Header /> */}
+      <SponsorConnectionRequestForm />
       <SeniorLivingProfile />
       {/* Start Hero Header Two */}
       <Cpmuntydata />

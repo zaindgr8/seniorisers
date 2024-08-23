@@ -1,8 +1,22 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../utils/prisma"; // Adjust the path based on your project structure
+import jwt from "jsonwebtoken";
 
+// POST API to create new agent business details
 export async function POST(request) {
   try {
+    const token = request.cookies.get("token")?.value;
+
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { error: "No token found or invalid token" },
+        { status: 401 }
+      );
+    }
+
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userauthId = decoded.userId;
+
     const {
       dba,
       yearFounded,
@@ -23,7 +37,6 @@ export async function POST(request) {
       agentbusinessInfoId, // This should reference an existing AgentBusinessinfo record
     } = await request.json();
 
-    // Ensure the `agentbusinessInfoId` is provided
     if (!agentbusinessInfoId) {
       return NextResponse.json(
         { error: "agentbusinessInfoId is required" },
@@ -31,27 +44,6 @@ export async function POST(request) {
       );
     }
 
-    console.log("Request payload:", {
-      dba,
-      yearFounded,
-      license,
-      country,
-      city,
-      state,
-      zip,
-      website,
-      image,
-      primaryPhone,
-      ext,
-      cellPhone,
-      fax,
-      Corporation,
-      Status,
-      companyOverview,
-      agentbusinessInfoId,
-    });
-
-    // Create the AgentBusinessDetails entry
     const agentBusinessDetails = await prisma.agentBusinessDetails.create({
       data: {
         dba,
@@ -71,13 +63,141 @@ export async function POST(request) {
         Status,
         companyOverview,
         agentbusinessInfo: {
-          connect: { id: agentbusinessInfoId }, // Connects the record to an existing AgentBusinessinfo by id
+          connect: { id: parseInt(agentbusinessInfoId) }, // Ensure ID is passed as an integer
+        },
+        userauthId, // Store the user ID for tracking purposes
+      },
+    });
+
+    return NextResponse.json(agentBusinessDetails, { status: 201 });
+  } catch (error) {
+    console.error("Error in API route:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+// GET API to fetch agent business details
+export async function GET(request) {
+  try {
+    const token = request.cookies.get("token")?.value;
+
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { error: "No token found or invalid token" },
+        { status: 401 }
+      );
+    }
+
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userauthId = decoded.userId;
+
+    const { searchParams } = new URL(request.url);
+    const agentbusinessInfoId = searchParams.get("agentbusinessInfoId");
+
+    if (!agentbusinessInfoId) {
+      return NextResponse.json(
+        { error: "agentbusinessInfoId is required" },
+        { status: 400 }
+      );
+    }
+
+    const agentBusinessDetails = await prisma.agentBusinessDetails.findMany({
+      where: { agentbusinessInfoId: parseInt(agentbusinessInfoId), userauthId }, // Ensure ID is passed as an integer
+      include: { agentbusinessInfo: true },
+    });
+
+    return NextResponse.json({ data: agentBusinessDetails });
+  } catch (error) {
+    console.error("Error in API route:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+// PUT API to update existing agent business details
+export async function PUT(request) {
+  try {
+    const token = request.cookies.get("token")?.value;
+
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { error: "No token found or invalid token" },
+        { status: 401 }
+      );
+    }
+
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userauthId = decoded.userId;
+
+    const {
+      id,
+      dba,
+      yearFounded,
+      license,
+      country,
+      city,
+      state,
+      zip,
+      website,
+      image,
+      primaryPhone,
+      ext,
+      cellPhone,
+      fax,
+      Corporation,
+      Status,
+      companyOverview,
+      agentbusinessInfoId,
+    } = await request.json();
+
+    if (!id || !agentbusinessInfoId) {
+      return NextResponse.json(
+        { error: "Both id and agentbusinessInfoId are required" },
+        { status: 400 }
+      );
+    }
+
+    const existingBusinessDetails =
+      await prisma.agentBusinessDetails.findUnique({
+        where: { id: parseInt(id), userauthId },
+      });
+
+    if (!existingBusinessDetails) {
+      return NextResponse.json(
+        { error: "Business details not found" },
+        { status: 404 }
+      );
+    }
+
+    const updatedBusinessDetails = await prisma.agentBusinessDetails.update({
+      where: { id: parseInt(id) },
+      data: {
+        dba: dba || existingBusinessDetails.dba,
+        yearFounded: yearFounded || existingBusinessDetails.yearFounded,
+        license: license || existingBusinessDetails.license,
+        country: country || existingBusinessDetails.country,
+        city: city || existingBusinessDetails.city,
+        state: state || existingBusinessDetails.state,
+        zip: zip || existingBusinessDetails.zip,
+        website: website || existingBusinessDetails.website,
+        image: image || existingBusinessDetails.image,
+        primaryPhone: primaryPhone || existingBusinessDetails.primaryPhone,
+        ext: ext || existingBusinessDetails.ext,
+        cellPhone: cellPhone || existingBusinessDetails.cellPhone,
+        fax: fax || existingBusinessDetails.fax,
+        Corporation:
+          Corporation.length > 0
+            ? Corporation
+            : existingBusinessDetails.Corporation,
+        Status: Status.length > 0 ? Status : existingBusinessDetails.Status,
+        companyOverview:
+          companyOverview || existingBusinessDetails.companyOverview,
+        agentbusinessInfo: {
+          connect: { id: parseInt(agentbusinessInfoId) }, // Ensure ID is passed as an integer
         },
       },
     });
 
-    console.log("Database entry created:", agentBusinessDetails);
-    return NextResponse.json(agentBusinessDetails, { status: 201 });
+    return NextResponse.json(updatedBusinessDetails);
   } catch (error) {
     console.error("Error in API route:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

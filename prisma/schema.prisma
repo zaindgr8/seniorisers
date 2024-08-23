@@ -72,20 +72,20 @@ model UserProfile {
 
 model CommunityBusinessDetails {
   id              Int                    @id @default(autoincrement())
-  dba             String
-  yearFounded     String
-  license         String
-  country         String
-  city            String
-  state           String
-  zip             String
-  website         String
-  units           String
-  image           String
-  primaryPhone    String
-  ext             String
-  cellPhone       String
-  fax             String
+  dba             String?
+  yearFounded     String?
+  license         String?
+  country         String?
+  city            String?
+  state           String?
+  zip             String?
+  website         String?
+  units           String?
+  image           String?
+  primaryPhone    String?
+  ext             String?
+  cellPhone       String?
+  fax             String?
   Corporation     String[]
   Status          String[]
   companyOverview String?
@@ -130,37 +130,54 @@ model AgentBusinessinfo {
   services             String[]               // Array of services
   agentBusiness        AgentBusinessDetails[]
   images               AgentImage[]
+  insurance   InsuranceOptions[]
   userauth             Userauth               @relation(fields: [userauthId], references: [id])
   userauthId           Int                    // Foreign key referencing Userauth
 }
 
 model AgentBusinessDetails {
   id                   Int                    @id @default(autoincrement())
-  dba                  String
-  yearFounded          String
-  license              String
-  country              String
-  city                 String
-  state                String
-  zip                  String
-  website              String
-  image                String
-  primaryPhone         String
-  ext                  String
-  cellPhone            String
-  fax                  String
+  dba                  String?
+  yearFounded          String?
+  license              String?
+  country              String?
+  city                 String?
+  state                String?
+  zip                  String?
+  website              String?
+  image                String?
+  primaryPhone         String?
+  ext                  String?
+  cellPhone            String?
+  fax                  String?
   Corporation          String[]
   Status               String[]
   companyOverview      String?
   agentbusinessInfo    AgentBusinessinfo      @relation(fields: [agentbusinessInfoId], references: [id])
-  agentbusinessInfoId  Int                    // Foreign key referencing AgentBusinessinfo
+  agentbusinessInfoId  Int
+  userauthId           Int?
 }
+
 
 model AgentImage {
   id                   Int                    @id @default(autoincrement())
   image                String[]
   agentbusinessInfo    AgentBusinessinfo      @relation(fields: [agentbusinessInfoId], references: [id])
   agentbusinessInfoId  Int                    // Foreign key referencing AgentBusinessinfo
+}
+model InsuranceOptions {
+  id                   Int       @id @default(autoincrement())
+  allInsurance         Boolean?   @default(false)
+  dentalInsurance      Boolean?  @default(false)
+  longTermInsurance    Boolean?  @default(false)
+  medicaid             Boolean?   @default(false)
+  medicaidManaged      Boolean?   @default(false)
+  medicare             Boolean?   @default(false)
+  supplemental         Boolean?   @default(false)
+  visionInsurance      Boolean?   @default(false)
+  workersComp          Boolean?   @default(false)
+agentbusinessInfo    AgentBusinessinfo      @relation(fields: [agentbusinessInfoId], references: [id])
+  agentbusinessInfoId  Int   
 }
 
 model AgentConnectionRequest {

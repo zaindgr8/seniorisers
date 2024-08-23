@@ -19,6 +19,7 @@ const Agentlisting = () => {
   });
 
   const [formData, setFormData] = useState({
+    id: "", // The ID of the existing business detail (for updates)
     dba: "",
     yearFounded: "",
     license: "",
@@ -50,8 +51,8 @@ const Agentlisting = () => {
             agentName: latestEntry.agentName,
             address: latestEntry.address,
             id: latestEntry.id,
-            businessType: latestEntry.businessType, // Set businessType
-            services: latestEntry.services, // Set services
+            businessType: latestEntry.businessType,
+            services: latestEntry.services,
           });
 
           setFormData((prevFormData) => ({
@@ -60,6 +61,34 @@ const Agentlisting = () => {
             businessType: latestEntry.businessType,
             services: latestEntry.services,
           }));
+
+          // Fetch the agent business details if they exist
+          const detailsResponse = await axios.get(
+            `/api/agentBusinessDetails?agentbusinessInfoId=${latestEntry.id}`
+          );
+          const existingDetails = detailsResponse.data.data[0]; // Assuming there's only one set of details
+
+          if (existingDetails) {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              id: existingDetails.id,
+              dba: existingDetails.dba || "",
+              yearFounded: existingDetails.yearFounded || "",
+              license: existingDetails.license || "",
+              country: existingDetails.country || "",
+              city: existingDetails.city || "",
+              state: existingDetails.state || "",
+              zip: existingDetails.zip || "",
+              website: existingDetails.website || "",
+              primaryPhone: existingDetails.primaryPhone || "",
+              ext: existingDetails.ext || "",
+              cellPhone: existingDetails.cellPhone || "",
+              fax: existingDetails.fax || "",
+              Corporation: existingDetails.Corporation || [],
+              Status: existingDetails.Status || [],
+              companyOverview: existingDetails.companyOverview || "",
+            }));
+          }
         } else {
           toast.error("Failed to fetch valid initial data.");
         }
@@ -123,7 +152,11 @@ const Agentlisting = () => {
     }
 
     try {
-      const response = await axios.post("/api/agentBusinessDetails", formData);
+      const response = await axios({
+        method: formData.id ? "put" : "post", // Use PUT if updating, POST if creating
+        url: "/api/agentBusinessDetails",
+        data: formData,
+      });
 
       console.log("Response:", response);
       toast.success("Data submitted successfully!");
@@ -380,11 +413,7 @@ const Agentlisting = () => {
                 ></textarea>
               </div>
               <div>
-                <input
-                  type="file"
-                  name="file"
-                  onChange={handleImageUpload} // Use the updated handleImageUpload function
-                />
+                <input type="file" name="file" onChange={handleImageUpload} />
                 {filePreview && (
                   <img
                     src={filePreview}
