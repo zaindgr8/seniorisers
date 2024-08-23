@@ -131,6 +131,7 @@ model AgentBusinessinfo {
   agentBusiness        AgentBusinessDetails[]
   images               AgentImage[]
   insurance   InsuranceOptions[]
+  paymentOptions   PaymentOptions[]
   userauth             Userauth               @relation(fields: [userauthId], references: [id])
   userauthId           Int                    // Foreign key referencing Userauth
 }
@@ -179,7 +180,23 @@ model InsuranceOptions {
 agentbusinessInfo    AgentBusinessinfo      @relation(fields: [agentbusinessInfoId], references: [id])
   agentbusinessInfoId  Int   
 }
-
+model PaymentOptions {
+  id                   Int       @id @default(autoincrement())
+  visa                 Boolean   @default(false)
+  mastercard           Boolean   @default(false)
+  amex                 Boolean   @default(false)
+  discover             Boolean   @default(false)
+  paypal               Boolean   @default(false)
+  applepay             Boolean   @default(false)
+  skrill               Boolean   @default(false)
+  venmo                Boolean   @default(false)
+  googlepay            Boolean   @default(false)
+  cash                 Boolean   @default(false)
+  checks               Boolean   @default(false)
+  moneyorder           Boolean   @default(false)
+  agentBusinessInfo    AgentBusinessinfo? @relation(fields: [agentBusinessInfoId], references: [id])
+  agentBusinessInfoId  Int?
+}
 model AgentConnectionRequest {
   id          Int               @id @default(autoincrement())
   senderId    Int
