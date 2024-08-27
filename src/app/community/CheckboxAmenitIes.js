@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import axios from "axios"; // Ensure axios is installed and imported
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Checkbox from "../../components/Checkbox"; // Ensure the import path is correct
+import Checkbox from "../../components/Checkbox";
 
 const amenities1 = [
   "24 Hour On-site Certified Licensed Staff",
@@ -42,6 +42,57 @@ const amenities3 = [
 
 const CheckboxAmenities = () => {
   const [selectedAmenities, setSelectedAmenities] = useState({});
+  const [businessInfoId, setBusinessInfoId] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    const fetchBusinessInfoId = async () => {
+      try {
+        const response = await axios.get("/api/communtyinfo");
+        const latestEntry = response.data.data?.[response.data.data.length - 1];
+
+        if (latestEntry && latestEntry.id) {
+          setBusinessInfoId(latestEntry.id);
+        } else {
+          throw new Error("No valid entry found.");
+        }
+      } catch (error) {
+        console.error("Error fetching business info:", error);
+        toast.error("Failed to fetch business info.");
+      }
+    };
+
+    fetchBusinessInfoId();
+  }, []);
+
+  useEffect(() => {
+    const fetchAmenities = async () => {
+      if (!businessInfoId) return;
+
+      try {
+        const response = await axios.get(`/api/checkboxamenitIes`, {
+          params: { businessInfoId },
+        });
+
+        if (response.data.data && response.data.data.amenities) {
+          const amenities = response.data.data.amenities.reduce(
+            (acc, amenity) => {
+              acc[amenity] = true;
+              return acc;
+            },
+            {}
+          );
+          setSelectedAmenities(amenities);
+          setIsEdit(true);
+        }
+      } catch (error) {
+        console.error("Error fetching amenities:", error);
+        toast.error("Failed to fetch amenities.");
+      }
+    };
+
+    fetchAmenities();
+  }, [businessInfoId]);
 
   const handleCheckboxChange = (amenity) => {
     setSelectedAmenities((prev) => ({
@@ -52,19 +103,32 @@ const CheckboxAmenities = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!businessInfoId) {
+      toast.error("Business info ID not available.");
+      return;
+    }
+
     const amenities = Object.keys(selectedAmenities).filter(
       (key) => selectedAmenities[key]
     );
 
     try {
-      const response = await axios.post("/api/checkboxamenitIes", {
-        amenities,
-        businessInfoId: 1, // Replace with the actual businessInfoId
-      });
-      toast.success("Amenities created successfully!");
-      setSelectedAmenities({});
+      if (isEdit) {
+        await axios.put("/api/checkboxamenitIes", {
+          amenities,
+          businessInfoId,
+        });
+        toast.success("Amenities updated successfully!");
+      } else {
+        await axios.post("/api/checkboxamenitIes", {
+          amenities,
+          businessInfoId,
+        });
+        toast.success("Amenities created successfully!");
+      }
     } catch (error) {
-      toast.error("Failed to create amenities. Please try again.");
+      console.error("Error submitting amenities:", error);
+      toast.error("Failed to save amenities. Please try again.");
     }
   };
 
@@ -106,7 +170,7 @@ const CheckboxAmenities = () => {
           type="submit"
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
         >
-          Submit
+          {isEdit ? "Update" : "Submit"}
         </button>
       </div>
     </form>

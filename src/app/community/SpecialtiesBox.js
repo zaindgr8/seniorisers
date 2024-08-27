@@ -41,6 +41,7 @@ const SpecialtiesBox = () => {
   });
 
   const [selectedSpecialties, setSelectedSpecialties] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,8 +52,26 @@ const SpecialtiesBox = () => {
         if (latestEntry && latestEntry.id) {
           setFormData((prevFormData) => ({
             ...prevFormData,
-            businessInfoId: latestEntry.id, // Assuming it's `id` instead of `_id`
+            businessInfoId: latestEntry.id,
           }));
+
+          // Fetch existing specialties
+          const specialtiesResponse = await axios.get(
+            `/api/CommunitySpecialties?businessInfoId=${latestEntry.id}`
+          );
+
+          if (specialtiesResponse.data.data?.specialties) {
+            const specialties =
+              specialtiesResponse.data.data.specialties.reduce(
+                (acc, specialty) => {
+                  acc[specialty] = true;
+                  return acc;
+                },
+                {}
+              );
+            setSelectedSpecialties(specialties);
+            setIsEdit(true); // Set to edit mode if data exists
+          }
         } else {
           throw new Error("No valid entry found in the response data.");
         }
@@ -94,13 +113,18 @@ const SpecialtiesBox = () => {
     };
 
     try {
-      const response = await axios.post(
-        "/api/CommunitySpecialties",
-        combinedData
-      );
-      if (response.status === 200) {
-        toast.success("Specialties data submitted successfully!");
+      let response;
+      if (isEdit) {
+        // If specialties exist, update them
+        response = await axios.put("/api/CommunitySpecialties", combinedData);
+        toast.success("Specialties updated successfully!");
       } else {
+        // Otherwise, create them
+        response = await axios.post("/api/CommunitySpecialties", combinedData);
+        toast.success("Specialties data submitted successfully!");
+      }
+
+      if (response.status !== 200) {
         toast.error("Failed to submit specialties.");
       }
     } catch (error) {

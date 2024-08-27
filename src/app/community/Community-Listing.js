@@ -73,28 +73,32 @@ const Communitylisting = () => {
           );
           const businessDetail = response.data.data[0]; // Assuming only one detail set per business
 
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            id: businessDetail.id,
-            dba: businessDetail.dba || "",
-            yearFounded: businessDetail.yearFounded || "",
-            license: businessDetail.license || "",
-            country: businessDetail.country || "",
-            city: businessDetail.city || "",
-            state: businessDetail.state || "",
-            zip: businessDetail.zip || "",
-            website: businessDetail.website || "",
-            primaryPhone: businessDetail.primaryPhone || "",
-            ext: businessDetail.ext || "",
-            cellPhone: businessDetail.cellPhone || "",
-            fax: businessDetail.fax || "",
-            services: businessDetail.services || "",
-            image: businessDetail.image || "",
-            units: businessDetail.units || "",
-            companyOverview: businessDetail.companyOverview || "",
-            Corporation: businessDetail.Corporation || [],
-            Status: businessDetail.Status || [],
-          }));
+          if (businessDetail) {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              id: businessDetail.id,
+              dba: businessDetail.dba || "",
+              yearFounded: businessDetail.yearFounded || "",
+              license: businessDetail.license || "",
+              country: businessDetail.country || "",
+              city: businessDetail.city || "",
+              state: businessDetail.state || "",
+              zip: businessDetail.zip || "",
+              website: businessDetail.website || "",
+              primaryPhone: businessDetail.primaryPhone || "",
+              ext: businessDetail.ext || "",
+              cellPhone: businessDetail.cellPhone || "",
+              fax: businessDetail.fax || "",
+              services: businessDetail.services || "",
+              image: businessDetail.image || "",
+              units: businessDetail.units || "",
+              companyOverview: businessDetail.companyOverview || "",
+              Corporation: businessDetail.Corporation || [],
+              Status: businessDetail.Status || [],
+            }));
+          } else {
+            console.warn("No business detail found.");
+          }
         }
       } catch (error) {
         console.error("Fetching error:", error);
