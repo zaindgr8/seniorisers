@@ -18,7 +18,6 @@ const Page = () => {
     eventUrl: "",
   });
 
-  // Fetch events when the component mounts or when the Refresh button is clicked
   const fetchEvents = async () => {
     try {
       const response = await fetch("/api/event");
@@ -30,7 +29,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    fetchEvents(); // Fetch events when the component mounts
+    fetchEvents();
   }, []);
   const handleInputChange = (e) => {
     const { id, value } = e.target;

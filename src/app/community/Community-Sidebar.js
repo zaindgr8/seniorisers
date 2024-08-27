@@ -43,18 +43,18 @@ const menuItems = [
     link: "/community-connections",
   },
   { id: 5, label: "Sponsors", icon: MdBusiness, link: "/community-sponsors" },
-  {
-    id: 6,
-    label: "Notifications",
-    icon: MdNotifications,
-    link: "/community-notifications",
-  },
-  {
-    id: 7,
-    label: "Analytics",
-    icon: MdAssessment,
-    link: "/community-analytics",
-  },
+  // {
+  //   id: 6,
+  //   label: "Notifications",
+  //   icon: MdNotifications,
+  //   link: "/community-notifications",
+  // },
+  // {
+  //   id: 7,
+  //   label: "Analytics",
+  //   icon: MdAssessment,
+  //   link: "/community-analytics",
+  // },
   {
     id: 8,
     label: "Featured Listing",

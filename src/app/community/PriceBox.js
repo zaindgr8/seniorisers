@@ -31,6 +31,7 @@ const PriceBox = () => {
   const [selectedPricing, setSelectedPricing] = useState({});
   const [selectedPayments, setSelectedPayments] = useState({});
   const [businessInfoId, setBusinessInfoId] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     const fetchBusinessInfo = async () => {
@@ -39,7 +40,29 @@ const PriceBox = () => {
         const latestEntry = response.data.data?.[response.data.data.length - 1];
 
         if (latestEntry && latestEntry.id) {
-          setBusinessInfoId(latestEntry.id); // Assuming the ID is stored as `id`
+          setBusinessInfoId(latestEntry.id);
+
+          // Fetch existing pricing and payment data if available
+          const pricingResponse = await axios.get(
+            `/api/communitypricing?businessInfoId=${latestEntry.id}`
+          );
+          if (pricingResponse.data.data) {
+            setSelectedPricing(
+              pricingResponse.data.data.pricing.reduce((acc, item) => {
+                acc[item] = true;
+                return acc;
+              }, {})
+            );
+
+            setSelectedPayments(
+              pricingResponse.data.data.payments.reduce((acc, item) => {
+                acc[item] = true;
+                return acc;
+              }, {})
+            );
+
+            setIsEdit(true); // Set edit mode if data exists
+          }
         } else {
           throw new Error("No valid entry found in the response data.");
         }
@@ -77,35 +100,36 @@ const PriceBox = () => {
 
     try {
       const response = await fetch("/api/communitypricing", {
-        method: "POST", // Specify the method as POST
+        method: isEdit ? "PUT" : "POST", // Use PUT if editing, POST if creating
         headers: {
-          "Content-Type": "application/json", // Set the content type to JSON
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           pricing,
           payments,
-          businessInfoId, // Use the dynamically fetched ID
+          businessInfoId,
         }),
       });
 
       if (response.ok) {
-        toast.success("Pricing and payment options created successfully!");
+        toast.success(
+          `Pricing and payment options ${
+            isEdit ? "updated" : "created"
+          } successfully!`
+        );
         setSelectedPricing({});
         setSelectedPayments({});
       } else {
         toast.error(
-          "Failed to create pricing and payment options. Please try again."
+          "Failed to save pricing and payment options. Please try again."
         );
       }
     } catch (error) {
       toast.error(
-        "Failed to create pricing and payment options. Please try again."
+        "Failed to save pricing and payment options. Please try again."
       );
     }
   };
-
-  console.log(selectedPayments);
-  console.log(selectedPricing);
 
   return (
     <div>
@@ -140,7 +164,7 @@ const PriceBox = () => {
           type="submit"
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
         >
-          Submit
+          {isEdit ? "Update" : "Submit"}
         </button>
       </form>
     </div>

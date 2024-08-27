@@ -1,13 +1,63 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ImagesUpload = () => {
   const [previews, setPreviews] = useState([]);
   const [images, setImages] = useState([]);
+  const [businessInfoId, setBusinessInfoId] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
+  // Fetch the businessInfoId and images when the component mounts
+  useEffect(() => {
+    const fetchBusinessInfoId = async () => {
+      try {
+        const response = await axios.get("/api/communtyinfo");
+        const latestEntry = response.data.data?.[response.data.data.length - 1];
+
+        if (latestEntry && latestEntry.id) {
+          setBusinessInfoId(latestEntry.id);
+        } else {
+          throw new Error("No valid entry found.");
+        }
+      } catch (error) {
+        console.error("Error fetching business info:", error);
+        toast.error("Failed to fetch business info.");
+      }
+    };
+
+    fetchBusinessInfoId();
+  }, []);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      if (!businessInfoId) return; // Ensure businessInfoId is available
+
+      try {
+        const response = await fetch(
+          `/api/propertyimages?businessInfoId=${businessInfoId}`
+        );
+        const result = await response.json();
+
+        if (response.ok && result.data && result.data.length > 0) {
+          setPreviews(result.data[0].image);
+          setImages(result.data[0].image);
+          setIsEditMode(true);
+        } else {
+          setIsEditMode(false);
+        }
+      } catch (error) {
+        toast.error("Failed to fetch images.");
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchImages();
+  }, [businessInfoId]);
+
+  // Handle file drop
   const onDrop = useCallback((acceptedFiles) => {
     const newPreviews = acceptedFiles.map((file) => URL.createObjectURL(file));
     setPreviews((prev) => [...prev, ...newPreviews]);
@@ -28,16 +78,22 @@ const ImagesUpload = () => {
     accept: "image/*",
   });
 
+  // Handle image upload
   const handleSubmit = async () => {
+    if (!businessInfoId) {
+      toast.error("Business Info ID is missing.");
+      return;
+    }
+
     try {
       const response = await fetch("/api/propertyimages", {
-        method: "POST",
+        method: isEditMode ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           images,
-          businessInfoId: 1, // Replace with actual businessInfoId
+          businessInfoId,
         }),
       });
 
@@ -53,8 +109,6 @@ const ImagesUpload = () => {
       toast.error("Failed to upload images.");
     }
   };
-
-  console.log(images);
 
   return (
     <div className="container mx-auto mt-4">
@@ -86,7 +140,7 @@ const ImagesUpload = () => {
         onClick={handleSubmit}
         className="mt-4 btn bg-blue-500 text-white px-4 py-2 rounded"
       >
-        Upload Images
+        {isEditMode ? "Update Images" : "Upload Images"}
       </button>
     </div>
   );

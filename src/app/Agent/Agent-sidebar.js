@@ -43,18 +43,18 @@ const menuItems = [
     link: "/agent-connections",
   },
   { id: 5, label: "Sponsors", icon: MdBusiness, link: "/agent-sponsors" },
-  {
-    id: 6,
-    label: "Notifications",
-    icon: MdNotifications,
-    link: "/agent-notifications",
-  },
-  {
-    id: 7,
-    label: "Analytics",
-    icon: MdAssessment,
-    link: "/agent-analytics",
-  },
+  // {
+  //   id: 6,
+  //   label: "Notifications",
+  //   icon: MdNotifications,
+  //   link: "/agent-notifications",
+  // },
+  // {
+  //   id: 7,
+  //   label: "Analytics",
+  //   icon: MdAssessment,
+  //   link: "/agent-analytics",
+  // },
   {
     id: 8,
     label: "Featured Listing",

@@ -83,8 +83,8 @@ const Incentives = () => {
             <th className="py-2 px-4 border-b border-gray-300">TITLE</th>
             <th className="py-2 px-4 border-b border-gray-300">VALUE</th>
             <th className="py-2 px-4 border-b border-gray-300">LIMITED</th>
-            <th className="py-2 px-4 border-b border-gray-300">VIEWS</th>
-            <th className="py-2 px-4 border-b border-gray-300">SHARED</th>
+            {/* <th className="py-2 px-4 border-b border-gray-300">VIEWS</th>
+            <th className="py-2 px-4 border-b border-gray-300">SHARED</th> */}
             <th className="py-2 px-4 border-b border-gray-300">ACTION</th>
           </tr>
         </thead>

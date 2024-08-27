@@ -28,3 +28,40 @@ export async function getCommunityBusinessinfoById(id) {
     await prisma.$disconnect();
   }
 }
+
+export async function getEventById(id) {
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: parseInt(id, 10) },
+    });
+    return event;
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    throw new Error("Failed to fetch event");
+  }
+}
+
+// Function to update an event by ID
+export async function updateEventById(id, data) {
+  try {
+    const updatedEvent = await prisma.event.update({
+      where: { id: parseInt(id, 10) },
+      data,
+    });
+    return updatedEvent;
+  } catch (error) {
+    console.error("Error updating event:", error);
+    throw new Error("Failed to update event");
+  }
+}
+
+// Function to get all events
+export async function getAllEvents() {
+  try {
+    const events = await prisma.event.findMany();
+    return events;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    throw new Error("Failed to fetch events");
+  }
+}
