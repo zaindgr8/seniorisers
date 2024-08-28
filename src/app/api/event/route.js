@@ -58,3 +58,21 @@ export async function GET() {
     );
   }
 }
+export async function DELETE(request, { params }) {
+  try {
+    const { id } = params;
+
+    // Delete the event by its ID
+    await prisma.event.delete({
+      where: { id: Number(id) },
+    });
+
+    return NextResponse.json({ message: "Event deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return NextResponse.json(
+      { error: "Failed to delete event" },
+      { status: 500 }
+    );
+  }
+}

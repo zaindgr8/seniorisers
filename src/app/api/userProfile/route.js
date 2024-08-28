@@ -1,12 +1,28 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../utils/prisma";
+import jwt from "jsonwebtoken";
 
 export async function POST(request) {
   try {
-    const body = await request.json();
+    // Get the token from cookies
+    const token = request.cookies.get("token")?.value;
+    console.log("token", token);
 
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { error: "No token found or invalid token" },
+        { status: 401 }
+      );
+    }
+
+    // Decode the token to get the user ID
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log("decoded", decoded);
+
+    const userauthId = decoded.userId;
+
+    // Parse request body
     const {
-      UserauthId,
       jobTitle,
       startedInIndustry,
       aboutYou,
@@ -14,12 +30,12 @@ export async function POST(request) {
       fullName,
       profilePhoto,
       certificatesAndAwards,
-    } = body;
+    } = await request.json();
 
     // Create a new user profile with the provided data
     const newUserProfile = await prisma.userProfile.create({
       data: {
-        UserauthId,
+        UserauthId: userauthId,
         jobTitle,
         fullName,
         startedInIndustry: startedInIndustry

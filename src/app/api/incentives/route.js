@@ -56,3 +56,24 @@ export async function GET() {
     );
   }
 }
+export async function DELETE(request, { params }) {
+  try {
+    const { id } = params;
+
+    // Delete the incentive by its ID
+    const deletedIncentive = await prisma.incentive.delete({
+      where: { id: Number(id) },
+    });
+
+    return NextResponse.json({
+      message: "Incentive deleted successfully",
+      deletedIncentive,
+    });
+  } catch (error) {
+    console.error("Error deleting incentive:", error);
+    return NextResponse.json(
+      { error: "Failed to delete incentive" },
+      { status: 500 }
+    );
+  }
+}

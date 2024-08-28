@@ -26,10 +26,10 @@ const menuItems = [
     id: 9,
     label: "Edit Profile",
     icon: MdEdit,
-    link: "/userProfile",
+    link: "/agentProfile",
     isChecked: true,
   },
-  { id: 2, label: "Events", icon: MdEvent, link: "/events" },
+  { id: 2, label: "event", icon: MdEvent, link: "/agentevent" },
   {
     id: 3,
     label: "Incentives",

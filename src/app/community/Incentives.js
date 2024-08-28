@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Incentives = () => {
   const [activeTab, setActiveTab] = useState("current");
@@ -15,21 +17,38 @@ const Incentives = () => {
   const [expiredIncentives, setExpiredIncentives] = useState([]);
 
   useEffect(() => {
-    const fetchIncentives = async () => {
-      try {
-        const response = await fetch("/api/incentives");
-        const data = await response.json();
-
-        setCurrentIncentives(data.currentIncentives);
-        setUpcomingIncentives(data.upcomingIncentives);
-        setExpiredIncentives(data.expiredIncentives);
-      } catch (error) {
-        console.error("Failed to fetch incentives", error);
-      }
-    };
-
     fetchIncentives();
   }, []);
+
+  const fetchIncentives = async () => {
+    try {
+      const response = await fetch("/api/incentives");
+      const data = await response.json();
+
+      setCurrentIncentives(data.currentIncentives);
+      setUpcomingIncentives(data.upcomingIncentives);
+      setExpiredIncentives(data.expiredIncentives);
+    } catch (error) {
+      toast.error("Failed to fetch incentives");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`/api/incentives/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        toast.success("Incentive deleted successfully");
+        fetchIncentives(); // Refresh incentives after deletion
+      } else {
+        toast.error("Failed to delete incentive");
+      }
+    } catch (error) {
+      toast.error("Error deleting incentive");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,8 +73,8 @@ const Incentives = () => {
       });
 
       if (response.ok) {
-        console.log("Incentive created successfully");
-        // Reset form after successful submission
+        toast.success("Incentive created successfully");
+
         setIncentiveName("");
         setStartDate("");
         setEndDate("");
@@ -64,27 +83,24 @@ const Incentives = () => {
         setDescription("");
         setLegalDisclaimer("");
 
-        // Refresh incentives after adding a new one
-        fetchIncentives();
+        fetchIncentives(); // Refresh incentives after adding a new one
       } else {
-        console.error("Failed to create incentive");
+        toast.error("Failed to create incentive");
       }
     } catch (error) {
-      console.error("Error submitting the form:", error);
+      toast.error("Error submitting the form:");
     }
   };
 
   const renderIncentives = (incentives) => (
     <div className="overflow-x-auto">
+      <ToastContainer />
       <table className="min-w-full bg-white">
         <thead className="bg-gray-100">
           <tr>
             <th className="py-2 px-4 border-b border-gray-300">DURATION</th>
             <th className="py-2 px-4 border-b border-gray-300">TITLE</th>
             <th className="py-2 px-4 border-b border-gray-300">VALUE</th>
-            <th className="py-2 px-4 border-b border-gray-300">LIMITED</th>
-            {/* <th className="py-2 px-4 border-b border-gray-300">VIEWS</th>
-            <th className="py-2 px-4 border-b border-gray-300">SHARED</th> */}
             <th className="py-2 px-4 border-b border-gray-300">ACTION</th>
           </tr>
         </thead>
@@ -110,11 +126,13 @@ const Incentives = () => {
                     ? `${incentive.valueOfIncentive}%`
                     : `$${incentive.valueOfIncentive}`}
                 </td>
-                <td className="py-2 px-4 border-b border-gray-300">No</td>
-                <td className="py-2 px-4 border-b border-gray-300">0</td>
-                <td className="py-2 px-4 border-b border-gray-300">0</td>
                 <td className="py-2 px-4 border-b border-gray-300">
-                  <button className="text-blue-500">Delete</button>
+                  <button
+                    onClick={() => handleDelete(incentive.id)}
+                    className="text-blue-500"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))
@@ -126,6 +144,7 @@ const Incentives = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <ToastContainer />
       <div className="flex space-x-4 mb-4">
         <button
           className={`px-4 py-2 ${

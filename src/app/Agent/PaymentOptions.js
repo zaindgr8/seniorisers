@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function PaymentOptions() {
   const [paymentOptions, setPaymentOptions] = useState({
@@ -92,6 +93,7 @@ export default function PaymentOptions() {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+      <ToastContainer />
       <h1 className="text-2xl font-bold mb-6 text-center">
         Manage Payment Options
       </h1>

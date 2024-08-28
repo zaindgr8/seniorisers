@@ -1,7 +1,7 @@
 import prisma from "../../../utils/prisma"; // Adjust the import path if necessary
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 export async function POST(request) {
   try {
     const reqBody = await request.json();
@@ -46,10 +46,31 @@ export async function POST(request) {
 }
 export async function GET(request) {
   try {
-    // Fetch all users from the database
-    const users = await prisma.userauth.findMany();
+    // Retrieve the token from cookies
+    const token = request.cookies.get("token")?.value;
 
-    return NextResponse.json(users, { status: 200 });
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { error: "No token found or invalid token" },
+        { status: 401 }
+      );
+    }
+
+    // Verify and decode the token to get the user ID
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userauthId = decoded.userId;
+
+    // Fetch the logged-in user's data
+    const user = await prisma.userauth.findUnique({
+      where: { id: userauthId },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Return the logged-in user's data
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

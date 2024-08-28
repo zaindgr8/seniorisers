@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function InsuranceOptions() {
   const [insuranceOptions, setInsuranceOptions] = useState({
@@ -90,6 +91,7 @@ export default function InsuranceOptions() {
 
   return (
     <div>
+      <ToastContainer />
       <h1>Manage Insurance Options</h1>
       <div className="h-full border-blue-500 rounded-lg border-2 pt-4 shadow-sm w-full mt-2">
         <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto p-4">
