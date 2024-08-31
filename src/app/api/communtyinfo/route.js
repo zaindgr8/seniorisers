@@ -14,7 +14,7 @@ export async function GET(request) {
         userauth: true,
       },
     });
-    console.log(communityBusinesses);
+    console.log("communityBusinesses", communityBusinesses);
 
     return NextResponse.json({ data: communityBusinesses });
   } catch (error) {

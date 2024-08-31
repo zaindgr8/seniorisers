@@ -65,3 +65,23 @@ export async function getAllEvents() {
     throw new Error("Failed to fetch events");
   }
 }
+
+export async function getAllCommunityBusinessInfoWithRelations() {
+  try {
+    const communityBusinessInfos = await prisma.communityBusinessinfo.findMany({
+      include: {
+        businessDetails: true,
+        amenities: true,
+        specialties: true,
+        pricing: true,
+        propertyImages: true,
+        userauth: true, // Assuming you might also want to include the associated user
+      },
+    });
+
+    return communityBusinessInfos;
+  } catch (error) {
+    console.error("Error fetching CommunityBusinessinfo:", error);
+    throw new Error("Failed to fetch CommunityBusinessinfo");
+  }
+}
