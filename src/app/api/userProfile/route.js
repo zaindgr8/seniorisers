@@ -58,3 +58,30 @@ export async function POST(request) {
     );
   }
 }
+export async function GET(request) {
+  try {
+    // Fetching the data from the Prisma client
+    const agentProfiles = await prisma.userauth.findMany({
+      where: {
+        userType: "AGENT", // Filtering to include only 'AGENT' users
+      },
+      select: {
+        id: true,
+        fullName: true,
+        UserProfile: {
+          select: {
+            jobTitle: true,
+            profilePhoto: true,
+          },
+        },
+      },
+    });
+    console.log("agentProfiles", agentProfiles);
+
+    // Returning the fetched data as a JSON response
+    return NextResponse.json({ data: agentProfiles });
+  } catch (error) {
+    console.error("Error fetching agent profiles:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

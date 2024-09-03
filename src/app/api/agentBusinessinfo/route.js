@@ -52,11 +52,25 @@ export async function POST(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
 export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const zip = searchParams.get("zip");
+  const city = searchParams.get("city");
+  const state = searchParams.get("state");
+  const businessName = searchParams.get("businessName");
+
   try {
-    // Fetch all AgentBusinessinfo entries along with their related Userauth data
     const agentBusinessinfoList = await prisma.agentBusinessinfo.findMany({
+      where: {
+        OR: [
+          zip ? { agentBusiness: { some: { zip } } } : undefined,
+          city ? { agentBusiness: { some: { city } } } : undefined,
+          state ? { agentBusiness: { some: { state } } } : undefined,
+          businessName
+            ? { agentName: { contains: businessName, mode: "insensitive" } }
+            : undefined,
+        ].filter(Boolean),
+      },
       include: {
         agentBusiness: true,
         userauth: true,

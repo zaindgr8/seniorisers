@@ -21,20 +21,6 @@ function Dropdown() {
     }
   };
 
-  const options = [
-    { value: "1234", label: "1234" },
-    { value: "5678", label: "5678" },
-    { value: "9090", label: "9090" },
-  ];
-  const optionsTwo = [
-    { value: "Las Vegas", label: "Las Vegas" },
-    { value: "NewYork", label: "NewYork" },
-    { value: "Washington", label: "Washington" },
-  ];
-  const optionsThree = [
-    { value: "Texas", label: "Texas" },
-    { value: "California", label: "California" },
-  ];
   const customSelectStyle = {
     control: (provided) => ({
       ...provided,
@@ -69,7 +55,6 @@ function Dropdown() {
             <div className="search-select ">
               <Select
                 id="test"
-                options={options}
                 defaultValue={value}
                 onChange={setValue}
                 isSearchable={true}
@@ -81,7 +66,6 @@ function Dropdown() {
           <div className="col-md-4">
             <div className="search-select">
               <Select
-                options={optionsTwo}
                 defaultValue={value}
                 onChange={setValue}
                 isSearchable={true}
@@ -93,7 +77,6 @@ function Dropdown() {
           <div className="col-md-4">
             <div className="search-select">
               <Select
-                options={optionsThree}
                 defaultValue={value}
                 onChange={setValue}
                 isSearchable={true}
@@ -125,18 +108,6 @@ function Dropdown() {
       <div className="col-md-12  mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.isArray(houses) && houses.length > 0 ? (
           houses.map((house) => (
-            // <div
-            //   key={house._id}
-            //   className="border rounded-lg shadow-lg p-4 bg-white"
-            // >
-            //   <h3 className="text-xl font-bold text-gray-900">
-            //     {house.CompanyName}
-            //   </h3>
-            //   <p className="text-gray-700">{house.Address}</p>
-            //   <p className="text-gray-700">{house.City}</p>
-            //   <p className="text-gray-700">{house.state}</p>
-            //   <p className="text-gray-700">{house.Zip}</p>
-            // </div>
             <div className=" card mb-4   bg-grey border-0 shadow rounded-3">
               <Link href="" className="card-link" />
               <div className="card-body p-0">

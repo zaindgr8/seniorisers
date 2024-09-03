@@ -8,7 +8,7 @@ export default function FeaturesProperties() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/communtyinfo");
+        const response = await fetch("/api/getcommuntydata");
         const result = await response.json();
         if (result.data) {
           setFeaturesProperties(result.data);
@@ -52,15 +52,18 @@ export default function FeaturesProperties() {
               data-aos-delay={300}
               key={featuresProperty.id}
             >
-              <Link href="" className="card-link" />
+              <Link
+                href={`/community-details/${featuresProperty.id}`}
+                className="card-link"
+              />
               <div className="card-body p-0">
                 <div className="g-0 row">
                   <div className="bg-white col-lg-5 col-md-6 col-xl-3 position-relative">
                     <div className="card-image-hover overflow-hidden position-relative h-100">
                       <img
                         src={
-                          featuresProperty.businessDetails[0]?.image ||
-                          "/placeholder-image.jpg"
+                          featuresProperty.propertyImages[0]?.url ||
+                          "/assets/my_imgs/agent.jpg"
                         }
                         alt=""
                         className="h-100 w-100 object-fit-cover"
