@@ -4,17 +4,7 @@ import jwt from "jsonwebtoken";
 
 export async function GET(request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
-
-    if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
-
-    const communityBusiness = await prisma.communityBusinessinfo.findUnique({
-      where: {
-        id: parseInt(id),
-      },
+    const communityBusinesses = await prisma.communityBusinessinfo.findMany({
       include: {
         amenities: true,
         businessDetails: true,
@@ -24,19 +14,14 @@ export async function GET(request) {
         userauth: true,
       },
     });
+    console.log("communityBusinesses", communityBusinesses);
 
-    if (!communityBusiness) {
-      return NextResponse.json(
-        { error: "Business not found" },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({ data: communityBusiness });
+    return NextResponse.json({ data: communityBusinesses });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
 export async function POST(request) {
   try {
     const token = request.cookies.get("token")?.value;

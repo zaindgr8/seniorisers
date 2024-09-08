@@ -5,9 +5,8 @@ CREATE TYPE "UserType" AS ENUM ('COMMUNITY_MEMBER', 'AGENT');
 CREATE TABLE "SponsorConnectionRequest" (
     "id" SERIAL NOT NULL,
     "sponsorId" INTEGER NOT NULL,
-    "agentId" INTEGER NOT NULL,
-    "communityId" INTEGER NOT NULL,
-    "status" TEXT NOT NULL,
+    "receiverId" INTEGER NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -56,20 +55,20 @@ CREATE TABLE "UserProfile" (
 -- CreateTable
 CREATE TABLE "CommunityBusinessDetails" (
     "id" SERIAL NOT NULL,
-    "dba" TEXT NOT NULL,
-    "yearFounded" TEXT NOT NULL,
-    "license" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "zip" TEXT NOT NULL,
-    "website" TEXT NOT NULL,
-    "units" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
-    "primaryPhone" TEXT NOT NULL,
-    "ext" TEXT NOT NULL,
-    "cellPhone" TEXT NOT NULL,
-    "fax" TEXT NOT NULL,
+    "dba" TEXT,
+    "yearFounded" TEXT,
+    "license" TEXT,
+    "country" TEXT,
+    "city" TEXT,
+    "state" TEXT,
+    "zip" TEXT,
+    "website" TEXT,
+    "units" TEXT,
+    "image" TEXT,
+    "primaryPhone" TEXT,
+    "ext" TEXT,
+    "cellPhone" TEXT,
+    "fax" TEXT,
     "Corporation" TEXT[],
     "Status" TEXT[],
     "companyOverview" TEXT,
@@ -130,23 +129,24 @@ CREATE TABLE "AgentBusinessinfo" (
 -- CreateTable
 CREATE TABLE "AgentBusinessDetails" (
     "id" SERIAL NOT NULL,
-    "dba" TEXT NOT NULL,
-    "yearFounded" TEXT NOT NULL,
-    "license" TEXT NOT NULL,
-    "country" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "zip" TEXT NOT NULL,
-    "website" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
-    "primaryPhone" TEXT NOT NULL,
-    "ext" TEXT NOT NULL,
-    "cellPhone" TEXT NOT NULL,
-    "fax" TEXT NOT NULL,
+    "dba" TEXT,
+    "yearFounded" TEXT,
+    "license" TEXT,
+    "country" TEXT,
+    "city" TEXT,
+    "state" TEXT,
+    "zip" TEXT,
+    "website" TEXT,
+    "image" TEXT,
+    "primaryPhone" TEXT,
+    "ext" TEXT,
+    "cellPhone" TEXT,
+    "fax" TEXT,
     "Corporation" TEXT[],
     "Status" TEXT[],
     "companyOverview" TEXT,
     "agentbusinessInfoId" INTEGER NOT NULL,
+    "userauthId" INTEGER,
 
     CONSTRAINT "AgentBusinessDetails_pkey" PRIMARY KEY ("id")
 );
@@ -158,6 +158,43 @@ CREATE TABLE "AgentImage" (
     "agentbusinessInfoId" INTEGER NOT NULL,
 
     CONSTRAINT "AgentImage_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "InsuranceOptions" (
+    "id" SERIAL NOT NULL,
+    "allInsurance" BOOLEAN DEFAULT false,
+    "dentalInsurance" BOOLEAN DEFAULT false,
+    "longTermInsurance" BOOLEAN DEFAULT false,
+    "medicaid" BOOLEAN DEFAULT false,
+    "medicaidManaged" BOOLEAN DEFAULT false,
+    "medicare" BOOLEAN DEFAULT false,
+    "supplemental" BOOLEAN DEFAULT false,
+    "visionInsurance" BOOLEAN DEFAULT false,
+    "workersComp" BOOLEAN DEFAULT false,
+    "agentbusinessInfoId" INTEGER NOT NULL,
+
+    CONSTRAINT "InsuranceOptions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PaymentOptions" (
+    "id" SERIAL NOT NULL,
+    "visa" BOOLEAN NOT NULL DEFAULT false,
+    "mastercard" BOOLEAN NOT NULL DEFAULT false,
+    "amex" BOOLEAN NOT NULL DEFAULT false,
+    "discover" BOOLEAN NOT NULL DEFAULT false,
+    "paypal" BOOLEAN NOT NULL DEFAULT false,
+    "applepay" BOOLEAN NOT NULL DEFAULT false,
+    "skrill" BOOLEAN NOT NULL DEFAULT false,
+    "venmo" BOOLEAN NOT NULL DEFAULT false,
+    "googlepay" BOOLEAN NOT NULL DEFAULT false,
+    "cash" BOOLEAN NOT NULL DEFAULT false,
+    "checks" BOOLEAN NOT NULL DEFAULT false,
+    "moneyorder" BOOLEAN NOT NULL DEFAULT false,
+    "agentBusinessInfoId" INTEGER,
+
+    CONSTRAINT "PaymentOptions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -223,10 +260,7 @@ CREATE UNIQUE INDEX "Userauth_email_key" ON "Userauth"("email");
 ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_sponsorId_fkey" FOREIGN KEY ("sponsorId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_agentId_fkey" FOREIGN KEY ("agentId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_communityId_fkey" FOREIGN KEY ("communityId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "SponsorConnectionRequest" ADD CONSTRAINT "SponsorConnectionRequest_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CommunityBusinessinfo" ADD CONSTRAINT "CommunityBusinessinfo_userauthId_fkey" FOREIGN KEY ("userauthId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -257,6 +291,12 @@ ALTER TABLE "AgentBusinessDetails" ADD CONSTRAINT "AgentBusinessDetails_agentbus
 
 -- AddForeignKey
 ALTER TABLE "AgentImage" ADD CONSTRAINT "AgentImage_agentbusinessInfoId_fkey" FOREIGN KEY ("agentbusinessInfoId") REFERENCES "AgentBusinessinfo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "InsuranceOptions" ADD CONSTRAINT "InsuranceOptions_agentbusinessInfoId_fkey" FOREIGN KEY ("agentbusinessInfoId") REFERENCES "AgentBusinessinfo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PaymentOptions" ADD CONSTRAINT "PaymentOptions_agentBusinessInfoId_fkey" FOREIGN KEY ("agentBusinessInfoId") REFERENCES "AgentBusinessinfo"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AgentConnectionRequest" ADD CONSTRAINT "AgentConnectionRequest_senderId_fkey" FOREIGN KEY ("senderId") REFERENCES "Userauth"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -126,6 +126,27 @@ export default function PropertyList() {
           </div>
         </div>
 
+        <div className="row">
+          <div className="col-md-10 offset-md-1">
+            {/* Start Section Header Title */}
+            <div className="section-header text-center mb-5">
+              {/* Start Section Header title */}
+              <h2 className="h1 fw-semibold mb-3 section-header__title text-capitalize">
+                Community Service Centers <br /> Across USA
+              </h2>
+              {/* /.End Section Header Title */}
+              {/* Start Section Header Sub Title */}
+              <div className="sub-title fs-16">
+                Explore the premier Old-Age Community Service Centers,
+                <br />
+                seeking service providers to help address their real estate
+                inquiries.
+              </div>
+              {/* /.End Section Header Sub Title */}
+            </div>
+            {/*/. End Section Header */}
+          </div>
+        </div>
         {/* Filters Section */}
         <div className="py-5">
           <div className="container py-4">

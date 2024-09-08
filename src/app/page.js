@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Carousel from "../components/corousel";
 import FeaturesProperties from "../components/feature-properties";
 import FooterWhite from "../components/footer-white";
-import Dropdown from "../components/form-control-two";
+
 import SeniorLivingProfile from "./community/priv";
 import Cpmuntydata from "./community/Cpmuntydata";
 import Slideshow from "../components/slideshow";
@@ -16,7 +16,7 @@ export default function HomeTwo() {
       <Header />
       <SponsorConnectionRequestForm />
       <SeniorLivingProfile />
-      <Cpmuntydata />
+      <Cpmuntydata communityId={1} userauthId={1} />
       <div className="align-items-center d-flex hero-header hero-header__two overflow-hidden position-relative">
         <img
           src="assets/img/png-img/section-bg.png"
@@ -35,7 +35,6 @@ export default function HomeTwo() {
                 <br className="d-none d-md-block" />
                 and Providers.
               </h1>
-              <Dropdown />
             </div>
           </div>
         </div>
