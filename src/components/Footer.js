@@ -198,8 +198,18 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li className="mb-2">
+                  <Link href="privacy-policy" className="link d-block">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li className="mb-2">
                   <Link href="terms-conditions" className="link d-block">
                     Terms &amp; Conditions
+                  </Link>
+                </li>
+                <li className="mb-2">
+                  <Link href="refund-cancellation-policy" className="link d-block">
+                    Refund &amp; Cancellation Policy
                   </Link>
                 </li>
                 <li className="mb-2">
@@ -270,7 +280,7 @@ export default function Footer() {
             {/* Start Sub Footer Nav */}
             <ul className="list-unstyled list-separator mb-2 footer-nav">
               <li className="list-inline-item">
-                <Link href="#">Privacy</Link>
+                <Link href="privacy-policy">Privacy</Link>
               </li>
               <li className="list-inline-item">
                 <Link href="#">Sitemap</Link>
@@ -280,6 +290,11 @@ export default function Footer() {
               </li>
               <li className="list-inline-item">
                 <Link href="terms-conditions">Terms &amp; Conditions</Link>
+              </li>
+              <li className="list-inline-item">
+                <Link href="refund-cancellation-policy">
+                  Refund &amp; Cancellation
+                </Link>
               </li>
             </ul>
             {/*  /. End Sub Footer Nav */}
